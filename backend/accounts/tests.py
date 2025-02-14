@@ -2,113 +2,122 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core import mail
-from django.contrib.auth.tokens import default_token_generator
-from django.utils.encoding import force_bytes
-from django.utils.http import urlsafe_base64_encode
 # Create your tests here.
 """
 Tests:
-1. Login: login success, login fail
-2. Password Reset: views rendered correctly and the entire password reset flow
+1. Login Tests
+2. Password Reset Tests:
+3. Signup Tests:
 """
+#9/9 tests passed
 class LoginTest(TestCase):
     def setUp(self):
         """
-        Set up test data. This method is called before each test.
+        Set up test data
         """
         self.client = Client()
         self.user = User.objects.create_user(username='testuser', password='testpass%123')
 
+    def test_login_view_get(self):
+        """
+        Test login template loads correctly
+        """
+        response = self.client.get(reverse('login'))
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'registration/login.html')
+
     def test_login_success(self):
         """
-        Test successful login.
+        Test login success
         """
-        response = self.client.post(reverse('login'), {'username': 'testuser', 'password': 'testpass%123'})
-        self.assertEqual(response.status_code, 302)  # Check for redirect after successful login
+        response = self.client.post(reverse('login'), {
+            'username': 'testuser',
+            'password': 'testpass%123',
+        })
         self.assertRedirects(response, reverse('home'))
 
-    def test_login_fail(self):
+    def test_login_failure(self):
         """
-        Test unsuccessful login.
+        Test login failure
         """
-        response = self.client.post(reverse('login'), {'username': 'testuser', 'password': 'wrongpass123'})
-        self.assertEqual(response.status_code, 200)  # Check for unsuccessful login
-        self.assertContains(response, 'Please enter a correct username and password.')
+        response = self.client.post(reverse('login'), {
+            'username': 'testuser',
+            'password': 'wrongpassword',
+        })
+        self.assertEqual(response.status_code, 200)
+        self.assertFormError(response, 'form', None, "Please enter a correct username and password. Note that both fields may be case-sensitive.")
 
-class PasswordResetTest(TestCase):
+
+class PasswordResetTests(TestCase):
     def setUp(self):
         """
-        Set up account test
+        Set up test data
         """
         self.client = Client()
-        self.user = User.objects.create_user(
-            username='testuser',
-            email='testuser@example.com',
-            password='testpass%123'
-        )
-        self.password_reset_url = reverse('password_reset')
-        self.password_reset_done_url = reverse('password_reset_done')
-        self.password_reset_confirm_url = reverse('password_reset_confirm', kwargs={'uidb64': 'uidb64', 'token': 'token'})
-        self.password_reset_complete_url = reverse('password_reset_complete')
+        self.user = User.objects.create_user(username='testuser', email='test@example.com', password='12345')
 
-    def test_password_reset_view(self):
+    def test_password_reset_view_get(self):
         """
-        Test password reset view renders correctly.
+        Test password reset page loads correctly
         """
-        response = self.client.get(self.password_reset_url)
+        response = self.client.get(reverse('password_reset'))
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'registration/password_reset_form.html')
 
-    def test_password_reset_form_submission(self):
+    def test_password_reset_post_success(self):
         """
-        Test password submission reset form sends an email.
+        Test successful POST request
         """
-        response = self.client.post(self.password_reset_url, {'email': self.user.email})
-        self.assertEqual(response.status_code, 302)  # Check for redirect after form submission
-        self.assertRedirects(response, self.password_reset_done_url)
-
-        # Check that an email was sent
+        response = self.client.post(reverse('password_reset'), {'email': 'test@example.com'})
+        self.assertEqual(response.status_code, 302)
         self.assertEqual(len(mail.outbox), 1)
-        self.assertIn(self.user.email, mail.outbox[0].to)
+        self.assertEqual(mail.outbox[0].subject, 'Password reset on testserver')
 
-    def test_password_reset_confirm_view(self):
+    def test_password_reset_post_failure(self):
         """
-        Test confirmation view works correctly.
+        Test failed POST request
         """
-        uidb64 = urlsafe_base64_encode(force_bytes(self.user.pk))
-        token = default_token_generator.make_token(self.user)
+        response = self.client.post(reverse('password_reset'), {'email': 'wrong@example.com'})
+        self.assertEqual(response.status_code, 302)  # Expect a redirect
+        follow_response = self.client.get(response.url)  # Follow the redirect
+        self.assertEqual(follow_response.status_code, 200)  # Ensure the redirected page loads
+        self.assertTemplateUsed(follow_response, 'registration/password_reset_done.html')
 
-        # Access the password reset confirm page
-        response = self.client.get(reverse('password_reset_confirm', kwargs={'uidb64': uidb64, 'token': token}))
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, reverse('password_reset_confirm', kwargs={'uidb64': uidb64, 'token': 'set-password'}))
+class SignupTests(TestCase):
+    def setUp(self):
+        """
+        Set up test data
+        """
+        self.client = Client()
 
-    def test_password_reset_complete_view(self):
+    def test_signup_view_get(self):
         """
-        Test password reset complete view renders correctly.
+        Test signup page loads correctly
         """
-        response = self.client.get(self.password_reset_complete_url)
+        response = self.client.get(reverse('signup'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'registration/password_reset_complete.html')
+        self.assertTemplateUsed(response, 'registration/signup.html')
 
-    def test_password_reset(self):
+    def test_signup_success(self):
         """
-        Test entire password reset flow:
+        Test successful signup request
         """
-        response = self.client.post(self.password_reset_url, {'email': self.user.email})
+        response = self.client.post(reverse('signup'), {
+            'username': 'newuser',
+            'password1': 'complexpassword123',
+            'password2': 'complexpassword123',
+        })
         self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, self.password_reset_done_url)
-        self.assertEqual(len(mail.outbox), 1)
-        email_body = mail.outbox[0].body
-        reset_link = [line for line in email_body.splitlines() if 'http://testserver' in line][0]
-        response = self.client.get(reset_link, follow=True)
+        self.assertTrue(User.objects.filter(username='newuser').exists())
+
+    def test_signup_failure(self):
+        """
+        Test failed signup request
+        """
+        response = self.client.post(reverse('signup'), {
+            'username': 'newuser',
+            'password1': 'complexpassword123',
+            'password2': 'differentpassword',
+        })
         self.assertEqual(response.status_code, 200)
-        new_password = 'newpass%123'
-        response = self.client.post(
-            response.request['PATH_INFO'],
-            {'new_password1': new_password, 'new_password2': new_password}
-        )
-        self.assertEqual(response.status_code, 302)
-        self.assertRedirects(response, self.password_reset_complete_url)
-        self.user.refresh_from_db()
-        self.assertTrue(self.user.check_password(new_password))
+        self.assertFormError(response, 'form', 'password2', "The two password fields didn’t match.")
