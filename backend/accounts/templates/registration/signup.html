@@ -1,12 +1,31 @@
+<!-- LOAD DEPENDENCIES -->
 {% extends "base.html" %}
+{% load static %}
 
+<!-- VARIABLES -->
 {% block title %}Sign Up{% endblock %}
 
+{% block css %}<link href="{% static 'styles.css' %}" rel="stylesheet">{% endblock %}
+
 {% block content %}
-<h2>Sign up</h2>
-<form method="post">
-  {% csrf_token %}
-  {{ form }}
-  <button type="submit">Sign Up</button>
-</form>
+    <div class="login-container">
+        <h2>Sign up</h2>
+
+        <!-- <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button type="submit">Sign Up</button>
+        </form> -->
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="form-group">
+            <input type="text" name="email" class="form-control" placeholder="Email" required>
+            <input type="text" name="username" class="form-control" placeholder="Username" maxlength="20" required>
+            <input type="password" name="password1" class="form-control" placeholder="Password" title="Must contain at least one number, one uppercase letter, one lowercase letter and minimum 8 characters">
+            <input type="password" name="password2" class="form-control" placeholder="Password Confirmation" title="Must contain at least one number, one uppercase letter, one lowercase letter and minimum 8 characters">
+          </div>
+          <button type="submit" class="login-btn">Sign Up</button>
+        </form>
+    </div>
 {% endblock %}
