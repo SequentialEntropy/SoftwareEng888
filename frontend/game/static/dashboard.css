@@ -1,0 +1,143 @@
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background-color: #96C88E;
+   
+}
+
+.heading{
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    padding: 10px;
+    width: 40%;
+    margin-top: 10px;
+    
+   
+}
+
+.sidebar{
+    background-color: #0c3412;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 8%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+}
+
+.sidebar i{
+    color: #96C88E;
+    
+}
+
+.sidebar a{
+    margin-top: 20%;
+}
+
+
+
+.grid {
+    width: 88vw;
+    height: 87vh;
+    display: grid;
+    gap: 1.5vw;
+    padding: 1vw;
+    grid-template-columns: repeat(6, 1fr);
+    grid-template-rows: auto;
+    grid-template-areas:
+      "hero hero hero aside2 aside2 aside2"
+      "hero hero hero aside2 aside2 aside2"
+      "progress progress progress aside2 aside2 aside2"
+      " aside4 aside4 aside4 aside4 aside5 aside5"
+      "aside4 aside4 aside4 aside4 aside5 aside5 ";
+      margin-left: 10%;
+  }
+
+  .item {
+    border: 2px solid #464545;
+    border-radius: 15px;
+  }
+  
+  .grid .item:nth-child(1) {
+    grid-area: hero;
+    background-image: url("https://th.bing.com/th/id/OIG3.GT5s7Vvbbwp0LjZgdUuZ?pid=ImgGn");
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+  .grid .item:nth-child(2) {
+    grid-area: aside2;
+  }
+  
+  .grid .item:nth-child(3) {
+    grid-area: progress;
+  }
+  .grid .item:nth-child(4) {
+    grid-area: aside4;
+  }
+  
+  .grid .item:nth-child(5) {
+    grid-area: aside5;
+  }
+
+/* .game-container{
+    background-image: url("https://th.bing.com/th/id/OIG3.GT5s7Vvbbwp0LjZgdUuZ?pid=ImgGn");
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    width: 40vw;
+    height: 40vh;
+    margin-left: 12%;
+    border-radius: 10px;
+    grid-area: game;
+    
+
+
+}
+
+.game-container .headings{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    margin-top: 3%;
+} */
+
+/* .grid .game-container{
+    grid-area: game;
+    padding: 1rem;
+    border: 1px;
+}
+
+.grid .progress-bar{
+    grid-area: progress;
+    padding: 1rem;
+    border: 1px;
+}
+
+.grid .map{
+    grid-area: map;
+    padding: 1rem;
+    border: 1px;
+}
+
+.grid .leaderboard{
+    grid-area: board;
+    padding: 1rem;
+    border: 1px;
+}
+
+.grid .rewards{
+    grid-area: reward;
+    padding: 1rem;
+    border: 1px;
+} */
+
