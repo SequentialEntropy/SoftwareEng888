@@ -5,9 +5,9 @@ from django.core import mail
 # Create your tests here.
 """
 Tests:
-1. Login Tests
-2. Password Reset Tests:
-3. Signup Tests:
+1. Login Tests: Login Template Load, Login Success, Login Failure
+2. Password Reset Tests: Password Reset Template Load, Password Reset Success, Password Reset Failure
+3. Signup Tests: Signup Template Load, Signup Success, Signup Failure
 """
 #9/9 tests passed
 class LoginTest(TestCase):
