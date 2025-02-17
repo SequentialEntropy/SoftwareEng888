@@ -7,10 +7,12 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "square_id"]
+        # fields = ["id", "username", "password", "square_id"]
+        fields = ["id", "username", "password"]
         extra_kwargs = {"password": {"write_only": True}} # Nobody can read the password
 
     def create(self, validated_data):
+        print(validated_data)
         user = User.objects.create_user(**validated_data)
         return user
     
