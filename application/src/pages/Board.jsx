@@ -1,7 +1,10 @@
 import styles from "../styles/Board.module.css"
 
 function Board() {
-    return <div className={styles.main_board}>
+    return  <div className={styles.main_board}>
+        <div className={styles.avatar}>
+            <i className="bi bi-bicycle"></i>
+        </div>
         <div className={styles.item}>
             <h3>Peter Chalk</h3>
         </div>
@@ -59,6 +62,7 @@ function Board() {
                 <button type="button">SPIN</button>
             </fieldset>
         </div>
+        
         <div />
         <div />
         <div className={styles.item}> 

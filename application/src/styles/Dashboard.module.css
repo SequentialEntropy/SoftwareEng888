@@ -6,7 +6,7 @@
 
 .main_dashboard {
     min-height: 100vh;
-    background-color: #96C88E;
+    background-color: #C5E4E1;
 }
 
 .heading{
@@ -17,22 +17,28 @@
     justify-content: center;
     padding: 10px;
     width: 40%;
+    color: white;
+    font-family: "Hammersmith One", serif;
 }
 
 .sidebar{
-    background-color: #0c3412;
+    background-color:#3C3E4C;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 8%;
-    height: 100vh;
+    padding: 20px 0;
+    height: 90vh;
     position: fixed;
-    top: 0;
+    border-radius: 30px;
+    top: 5.5%;
+    justify-content: flex-start;
 }
 
 .sidebar i{
-    color: #96C88E;
+    color: #85AEB3;
+    margin-top: 200px;
     
 }
 
@@ -40,7 +46,19 @@
     margin-top: 20%;
 }
 
+.logoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
 
+.logoText {
+    color: #85AEB3;
+    font-size:25px;
+    top: 0;
+    justify-content: flex-start;
+}
 
 .grid {
     width: 88vw;
@@ -51,89 +69,108 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: auto;
     grid-template-areas:
-        "hero hero hero aside2 aside2 aside2"
-        "hero hero hero aside2 aside2 aside2"
-        "progress progress progress aside2 aside2 aside2"
-        " aside4 aside4 aside4 aside4 aside5 aside5"
-        "aside4 aside4 aside4 aside4 aside5 aside5 ";
+        "hero hero hero hero aside2 aside2"
+        "hero hero hero hero aside2 aside2"
+        "progress progress progress progress aside2 aside2"
+        "aside4 aside4 aside4 aside5 aside5 aside5"
+        "aside4 aside4 aside4 aside5 aside5 aside5 ";
     margin-left: 10%;
 }
 
-    .item {
-        border: 2px solid #464545;
-        border-radius: 15px;
-    }
-  
-    .grid .item:nth-child(1) {
-        grid-area: hero;
-        background-image: url("https://th.bing.com/th/id/OIG3.GT5s7Vvbbwp0LjZgdUuZ?pid=ImgGn");
-        background-size: cover;
-        background-repeat: no-repeat;
-    }
-    .grid .item:nth-child(2) {
-        grid-area: aside2;
-    }
-    
-    .grid .item:nth-child(3) {
-        grid-area: progress;
-    }
-    .grid .item:nth-child(4) {
-        grid-area: aside4;
-    }
-    
-    .grid .item:nth-child(5) {
-        grid-area: aside5;
-    }
-
-/* .game-container{
-    background-image: url("https://th.bing.com/th/id/OIG3.GT5s7Vvbbwp0LjZgdUuZ?pid=ImgGn");
-    background-size: cover;
-    background-repeat: no-repeat;
-    display: flex;
-    width: 40vw;
-    height: 40vh;
-    margin-left: 12%;
-    border-radius: 10px;
-    grid-area: game;
-    
-
-
+.item {
+    border-radius: 15px;
+    font-family: "Hammersmith One", serif;
+    /* background-color: rgba(0, 0, 0, 0.5);  */
+    color: white;
+    text-align: "center";
+    place-items: "center";
 }
 
-.game-container .headings{
+.grid .item:nth-child(1) {
+    grid-area: hero;
+    background-image: url("https://downtowndetroit.org/wp-content/uploads/Grand-Circus-Park-747x345.jpg");
+    background-size:cover;
+    background-repeat: no-repeat;
+    align-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.804); /* Semi-transparent background */
+}
+
+
+.grid .item:nth-child(2) {
+    grid-area: aside2;
+    /* align-content: center; */
+    top: 0;
+    text-align: center;
     display: flex;
     flex-direction: column;
-    margin-left: 5%;
-    margin-top: 3%;
-} */
+    align-items: center;
+    gap: 20px;
+    border-radius: 30px;
+    width: 100%;
 
-/* .grid .game-container{
-    grid-area: game;
-    padding: 1rem;
-    border: 1px;
 }
 
-.grid .progress-bar{
+
+/* Individual profile item */
+.profileItem {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    text-align: center;
+    gap: 10px;
+    background-color: #3C3E4C;
+    width: 80%;
+    color:white;
+    border-radius: 30px;
+}
+
+.profileIcon {
+    margin-top: 5px;
+}
+
+.grid .item:nth-child(3) {
     grid-area: progress;
-    padding: 1rem;
-    border: 1px;
+    align-content:center;
+    margin-left: 0;
+    text-align: center;
 }
 
-.grid .map{
-    grid-area: map;
-    padding: 1rem;
-    border: 1px;
+
+.grid .item:nth-child(4) {
+    grid-area: aside4;
+    align-content: center;
+    text-align: center;
+    background-image: url("https://miro.medium.com/v2/resize:fill:1200:675/g:fp:0.73:0.06/1*dBe7OoCKPI4HKNQ1_79x2A.jpeg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-color: rgb(0, 0, 0); /* Semi-transparent background */
+
 }
 
-.grid .leaderboard{
-    grid-area: board;
-    padding: 1rem;
-    border: 1px;
+.grid .item:nth-child(5) {
+    grid-area: aside5;
+    align-content: center;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.grid .rewards{
-    grid-area: reward;
-    padding: 1rem;
-    border: 1px;
-} */
+.progressBar {
+    width: 100%;
+    height: 70px;
+    appearance: none;
+    border-radius: 30px;
+    margin-left: 0;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
 
+.progressBar::-webkit-progress-bar {
+    background-color: #C5E4E1;
+    border-radius: 30px;
+    border: 1px solid #3C3E4C; /* Add a border color to the progress bar */
+}
+
+.progressBar::-webkit-progress-value {
+    background-color: #3C3E4C;
+    border-radius: 30px;
+}
