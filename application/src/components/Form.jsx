@@ -33,16 +33,29 @@ function Form({route, method}) {
     }
 
     return <div className={styles.main_form}>
-        <div className={styles.login_container}>
-            <h2>{name}</h2>
-            
-            <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" />
-                    <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
-                </div>
-                <button type="submit" className={styles.login_btn}>{name}</button>
-            </form>
+
+        <div className={styles.header}>
+            <h1 className={styles.logo}>888</h1>
+            <h1 className={styles.heading}>cliMate</h1>
+            <a className={styles.header_btn_login}>Login</a>
+            <a className={styles.header_btn_sign}>Sign Up</a>
+        </div>
+
+        
+
+        <div className={styles.login}>
+        
+            <div className={styles.login_container}>
+                <h2>{name}</h2>
+                
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group">
+                        <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" />
+                        <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+                    </div>
+                    <button type="submit" className={styles.login_btn}>{name}</button>
+                </form>
+            </div>
         </div>
     </div>
 }
