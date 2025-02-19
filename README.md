@@ -10,10 +10,6 @@ This section includes the software you will need to run our application.
 
 `npm install vite --save -dev`
 
-`pip install django-cors-headers`
-
-`pip install djangorestframework-simplejwt`
-
 ## How to play 
 Users can register to the game using their email address and creating a username and password. After this they will then navigate to their dashboard.
 1. Spin wheel
