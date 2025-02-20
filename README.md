@@ -32,5 +32,3 @@ Database: Stores user data, completed tasks, and leaderboard rankings.
 QR Code System: Used to verify task completion by scanning codes at designated locations.
 
 This modular approach ensures scalability and ease of maintenance.
-
-## Testing
