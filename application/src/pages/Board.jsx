@@ -1,16 +1,57 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 
 function Board() {
     const spinnerRef = useRef(null);
-    const buttonRef = useRef(null);
     const [result, setResult] = useState(null); // stores the result
+    const [previousEndDegree, setPreviousEndDegree] = useState(0)
+    const [animation, setAnimation] = useState(null)
 
-    useEffect(() => {
-        if (spinnerRef.current && buttonRef.current) {
-            wheelOfFortune(spinnerRef.current, buttonRef.current, setResult);
+    const totalSections = 12; // 12 sections in the wheel 
+    const sectionSize = 360 / totalSections; // each section is 30 degrees
+    const pointerOffset = 15; // adjust to align with the pointer
+
+    // exact number order on the spinner
+    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3];
+
+
+    const wheelOfFortune = () => {
+        if (animation) {
+            animation.cancel();
         }
-    }, []);
+
+        const randomAdditionalDegrees = Math.random() * 360 + 1800; 
+        const newEndDegree = previousEndDegree + randomAdditionalDegrees;
+
+        // animate rotation
+        const newAnimation = spinnerRef.current.animate(
+            [
+                { transform: `rotate(${previousEndDegree}deg)` },
+                { transform: `rotate(${newEndDegree}deg)` },
+            ],
+            {
+                duration: 4000,
+                easing: "cubic-bezier(0.440, -0.205, 0.000, 1.130)", 
+                fill: "forwards",
+            }
+        );
+
+        newAnimation.onfinish = () => {
+            // normalize the final rotation angle 
+            let finalAngle = newEndDegree % 360;
+
+            // adjust to align with the top pointer correctly
+            let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
+
+            // get the correct number from the order listed 
+            let landedNumber = numberOrder[landedIndex];
+
+            setResult(landedNumber); // display result
+        };
+
+        setAnimation(newAnimation)
+        setPreviousEndDegree(newEndDegree % 360) // store last rotation
+    }
 
     return (
         <div className={styles.main_board}>
@@ -68,7 +109,7 @@ function Board() {
                         <li>5</li>
                         <li>6</li>
                     </ul>
-                    <button ref={buttonRef} type="button">SPIN</button>
+                    <button onClick={wheelOfFortune} type="button">SPIN</button>
                 </fieldset>
             </div>
             <div />
@@ -106,55 +147,6 @@ function Board() {
             )}
         </div>
     );
-}
-
-//function for spinner to spin and show result
-function wheelOfFortune(wheel, button, setResult) {
-    let animation;
-    let previousEndDegree = 0;
-    const totalSections = 12; // 12 sections in the wheel 
-    const sectionSize = 360 / totalSections; // each section is 30 degrees
-    const pointerOffset = 15; // adjust to align with the pointer
-
-    // exact number order on the spinner
-    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3];
-
-    button.addEventListener("click", () => {
-        if (animation) {
-            animation.cancel();
-        }
-
-        const randomAdditionalDegrees = Math.random() * 360 + 1800; 
-        const newEndDegree = previousEndDegree + randomAdditionalDegrees;
-
-        // animate rotation
-        animation = wheel.animate(
-            [
-                { transform: `rotate(${previousEndDegree}deg)` },
-                { transform: `rotate(${newEndDegree}deg)` },
-            ],
-            {
-                duration: 4000,
-                easing: "cubic-bezier(0.440, -0.205, 0.000, 1.130)", 
-                fill: "forwards",
-            }
-        );
-
-        animation.onfinish = () => {
-            // normalize the final rotation angle 
-            let finalAngle = newEndDegree % 360;
-
-            // adjust to align with the top pointer correctly
-            let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
-
-            // get the correct number from the order listed 
-            let landedNumber = numberOrder[landedIndex];
-
-            setResult(landedNumber); // display result
-        };
-
-        previousEndDegree = newEndDegree; // store last rotation
-    });
 }
 
 export default Board;
