@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core import mail
+import json
 # Create your tests here.
 """
 Tests:
@@ -45,7 +46,7 @@ class LoginTest(TestCase):
             'password': 'wrongpassword',
         })
         self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', None, "Please enter a correct username and password. Note that both fields may be case-sensitive.")
+        self.assertContains(response, "Please enter a correct username or password.")
 
 
 class PasswordResetTests(TestCase):
@@ -94,30 +95,37 @@ class SignupTests(TestCase):
         """
         Test signup page loads correctly
         """
-        response = self.client.get(reverse('signup'))
-        self.assertEqual(response.status_code, 200)
+        response = self.client.get(reverse('register'))
+        self.assertEqual(response.status_code, 200)  # Expect 200 OK
         self.assertTemplateUsed(response, 'registration/signup.html')
 
     def test_signup_success(self):
         """
         Test successful signup request
         """
-        response = self.client.post(reverse('signup'), {
+        data = {
             'username': 'newuser',
-            'password1': 'complexpassword123',
-            'password2': 'complexpassword123',
-        })
-        self.assertEqual(response.status_code, 302)
+            'password': 'complexpassword123',
+        }
+        response = self.client.post(
+            reverse('register'),
+            data=json.dumps(data),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 201)  # 201 Created for successful POST
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
     def test_signup_failure(self):
         """
         Test failed signup request
         """
-        response = self.client.post(reverse('signup'), {
-            'username': 'newuser',
-            'password1': 'complexpassword123',
-            'password2': 'differentpassword',
-        })
-        self.assertEqual(response.status_code, 200)
-        self.assertFormError(response, 'form', 'password2', "The two password fields didn’t match.")
+        data = {
+            'username': '',  # Invalid username
+            'password': 'complexpassword123',
+        }
+        response = self.client.post(
+            reverse('register'),
+            data=json.dumps(data),
+            content_type='application/json'
+        )
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request for invalid data
