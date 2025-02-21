@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core import mail
+import json
 # Create your tests here.
 """
 Tests:
@@ -9,7 +10,7 @@ Tests:
 2. Password Reset Tests: Password Reset Template Load, Password Reset Success, Password Reset Failure
 3. Signup Tests: Signup Template Load, Signup Success, Signup Failure
 """
-#8/9 tests passed
+#9/9 tests passed
 class LoginTest(TestCase):
     def setUp(self):
         """
@@ -94,7 +95,6 @@ class SignupTests(TestCase):
         """
         Test signup page loads correctly
         """
-        # Failed test
         response = self.client.get(reverse('register'))
         self.assertEqual(response.status_code, 200)  # Expect 200 OK
         self.assertTemplateUsed(response, 'registration/signup.html')
@@ -103,10 +103,15 @@ class SignupTests(TestCase):
         """
         Test successful signup request
         """
-        response = self.client.post(reverse('register'), {
+        data = {
             'username': 'newuser',
             'password': 'complexpassword123',
-        })
+        }
+        response = self.client.post(
+            reverse('register'),
+            data=json.dumps(data),
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, 201)  # 201 Created for successful POST
         self.assertTrue(User.objects.filter(username='newuser').exists())
 
@@ -114,8 +119,13 @@ class SignupTests(TestCase):
         """
         Test failed signup request
         """
-        response = self.client.post(reverse('register'), {
+        data = {
             'username': '',  # Invalid username
             'password': 'complexpassword123',
-        })
+        }
+        response = self.client.post(
+            reverse('register'),
+            data=json.dumps(data),
+            content_type='application/json'
+        )
         self.assertEqual(response.status_code, 400)  # 400 Bad Request for invalid data
