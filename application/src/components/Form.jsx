@@ -62,7 +62,7 @@ function Form({ route, method }) {
                 // Store the authentication tokens
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
-                navigate("/");
+                navigate("/home");
             } else {
                 // Redirect user to login page after registration
                 navigate("/login");
@@ -74,39 +74,74 @@ function Form({ route, method }) {
         }
     };
 
+    // return (
+    //     <form onSubmit={handleSubmit} className={styles.form}>
+    //         
+    //         <h2>{name}</h2>
+
+    //         {/* Username input field */}
+    //         <label>
+    //             Username:
+    //             <input
+    //                 type="text"
+    //                 value={username}
+    //                 onChange={(e) => setUsername(e.target.value)}
+    //                 required
+    //             />
+    //         </label>
+
+    //         {/* Password input field */}
+    //         <label>
+    //             Password:
+    //             <input
+    //                 type="password"
+    //                 value={password}
+    //                 onChange={(e) => setPassword(e.target.value)}
+    //                 required
+    //             />
+    //         </label>
+
+    //         {/* Submit button */}
+    //         <button type="submit" disabled={loading}>
+    //             {loading ? "Processing..." : name}
+    //         </button>
+    //     </form>
+    // );
+
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
-            {/* Display form title based on method (Login/Register) */}
-            <h2>{name}</h2>
+        <div className={styles.main_form}>
 
-            {/* Username input field */}
-            <label>
-                Username:
-                <input
-                    type="text"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    required
-                />
-            </label>
+            <div className={styles.header}>
+                <h1 className={styles.logo}>888</h1>
+                <h1 className={styles.heading}>cliMate</h1>
+                <a className={styles.header_btn_login}>Login</a>
+                <a className={styles.header_btn_sign}>Sign Up</a>
+            </div>
 
-            {/* Password input field */}
-            <label>
-                Password:
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
+            
 
-            {/* Submit button */}
-            <button type="submit" disabled={loading}>
-                {loading ? "Processing..." : name}
-            </button>
-        </form>
-    );
+            <div className={styles.login}>
+            
+                <div className={styles.login_container}>
+                    {/* Display form title based on method (Login/Register) */}
+                    <h2>{name}</h2>
+                    
+                    <form onSubmit={handleSubmit}>
+                        <div className="form-group">
+                            {/* Username input field */}
+                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" />
+
+                            {/* Password input field */}
+                            <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+                        </div>
+
+                        {/* Submit button */}
+                        <button type="submit" className={styles.login_btn}>{name}</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    )
 }
 
 export default Form;
