@@ -37,6 +37,8 @@ function Board() {
     const avatarRef = useRef(null);
     const [avatarPos, setAvatarPos] = useState([0, 0])
     const [avatarSquare, setAvatarSquare] = useState(0)
+    const [userLocation, setUserLocation] = useState(null);
+    const [canClick, setCanClick] = useState(false);
 
     /**
      * Initialises the spinning wheel effect
@@ -44,7 +46,32 @@ function Board() {
     useEffect(() => {
         teleportAvatar(0)
     }, [])
+    const checkLocation = () => {         
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords;
 
+                    setUserLocation({ latitude, longitude });
+
+                    // Define your allowed location (Example: New York)
+                    const allowedLatitude = 50.7288;
+                    const allowedLongitude = -3.5060;
+                    const threshold = 0.1; // Allow slight variation
+                    if (
+                        Math.abs(latitude - allowedLatitude) < threshold &&
+                        Math.abs(longitude - allowedLongitude) < threshold
+                        || true) {
+                        setCanClick(true);
+                    } else {
+                        setCanClick(false);
+                        setError("You're not in the required location.");
+                    }
+                },
+                (error) => console.error("Error fetching location:", error)
+            );
+        }
+    };
     const teleportAvatar = (squareId) => {
         console.log(squareRefs.current[squareId])
         const pos = squareRefs.current[squareId].getBoundingClientRect()
@@ -67,7 +94,7 @@ function Board() {
             [
                 { transform: `rotate(${previousEndDegree}deg)` },
                 { transform: `rotate(${newEndDegree}deg)` },
-            ],
+            ],  
             {
                 duration: 4000,
                 easing: "cubic-bezier(0.440, -0.205, 0.000, 1.130)", 
@@ -88,6 +115,7 @@ function Board() {
             setResult(landedNumber); // display result
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
+            checkLocation()
         };
 
         setAnimation(newAnimation)
@@ -103,7 +131,7 @@ function Board() {
             </div>
         )
     }
-
+    
     const squares = [
         BoardSquare(0,  "Start"            , "#3c3e4c"),
         BoardSquare(1,  "Birks Grange"     , "#7f95d1"),
@@ -200,16 +228,26 @@ function Board() {
                 <div className={styles.item} style={{backgroundColor: '#3c4c3e'}} key={0} ref={e => {squareRefs.current[0] = e}}>
                     <h3 style={{color: '#d9d9d9', fontSize: '50px', transform: 'rotate(-25deg)', margin:'auto', letterSpacing: '5px'}}>START</h3>
                 </div>
-
+                <div>  
                 {/* Popup to show result */}
-                {result !== null && (
+                {result != null && (
                     <div className={styles.popup}>
                         <div className={styles.popup_content}>
-                            <h2>You landed on: {result}</h2>
-                            <button onClick={() => setResult(null)}>OK</button>
+                        {/* <h2>You are at: {result}</h2> */}
+                        <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
+                        <button 
+                            onClick={() => setResult(null)} 
+                            disabled={!canClick} 
+                            style={{ 
+                                opacity: canClick ? 1 : 0.5, 
+                                cursor: canClick ? "pointer" : "not-allowed" 
+                            }}>
+                            OK
+                        </button>
                         </div>
                     </div>
                 )}
+            </div>
             </div>
         </div>
     )
