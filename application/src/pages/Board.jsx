@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 
 function Board() {
@@ -10,10 +10,24 @@ function Board() {
     const totalSections = 12; // 12 sections in the wheel 
     const sectionSize = 360 / totalSections; // each section is 30 degrees
     const pointerOffset = 15; // adjust to align with the pointer
+    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
+    
+    const squareRefs = useRef({});
+    const avatarRef = useRef(null);
+    const [avatarPos, setAvatarPos] = useState([0, 0])
+    const [avatarSquare, setAvatarSquare] = useState(0)
 
-    // exact number order on the spinner
-    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3];
+    useEffect(() => {
+        teleportAvatar(0)
+    }, [])
 
+    const teleportAvatar = (squareId) => {
+        console.log(squareId)
+        const pos = squareRefs.current[squareId].getBoundingClientRect()
+        setAvatarPos([pos.top, pos.left])
+        
+        setAvatarSquare(squareId)
+    }
 
     const wheelOfFortune = () => {
         if (animation) {
@@ -47,45 +61,60 @@ function Board() {
             let landedNumber = numberOrder[landedIndex];
 
             setResult(landedNumber); // display result
+
+            teleportAvatar((avatarSquare + landedNumber) % squares.length)
         };
 
         setAnimation(newAnimation)
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
 
+    const BoardSquare = (id, name) => {
+        return <div className={styles.item} key={id} ref={e => {squareRefs.current[id] = e}}>
+            <h3>{name}</h3>
+        </div>
+    }
+
+    const squares = [
+        BoardSquare(0,  "Start"            ),
+        BoardSquare(1,  "Birks Grange"     ),
+        BoardSquare(2,  "East Park"        ),
+        BoardSquare(3,  "Peter Chalk"      ),
+        BoardSquare(4,  "Forum"            ),
+        BoardSquare(5,  "Great Hall"       ),
+        BoardSquare(6,  "Reed Hall"        ),
+        BoardSquare(7,  "Harrison"         ),
+        BoardSquare(8,  "Innovation Centre"),
+        BoardSquare(9,  "INTO Building"    ),
+        BoardSquare(10, "Streatham Court"  ),
+        BoardSquare(11, "Hatherly"         ),
+        BoardSquare(12, "Old Library"      ),
+        BoardSquare(13, "Queens"           ),
+        BoardSquare(14, "Amory"            ),
+        BoardSquare(15, "Business School"  ),
+    ]
+
     return (
         <div className={styles.main_board}>
-            <div className={styles.item}>
-                <h3>Peter Chalk</h3>
+            <div ref={avatarRef} className={styles.avatar} style={{
+                top: avatarPos[0] + 65,
+                left: avatarPos[1] + 60,
+            }}>
+                <i className="bi bi-bicycle"></i>
             </div>
-            <div className={styles.item}>
-                <h3>Forum</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Great Hall</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Reed Hall</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Harrison</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Innovation Centre</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>East Park</h3>
-            </div>
+            {squares[3]}
+            {squares[4]}
+            {squares[5]}
+            {squares[6]}
+            {squares[7]}
+            {squares[8]}
+            {squares[2]}
             <div />
             <div />
             <div />
             <div />
-            <div className={styles.item}>
-                <h3>INTO Building</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Birks Grange</h3>
-            </div>
+            {squares[9]}
+            {squares[1]}
             <div />
             <div>
                 <fieldset className={styles.spinner}>
@@ -114,27 +143,13 @@ function Board() {
             </div>
             <div />
             <div />
-            <div className={styles.item}>
-                <h3>Streatham Court</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Start</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Business School</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Amory</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Queens</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Old Library</h3>
-            </div>
-            <div className={styles.item}>
-                <h3>Hatherly</h3>
-            </div>
+            {squares[10]}
+            {squares[0]}
+            {squares[15]}
+            {squares[14]}
+            {squares[13]}
+            {squares[12]}
+            {squares[11]}
 
             {/* popup to show result */}
             {result !== null && (
@@ -146,7 +161,7 @@ function Board() {
                 </div>
             )}
         </div>
-    );
+    )
 }
 
 export default Board;
