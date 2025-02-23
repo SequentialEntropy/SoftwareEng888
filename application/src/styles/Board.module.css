@@ -145,9 +145,7 @@
 
 .avatar{
     position: absolute;
-    bottom: 5px;
-    left: 95px;
-    
+    z-index: 1;
 }
 
 .main_board i{
