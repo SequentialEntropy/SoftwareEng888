@@ -80,7 +80,7 @@ function Home() {
                 <div className={styles.logoContainer}>
                     <h2 className={styles.logoText}>cliMate</h2>
                 </div>
-                <a href="home/"><i className="bi bi-house-door-fill" style={{fontSize: "48px"}} ></i></a>
+                <a href="home"><i className="bi bi-house-door-fill" style={{fontSize: "48px"}} ></i></a>
                 <a href="board"><i className="bi bi-dice-3-fill" style={{fontSize: "48px"}} ></i></a>
                 <a href="map"><i className="bi bi-map-fill" style={{fontSize: "48px"}} ></i></a>
                 <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
