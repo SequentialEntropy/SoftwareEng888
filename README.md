@@ -4,11 +4,13 @@ Our web application aims to promote sustainability through performing tasks arou
 ## Prerequisites
 This section includes the software you will need to run our application. 
 
+1. Open a terminal on your system.
+2. Navigate to the root directory of the project: 
+`cd /path/to/project`
+3. Install the required dependencies:
 `pip install -r requirements.txt`
-
-#### Must ensure vite is installed locally
-
-`npm install vite --save -dev`
+4. Ensure Vite is installed locally:
+`npm install vite --save-dev`
 
 ## How to play 
 Users can register to the game using their email address and creating a username and password. After this they will then navigate to their dashboard.
@@ -19,5 +21,22 @@ Users can register to the game using their email address and creating a username
 5. See your progress on the leaderboard
 
 ## Structure
+The project is structured as follows:
 
-## Testing
+Frontend: Built using Vite and React, responsible for the user interface and interactions.
+
+Backend: Developed with Python (Django) to handle authentication, task verification, and leaderboard updates.
+
+Database: Stores user data, completed tasks, and leaderboard rankings.
+
+QR Code System: Used to verify task completion by scanning codes at designated locations.
+
+Frontend: Built using Vite and React, responsible for the user interface and interactions.
+
+Backend: Developed with Python (Django) to handle authentication, task verification, and leaderboard updates.
+
+Database: Stores user data, completed tasks, and leaderboard rankings.
+
+QR Code System: Used to verify task completion by scanning codes at designated locations.
+
+This modular approach ensures scalability and ease of maintenance.

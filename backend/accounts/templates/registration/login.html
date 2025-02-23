@@ -10,6 +10,13 @@
 {% block content %}
     <div class="login-container">
         <h2>Login</h2>
+
+        <!-- Display form errors -->
+        {% if form.errors %}
+            <div class="alert alert-danger">
+                Please enter a correct username or password.
+            </div>
+        {% endif %}
         
         <form method="post">
             {% csrf_token %}

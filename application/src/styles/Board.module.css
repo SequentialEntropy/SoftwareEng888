@@ -1,24 +1,56 @@
+/*
+* Board.module.css - Stylesheet for the Board component 
+* 
+* @file Defines the styles for the sidebar, board layout, spinner, and popups 
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @author Yap Wen Xing 
+* @version 1.1.0 
+* @since 19-02-2025
+*/
+
+/* Sidebar Navigation */
+.game{
+    background-color: #e9fffd;
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    width: 100vw;
+    position: absolute;
+}
+
 .sidebar {
-    background-color: #0c3412;
+    background-color:#3C3E4C;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 8%;
-    height: 100vh;
+    padding: 20px 0;
+    height: 90vh;
     position: fixed;
-    top: 0;
-    z-index: 5;
+    border-radius: 30px;
+    top: 5.5%;
+    justify-content: flex-start;
+
 }
 
 .sidebar i {
-    color: #96C88E;
+    color: #85AEB3;
+    margin-top: 200px;
 }
 
 .sidebar a {
     margin-top: 20%;
 }
 
+.sidebar h2{
+    color: #85AEB3;
+    font-family: 'Hammersmith One';
+    font-size: 30px;
+}
+
+/* Spinner component */
 :where(.spinner) {
     --_items: 12;
     all: unset;
@@ -46,10 +78,12 @@
   
     button {
         aspect-ratio: 1 / 1;
-        background: hsla(0, 0%, 100%, .8);
+        background: #3c3e4c;
         border: 0;
         border-radius: 50%;
         cursor: pointer;
+        font-family: 'Londrina Solid';
+        color: #d9d9d9;
         font-size: 5cqi;
         place-self: center;
         width: 20cqi;
@@ -65,10 +99,6 @@
         li {
             align-content: center;
             aspect-ratio: 1 / calc(2 * tan(180deg / var(--_items)));
-            background: hsl(calc(360deg / var(--_items) * calc(var(--_idx))), 100%, 75%);
-            /* background: hsl(calc(40deg + (var(--_idx) * 8deg)), 88%, 75%); */
-
-
             clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
             display: grid;
             font-size: 5cqi;
@@ -79,48 +109,43 @@
             user-select: none;
             width: 50cqi;
     
-            &:nth-of-type(1) { --_idx: 1; }
-            &:nth-of-type(2) { --_idx: 2; }
-            &:nth-of-type(3) { --_idx: 3; }
-            &:nth-of-type(4) { --_idx: 4; }
-            &:nth-of-type(5) { --_idx: 5; }
-            &:nth-of-type(6) { --_idx: 6; }
-            &:nth-of-type(7) { --_idx: 7; }
-            &:nth-of-type(8) { --_idx: 8; }
-            &:nth-of-type(9) { --_idx: 9; }
-            &:nth-of-type(10) { --_idx: 10; }
-            &:nth-of-type(11) { --_idx: 11; }
-            &:nth-of-type(12) { --_idx: 12; }
-            &:nth-of-type(13) { --_idx: 13; }
-            &:nth-of-type(14) { --_idx: 14; }
-            &:nth-of-type(15) { --_idx: 15; }
-            &:nth-of-type(16) { --_idx: 16; }
-            &:nth-of-type(17) { --_idx: 17; }
-            &:nth-of-type(18) { --_idx: 18; }
+            &:nth-of-type(1) { --_idx: 1; background-color: #7f2982; }
+            &:nth-of-type(2) { --_idx: 2; background-color: #ea526f; }
+            &:nth-of-type(3) { --_idx: 3; background-color: #558564; }
+            &:nth-of-type(4) { --_idx: 4; background-color: #7f95d1; }
+            &:nth-of-type(5) { --_idx: 5; background-color: #e98a15;}
+            &:nth-of-type(6) { --_idx: 6; background-color: #7f2982; }
+            &:nth-of-type(7) { --_idx: 7; background-color: #ea526f;}
+            &:nth-of-type(8) { --_idx: 8; background-color: #558564;}
+            &:nth-of-type(9) { --_idx: 9; background-color: #7f95d1; }
+            &:nth-of-type(10) { --_idx: 10; background-color: #e98a15;}
+            &:nth-of-type(11) { --_idx: 11; background-color: #7f2982;}
+            &:nth-of-type(12) { --_idx: 12; background-color: #ea526f;}
+            
         }
     }
 }
 
 
-
+/* Main board layout */
 .main_board {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 0.8vw;
-    width: 100vw;
-    height: 100vh;
+    width: 80vw;
+    height: 85vh;
     margin: auto;
+    margin-left: 200px;
+    margin-top: 75px;
     padding: 1vh 1vw;
     position: relative;
-    background-color: white;
+    background-color: #e9fffd;
 }
 
 .avatar{
     position: absolute;
-    bottom: 5px;
-    left: 95px;
-    
+    z-index: 1;
 }
 
 .main_board i{
@@ -128,28 +153,84 @@
 }
 
 .item {
-    border: 2px solid #464545;
+    
+    border-radius: 25px;
     display: flex;
     align-items: center;
-    justify-content: center;
-    font-size: 2vw;
+    justify-content: flex-start;
     width: 100%;
     height: 100%;
     text-align: center;
+    background-color: #d9d9d9;
+    flex-direction: column;
 }
 
-/* spinner */
+.item h3{
+    font-size: 1.2vw;
+    font-family: 'Londrina Solid';
+    margin-top: 30%;
+}
+
+.tile_bar{
+    background-color: pink;
+    width: 100%;
+    height: 25%;
+    border-radius: 10px;
+    margin-top: 0;
+}
+
+
+
+.task_deck{
+    background-color: #3c3e4c;
+    position: absolute;
+    top: 33%;
+    left: 55%;
+    width: 20%;
+    height: 15%;
+    border-radius: 25px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+   
+    
+}
+
+.chance_deck{
+    background-color: #3c3e4c;
+    position: absolute;
+    top: 52%;
+    left: 55%;
+    width: 20%;
+    height: 15%;
+    border-radius: 25px;
+    border: 2px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+ 
+}
+
+.task_deck h1,
+.chance_deck h1{
+    font-family: 'Londrina Solid';
+    margin: auto;
+    color: #d9d9d9;
+}
+
+/* Spinner */
 .spinner {
     position: absolute;
     top: 50%;
-    left: 50%;
+    left: 35%;
     transform: translate(-50%, -50%);
     width: min(28vw, 280px);
     height: min(28vw, 280px);
     z-index: 10;
 }
 
-/* popup */
+/* Popup modal */
 .popup {
     position: fixed;
     top: 50%;
