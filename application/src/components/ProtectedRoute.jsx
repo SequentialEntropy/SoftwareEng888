@@ -4,6 +4,7 @@
  * @file Ensures that only authenticated users can access certain routes
  * @author Carina Jose
  * @author Amreet Dhillon 
+ * @author Genki Asahi
  * @version 1.1.0
  * @since 15-02-2025
  */
