@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 8%;
+    width: 6rem;
     padding: 20px 0;
     height: 90vh;
     position: fixed;
@@ -47,7 +47,7 @@
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
-    font-size: 30px;
+    font-size: 1.5rem;
 }
 
 /* Spinner component */
@@ -197,6 +197,15 @@
     
 }
 
+.task_btn{
+    background: none;
+    border: none;
+    font-family: 'Londrina Solid';
+    margin: auto;
+    color: #d9d9d9;
+    font-size: 2.5rem;
+}
+
 .chance_deck{
     background-color: #3c3e4c;
     position: absolute;
@@ -236,19 +245,59 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: white;
+    background: #d9d9d9;
     padding: 20px;
-    border-radius: 10px;
+    border-radius: 25px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
     text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
 }
+
+.popup_header{
+    background-color: green;
+    width: 100%;
+    height: 25%;
+    border-radius: 10px;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+
+}
+
+.popup_header h1{
+    font-family: 'Londrina Solid';
+    font-size: 1.5rem;
+    margin: auto;
+}
+
+.popup_header .exit_btn{
+    color:black;
+    font-size: 25px;
+    position: absolute;
+    right: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+    
+}
+
 
 .popup_content h2 {
+    margin-top: 25px;
     margin-bottom: 10px;
+    font-family: 'Londrina Solid';
+    
 }
 
-.popup button {
+.popup_content button {
     background: #4CAF50;
     color: white;
     border: none;
@@ -257,6 +306,6 @@
     border-radius: 5px;
 }
 
-.popup button:hover {
+.popup_content  button:hover {
     background: #45a049;
 }

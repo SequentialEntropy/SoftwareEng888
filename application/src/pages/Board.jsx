@@ -151,6 +151,8 @@ function Board() {
         BoardSquare(15, "Business School"  , "#558564"),
     ]
 
+    const [showTask, setShowTask] = useState(false);
+
     return (
         <div className={styles.game}>
             <nav>
@@ -213,7 +215,35 @@ function Board() {
                 <div />
                 <div />
                 <div className={styles.task_deck}>
-                    <h1>Task</h1>
+                    {/* Task Button */}
+                    <button className={styles.task_btn} onClick={() => setResult(true)}>Task</button>
+                    <div>  
+                {/* Popup to show task reminder */}
+                {result != null && (
+                    <div className={styles.popup}>
+                        <div className={styles.popup_header}>
+                            <h1>Task</h1>
+                            <button
+                                className={styles.exit_btn}
+                                onClick={() => setResult(null)}>x
+                            </button>
+                        </div>
+                        <div className={styles.popup_content}>
+                        {/* <h2>You are at: {result}</h2> */}
+                        <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
+                        <button 
+                            onClick={() => setResult(null)} 
+                            disabled={!canClick} 
+                            style={{ 
+                                opacity: canClick ? 1 : 0.5, 
+                                cursor: canClick ? "pointer" : "not-allowed" 
+                            }}>
+                            OK
+                        </button>
+                        </div>
+                    </div>
+                )}
+            </div>
                 </div>
                 <div className={styles.chance_deck}>
                     <h1>Chance</h1>
@@ -232,6 +262,13 @@ function Board() {
                 {/* Popup to show result */}
                 {result != null && (
                     <div className={styles.popup}>
+                        <div className={styles.popup_header}>
+                            <h1>Task</h1>
+                            <button
+                                className={styles.exit_btn}
+                                onClick={() => setResult(null)}>x
+                            </button>
+                        </div>
                         <div className={styles.popup_content}>
                         {/* <h2>You are at: {result}</h2> */}
                         <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
