@@ -147,19 +147,19 @@ function Board() {
                         <i className="bi bi-bicycle"></i>
                 </div>
                 {/* Board items representing locations on campus */}
-                {squares[3]}
-                {squares[4]}
-                {squares[5]}
-                {squares[6]}
-                {squares[7]}
                 {squares[8]}
-                {squares[2]}
-                <div />
-                <div />
-                <div />
-                <div />
                 {squares[9]}
-                {squares[1]}
+                {squares[10]}
+                {squares[11]}
+                {squares[12]}
+                {squares[13]}
+                {squares[7]}
+                <div />
+                <div />
+                <div />
+                <div />
+                {squares[14]}
+                {squares[6]}
                 <div />
                 <div>
                     <fieldset className={styles.spinner}>
@@ -190,15 +190,15 @@ function Board() {
                     <h1>Chance</h1>
         
                 </div>
-                {squares[10]}
+                {squares[15]}
+                {squares[5]}
+                {squares[4]}
+                {squares[3]}
+                {squares[2]}
+                {squares[1]}
                 <div className={styles.item} style={{backgroundColor: '#3c4c3e'}} key={0} ref={e => {squareRefs.current[0] = e}}>
                     <h3 style={{color: '#d9d9d9', fontSize: '50px', transform: 'rotate(-25deg)', margin:'auto', letterSpacing: '5px'}}>START</h3>
                 </div>
-                {squares[15]}
-                {squares[14]}
-                {squares[13]}
-                {squares[12]}
-                {squares[11]}
 
                 {/* Popup to show result */}
                 {result !== null && (
