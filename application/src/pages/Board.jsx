@@ -1,10 +1,36 @@
+/**
+ * Board.jsx - A React component for displaying a board with interactive spinning functionality.
+ * 
+ * @file Handles rendering of the board and integrates with the 'wheelofFortune' function. 
+ * @author Carina Jose 
+ * @author Amreet Dhillon 
+ * @author Yap Wen Xing 
+ * @version 1.1.0 
+ * @since 19-02-2025
+ */
+
 import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 
+/**
+ * Board Component
+ * This component represents a spinning wheel that determines the number of squares the user will proceed.
+ * @returns {JSX.Element} A board with locations.
+ */
+
 function Board() {
+    // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
+
+    // Reference to the spin button element
     const buttonRef = useRef(null);
-    const [result, setResult] = useState(null); // stores the result
+
+    // State to store the selected result
+    const [result, setResult] = useState(null); 
+
+    /**
+     * Initialises the spinning wheel effect
+     */
 
     useEffect(() => {
         if (spinnerRef.current && buttonRef.current) {
@@ -29,6 +55,7 @@ function Board() {
                 
             </nav>
             <div className={styles.main_board}>
+                {/* Board items representing locations on campus */}
                 <div className={styles.item}>
                     <div className={styles.tile_bar} style={{backgroundColor: '#7f2982'}}>
                       <h3>Peter Chalk</h3>
@@ -142,7 +169,7 @@ function Board() {
                     </div>
                 </div>
 
-                {/* popup to show result */}
+                {/* Popup to show result */}
                 {result !== null && (
                     <div className={styles.popup}>
                         <div className={styles.popup_content}>
@@ -156,15 +183,15 @@ function Board() {
     );
 }
 
-//function for spinner to spin and show result
+// Function for spinner to spin and show result
 function wheelOfFortune(wheel, button, setResult) {
     let animation;
     let previousEndDegree = 0;
     const totalSections = 12; // 12 sections in the wheel 
-    const sectionSize = 360 / totalSections; // each section is 30 degrees
-    const pointerOffset = 15; // adjust to align with the pointer
+    const sectionSize = 360 / totalSections; // Each section is 30 degrees
+    const pointerOffset = 15; // Adjust to align with the pointer
 
-    // exact number order on the spinner
+    // Exact number order on the spinner
     const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3];
 
     button.addEventListener("click", () => {
@@ -175,7 +202,7 @@ function wheelOfFortune(wheel, button, setResult) {
         const randomAdditionalDegrees = Math.random() * 360 + 1800; 
         const newEndDegree = previousEndDegree + randomAdditionalDegrees;
 
-        // animate rotation
+        // Animate rotation
         animation = wheel.animate(
             [
                 { transform: `rotate(${previousEndDegree}deg)` },
@@ -189,19 +216,21 @@ function wheelOfFortune(wheel, button, setResult) {
         );
 
         animation.onfinish = () => {
-            // normalize the final rotation angle 
+            // Normalize the final rotation angle 
             let finalAngle = newEndDegree % 360;
 
-            // adjust to align with the top pointer correctly
+            // Adjust to align with the top pointer correctly
             let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
 
-            // get the correct number from the order listed 
+            // Get the correct number from the order listed 
             let landedNumber = numberOrder[landedIndex];
 
-            setResult(landedNumber); // display result
+            // Display result
+            setResult(landedNumber); 
         };
 
-        previousEndDegree = newEndDegree; // store last rotation
+        // Store last rotation
+        previousEndDegree = newEndDegree; 
     });
 }
 

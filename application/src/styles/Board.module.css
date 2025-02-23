@@ -1,3 +1,15 @@
+/*
+* Board.module.css - Stylesheet for the Board component 
+* 
+* @file Defines the styles for the sidebar, board layout, spinner, and popups 
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @author Yap Wen Xing 
+* @version 1.1.0 
+* @since 19-02-2025
+*/
+
+/* Sidebar Navigation */
 .game{
     background-color: #e9fffd;
     background-size: cover;
@@ -38,6 +50,7 @@
     font-size: 30px;
 }
 
+/* Spinner component */
 :where(.spinner) {
     --_items: 12;
     all: unset;
@@ -114,7 +127,7 @@
 }
 
 
-
+/* Main board layout */
 .main_board {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -208,7 +221,7 @@
     color: #d9d9d9;
 }
 
-/* spinner */
+/* Spinner */
 .spinner {
     position: absolute;
     top: 50%;
@@ -219,7 +232,7 @@
     z-index: 10;
 }
 
-/* popup */
+/* Popup modal */
 .popup {
     position: fixed;
     top: 50%;
