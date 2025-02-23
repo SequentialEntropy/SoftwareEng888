@@ -20,4 +20,14 @@ Users can register to the game using their email address and creating a username
 
 ## Structure
 
+Frontend: Built using Vite and React, responsible for the user interface and interactions.
+
+Backend: Developed with Python (Django) to handle authentication, task verification, and leaderboard updates.
+
+Database: Stores user data, completed tasks, and leaderboard rankings.
+
+QR Code System: Used to verify task completion by scanning codes at designated locations.
+
+This modular approach ensures scalability and ease of maintenance.
+
 ## Testing

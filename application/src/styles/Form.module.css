@@ -1,3 +1,15 @@
+/*
+* Form.module.css - Stylesheet for the Form component 
+*
+* @file Defines the styles for user login and registration form including the layout, buttons, and typography 
+* @author Carina Jose
+* @author Amreet Dhillon 
+* @version 1.1.0
+* @since 15-02-2025
+*
+*/
+
+/* Main form container */
 .main_form {
     background-image: url('../assets/background.jpg');
     background-repeat: no-repeat;
@@ -9,6 +21,7 @@
     
 }
 
+/* Login Section */
 .login{
     display: flex;
     justify-content: center;
@@ -18,6 +31,7 @@
 
 }
 
+/* Header Section */
 .header{
    
     display: flex;
@@ -45,6 +59,7 @@
     margin-left: 50px;
 }
 
+/* Header buttons */
 .header_btn_login{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -74,6 +89,7 @@
     background-color: #688089;
 }
 
+/* Login container */
 .login_container {
     color: #FAFEFF !important;
     display: flex !important;
@@ -105,6 +121,7 @@
     margin: 5%;
 }
 
+/* Form fields */
 .field {
     margin-top: 5%;
     margin-bottom: 5%;
@@ -112,6 +129,7 @@
     height: 7vh;
 }
 
+/* Login button */
 .login_btn {
     border-radius: 10px;
     border-width: 0;

@@ -1,20 +1,54 @@
+
+/**
+ * Home.jsx -  A React component for rendering the main dashboard. 
+ * 
+ * @file Handles user dashboard display, including user details, leaderboard, and navigation
+ * @author Carina Jose 
+ * @author Amreet Dhillon 
+ * @version 1.1.0
+ * @since 15-02-2025
+ */
+
 import { useState, useEffect } from "react"
 import api from "../api"
 import styles from "../styles/Dashboard.module.css"
 
+/**
+ * Home Component 
+ * 
+ * This component represents the user dashboard.
+ * It fetches user profiles and details and displays navigation options, leaderboard, and progress. 
+ * 
+ * @component 
+ * @returns {JSX.Element} The user dashboard UI
+ */
+
 function Home() {
+    // State to store user profiles
     const [userProfiles, setUserProfiles] = useState([])
+
+    // State to store the current user 
     const [user, setUser] = useState({
         username: null
     })
+
+    // State for storing content and title 
     const [content, setContent] = useState("")
     const [title, setTitle] = useState("")
+
+    /**
+     * Fetches user details and profiles when the component initialises 
+     */
 
     useEffect(() => {
         document.title = "Dashboard"
         getUserProfiles()
         getUserDetails()
     }, [])
+
+    /**
+     * Fetches logged-in user details from the API 
+     */
 
     const getUserDetails = () => {
         api
@@ -23,6 +57,10 @@ function Home() {
             .then(data => {setUser(data); console.log(data)})
             .catch(err => alert(err))
     }
+
+    /**
+     * Fetches user profiles from the API 
+     */
 
     const getUserProfiles = () => {
         api
@@ -33,8 +71,10 @@ function Home() {
     }
 
     return <div className={styles.main_dashboard}>
-        {/* <h1 class="heading">Welcome back {{ user.username }}</h1> */}
+        {/* Welcome message */}
         <h1 className={styles.heading}>Welcome back {user.username}</h1>
+
+        {/* Sidebar navigation */}
         <nav>
             <div className={styles.sidebar} style={{marginLeft: "20px"}}>
                 <div className={styles.logoContainer}>
@@ -50,11 +90,14 @@ function Home() {
             
         </nav>
 
+        {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
                 <h1>Level 1</h1>
                 <h2>Innovation Centre</h2>
             </div>
+
+            {/* Leaderboard section */}
             <div className={styles.item}>
                 <h1>Leaderboard</h1>
                 <div className={styles.profileItem}style={{backgroundColor: "#EA526F"}}>
@@ -77,6 +120,8 @@ function Home() {
                 </div>
                 <h3>You are at: Position #12</h3>
             </div>
+
+            {/* Progress bar */}
             <div className={styles.item}>
                 <progress value="50" max="100" className={styles.progressBar}></progress>
             </div>
