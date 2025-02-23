@@ -4,8 +4,10 @@
  * @file Handles authentication form submission: login & register
  * @author Carina Jose
  * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
  * @version 1.1.0
- * @since 15-02-2025
+ * @since 23-02-2025
  */
 
 import { useState } from "react";
@@ -31,6 +33,8 @@ function Form({ route, method }) {
 
     // State for storing the password input
     const [password, setPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
+    const [passwordError, setPasswordError] = useState("");
 
     // State to indicate if a request is loading
     const [loading, setLoading] = useState(false);
@@ -55,6 +59,15 @@ function Form({ route, method }) {
         setLoading(true);
         e.preventDefault();
 
+        // Password confirmation validation for registration
+        if (method === "register" && password !== confirmPassword) {
+            setPasswordError("Passwords do not match.");
+            setLoading(false);
+            return;
+        } else {
+            setPasswordError("");
+        }
+
         try {
             const res = await api.post(route, { username, password });
 
@@ -74,74 +87,50 @@ function Form({ route, method }) {
         }
     };
 
-    // return (
-    //     <form onSubmit={handleSubmit} className={styles.form}>
-    //         
-    //         <h2>{name}</h2>
-
-    //         {/* Username input field */}
-    //         <label>
-    //             Username:
-    //             <input
-    //                 type="text"
-    //                 value={username}
-    //                 onChange={(e) => setUsername(e.target.value)}
-    //                 required
-    //             />
-    //         </label>
-
-    //         {/* Password input field */}
-    //         <label>
-    //             Password:
-    //             <input
-    //                 type="password"
-    //                 value={password}
-    //                 onChange={(e) => setPassword(e.target.value)}
-    //                 required
-    //             />
-    //         </label>
-
-    //         {/* Submit button */}
-    //         <button type="submit" disabled={loading}>
-    //             {loading ? "Processing..." : name}
-    //         </button>
-    //     </form>
-    // );
-
     return (
         <div className={styles.main_form}>
-
+    
+            {/* Header section */}
             <div className={styles.header}>
                 <h1 className={styles.logo}>888</h1>
                 <h1 className={styles.heading}>cliMate</h1>
                 <a className={styles.header_btn_login}>Login</a>
                 <a className={styles.header_btn_sign}>Sign Up</a>
             </div>
-
-            
-
+    
             <div className={styles.login}>
-            
                 <div className={styles.login_container}>
                     {/* Display form title based on method (Login/Register) */}
                     <h2>{name}</h2>
-                    
+    
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             {/* Username input field */}
-                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" />
-
+                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" required />
+    
                             {/* Password input field */}
-                            <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" />
+                            <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+    
+                            {/* Confirm Password input field */}
+                            {method === "register" && (
+                                <>
+                                    <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
+                                    
+                                    {/* Display password mismatch error */}
+                                    {passwordError && <p style={{ color: "red" }}>{passwordError}</p>}
+                                </>
+                            )}
                         </div>
-
+    
                         {/* Submit button */}
-                        <button type="submit" className={styles.login_btn}>{name}</button>
+                        <button type="submit" className={styles.login_btn} disabled={loading}>
+                            {loading ? "Processing..." : name}
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
     )
-}
-
-export default Form;
+                            }
+    
+    export default Form;
