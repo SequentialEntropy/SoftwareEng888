@@ -14,9 +14,9 @@ import Register from "./pages/Register"
 import Home from "./pages/Home"
 import NotFound from "./pages/NotFound"
 import Board from "./pages/Board"
+import Profile from "./pages/Profile"
 import ProtectedRoute from "./components/ProtectedRoute"
-<<<<<<< Updated upstream
-=======
+import Landing from "./pages/Landing"
 
 /**
  * Logout Component 
@@ -26,7 +26,6 @@ import ProtectedRoute from "./components/ProtectedRoute"
  * @component
  * @returns {JSX.Element} A navigation redirection to the login page
  */
->>>>>>> Stashed changes
 
 function Logout() {
     localStorage.clear()
@@ -61,13 +60,15 @@ function App() {
         <BrowserRouter>
             <Routes>
                 {/* Protected home route */}
-                <Route path="/" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+                <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
 
                 {/* Public routes */}
+                <Route path="/" element={<Landing />}/>  
                 <Route path="/login" element={<Login />}/>
                 <Route path="/logout" element={<Logout />}/>
                 <Route path="/register" element={<RegisterAndLogout />}/>
                 <Route path="/board" element={<Board />}/>
+                <Route path="/profile" element={<Profile />}/>
 
                 {/* Catch-all route for 404 pages */}
                 <Route path="*" element={<NotFound />}/>
