@@ -40,9 +40,9 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 8%;
+    width: 6rem;
     padding: 20px 0;
-    height: 90vh;
+    height: 90%;
     position: fixed;
     border-radius: 30px;
     top: 5.5%;
@@ -57,6 +57,12 @@
 
 .sidebar a{
     margin-top: 20%;
+}
+
+.sidebar h2{
+    color: #85AEB3;
+    font-family: 'Hammersmith One';
+    font-size: 1.5rem;
 }
 
 /* Logo container */
@@ -79,14 +85,16 @@
     width: 88vw;
     height: 87vh;
     display: grid;
-    gap: 1.5vw;
+    row-gap: 0px;
     padding: 1vw;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: auto;
+    grid-template-rows: 1fr 1fr 2fr 1fr 1fr;
     grid-template-areas:
         "hero hero hero hero aside2 aside2"
         "hero hero hero hero aside2 aside2"
         "progress progress progress progress aside2 aside2"
+        "aside4 aside4 aside4 aside5 aside5 aside5"
+        "aside4 aside4 aside4 aside5 aside5 aside5"
         "aside4 aside4 aside4 aside5 aside5 aside5"
         "aside4 aside4 aside4 aside5 aside5 aside5 ";
     margin-left: 10%;
@@ -104,7 +112,7 @@
 
 .grid .item:nth-child(1) {
     grid-area: hero;
-    background-image: url("https://downtowndetroit.org/wp-content/uploads/Grand-Circus-Park-747x345.jpg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../assets/tile1.jpg');
     background-size:cover;
     background-repeat: no-repeat;
     align-content: center;
