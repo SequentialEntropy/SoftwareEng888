@@ -92,8 +92,11 @@ function Form({ route, method }) {
     
             {/* Header section */}
             <div className={styles.header}>
+            <a className={styles.logo} href="/">888</a>
                 <h1 className={styles.logo}>888</h1>
                 <h1 className={styles.heading}>cliMate</h1>
+                <a className={styles.header_btn_login} href="login">Login</a>
+                <a className={styles.header_btn_sign} href="Register">Sign Up</a>
                 <a className={styles.header_btn_login}>Login</a>
                 <a className={styles.header_btn_sign}>Sign Up</a>
             </div>

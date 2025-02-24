@@ -99,22 +99,22 @@ function Home() {
 
             {/* Leaderboard section */}
             <div className={styles.item}>
-                <h1>Leaderboard</h1>
+                <h1 style={{marginTop: "20px"}}>Leaderboard</h1>
                 <div className={styles.profileItem}style={{backgroundColor: "#EA526F"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username1</div>
                 </div>
                 <div className={styles.profileItem} style={{backgroundColor: "#7F95D1"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username2</div>
                 </div>
                 <div className={styles.profileItem} style={{backgroundColor:"#558564"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username3</div>
                 </div>
@@ -128,8 +128,19 @@ function Home() {
             <div className={styles.item}>
                 <h1>Map</h1>
             </div>
+
+            {/* Points section */}
             <div className={styles.item}>
-                <h1>Rewards</h1>
+                <h1 style={{marginTop: "20px", fontSize:"30px"}}>Your points</h1>
+                <div className={styles.points_container}>
+                    <div className={styles.pointsItem} style={{marginLeft:"40px", alignItems:"center", height:"70%"}}>
+                        <div className={styles.pointsIcon}>
+                            <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
+                        </div>
+                        <div style={{fontSize: "40px", textAlign:"center"}}>35</div>
+                    </div>
+                </div>
+            
             </div>
         </div>
     </div>
