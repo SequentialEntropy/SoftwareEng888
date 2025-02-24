@@ -3,9 +3,9 @@ import styles from "../styles/Landing.module.css";
 function Landing() {
     return <div className={styles.landing_page}>
         <div className={styles.landing_header}>
-            <a className={styles.logo} href="/">888</a>
-            <a className={styles.login_btn} href="login">Login</a>
-            <a className={styles.signup_btn} href="Register">Sign Up</a>
+            <h1 className={styles.logo}>888</h1>
+            <a className={styles.login_btn}>Login</a>
+            <a className={styles.signup_btn}>Sign Up</a>
         </div>
         <div className={styles.landing_main}>
             <h1 className={styles.title}>cliMate</h1>

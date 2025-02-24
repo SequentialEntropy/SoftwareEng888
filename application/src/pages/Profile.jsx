@@ -90,7 +90,7 @@ function Board() {
                         onClick={() => setShowPopup(false)}>x
                         </button>
                     </div>
-                </div>
+                    </div>
                 )}
             </div>
         </div>
