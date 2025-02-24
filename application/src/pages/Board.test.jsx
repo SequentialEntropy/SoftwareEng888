@@ -57,6 +57,16 @@ describe("Board Component", () => {
      /**
      * Test if the spin animation triggers when clicked
      */
+     test("Clicking spin triggers animation", async () => {
+        render(<Board />);
+        const spinButton = await screen.findByText("SPIN");
+
+        await act(async () => {
+            fireEvent.click(spinButton);
+        });
+
+        expect(HTMLElement.prototype.animate).toHaveBeenCalled();
+    });
 
      /**
      * Test if completion of task hides popup
