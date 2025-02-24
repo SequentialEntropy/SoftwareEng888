@@ -23,8 +23,10 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run mitigrations
-        run: python manage.py migrate
+      - name: Run migrations
+        run: | 
+          python manage.py migrate
 
       - name: Run tests
-        run: python manage.py test accounts
+        run: |
+          python manage.py test accounts
