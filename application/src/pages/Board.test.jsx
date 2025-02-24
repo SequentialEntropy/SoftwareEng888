@@ -45,4 +45,20 @@ describe("Board Component", () => {
         expect(screen.getByText("cliMate")).toBeInTheDocument();
         expect(screen.getByText("SPIN")).toBeInTheDocument();
     });
+
+    /**
+     * Test if the spin button is enabled in correct location
+     */
+
+     /**
+     * Test if the spin button is disabled in wrong location
+     */
+
+     /**
+     * Test if the spin animation triggers when clicked
+     */
+
+     /**
+     * Test if completion of task hides popup
+     */
 });
