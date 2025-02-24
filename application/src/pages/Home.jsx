@@ -76,7 +76,7 @@ function Home() {
 
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
-        <h1 className={styles.heading}>Welcome back {user.username} - Your score: {user.usergamestats.score}</h1>
+        <h1 className={styles.heading}>Welcome back {user.username}</h1>
 
         {/* Sidebar navigation */}
         <nav>
@@ -141,7 +141,7 @@ function Home() {
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
                         </div>
-                        <div style={{fontSize: "40px", textAlign:"center"}}>35</div>
+                        <div style={{fontSize: "40px", textAlign:"center"}}>{user.usergamestats.score}</div>
                     </div>
                 </div>
             
