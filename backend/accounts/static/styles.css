@@ -1,3 +1,14 @@
+/*
+* styles.css - Global stylesheet for the application
+*
+* @file Defines styles for the login page, background, and form elements
+* @author Carina Jose
+* @author Amreet Dhillon
+* @version 1.0.0
+* @since 20-02-2025
+*/
+
+/* Page Background Styling */
 body {
     background-image: url("https://th.bing.com/th/id/OIG1.oiOPzfB3GgXEPf..eaQD?w=1792&h=1024&rs=1&pid=ImgDetMain");
     background-repeat: no-repeat;
@@ -10,6 +21,7 @@ body {
     align-items: center;
 }
 
+/* Login Containter Styling */
 .login-container{
     color: green !important;
     display: flex !important;
@@ -28,8 +40,7 @@ body {
     font-size: 34px;
 }
 
-
-
+/* Form Styling */
 .login-container form{
     display: flex;
     flex-direction: column;
@@ -41,11 +52,13 @@ body {
     margin: 5%;
 }
 
+/* Input Field Styling */
 .form-control{
     margin-top: 10%;
     margin-bottom: 10%;
 }
 
+/* Login Button */
 .login-btn{
     border-radius: 10px;
     border-width: 0;
@@ -53,7 +66,6 @@ body {
     padding: 3%;
     width: 100%;
     color: white;
-
 }
 
 .login-btn:hover{
