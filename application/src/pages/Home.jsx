@@ -29,7 +29,11 @@ function Home() {
 
     // State to store the current user 
     const [user, setUser] = useState({
-        username: null
+        username: null,
+        usergamestats: {
+            current_square: 0,
+            score: 0,
+        }
     })
 
     // State for storing content and title 
@@ -72,7 +76,7 @@ function Home() {
 
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
-        <h1 className={styles.heading}>Welcome back {user.username}</h1>
+        <h1 className={styles.heading}>Welcome back {user.username} - Your score: {user.usergamestats.score}</h1>
 
         {/* Sidebar navigation */}
         <nav>
