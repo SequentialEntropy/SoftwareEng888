@@ -1,3 +1,14 @@
+/** 
+* Landing.module.css - Stylesheet for the Landing page
+* 
+* @file Defines styles for the landing page layout
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.0.0 
+* @since 23-02-2025
+*/
+
+/* Landing Page Layout */
 .landing_page{
     background-image: url('../assets/background.jpg');
     background-repeat: no-repeat;
@@ -8,6 +19,7 @@
     position: absolute;
 }
 
+/* Landing Page Header */
 .landing_header{
     display: flex;
     justify-content: center;
@@ -16,6 +28,7 @@
     height: 90px; 
 }
 
+/* Logo Styling */
 .logo{
     position: absolute;
     left: 25px;
@@ -25,6 +38,7 @@
     margin-left: 50px;
 }
 
+/* Login Button */
 .login_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -36,6 +50,8 @@
     margin-top: 20px;
 
 }
+
+/* Signup Button */
 .signup_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -54,6 +70,7 @@
     background-color: #688089;
 }
 
+/* Landing Main Section */
 .landing_main{
     margin: auto;
     margin-top: 10%;
@@ -67,6 +84,7 @@
     
 }
 
+/* Title Text */
 .title{
     font-family: 'Hammersmith One';
     font-size: 90px;
@@ -75,6 +93,7 @@
 
 }
 
+/* Slogan Styling */
 .slogan{
     font-family: 'Londrina Solid';
     font-size: 35px;
@@ -84,6 +103,7 @@
  
 }
 
+/* Start Button */
 .start_btn{
     position: relative;
     margin-top: 50px;
