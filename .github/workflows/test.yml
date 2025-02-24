@@ -16,15 +16,19 @@ jobs:
         uses: actions/checkout@v2  
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
-          python-version: 3.9
+          python-version: 3.11
 
       - name: Install dependencies
         run: pip install -r requirements.txt
 
-      - name: Run mitigrations
-        run: python manage.py migrate
+      - name: Run migrations
+        run: | 
+          cd backend
+          python manage.py migrate
 
       - name: Run tests
-        run: python manage.py test accounts
+        run: |
+          cd backend
+          python manage.py test accounts
