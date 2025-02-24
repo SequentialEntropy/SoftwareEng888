@@ -23,6 +23,8 @@
     font-family: 'Chango';
     color: #4e5e6a;
     margin-left: 50px;
+    text-decoration: none;
+    font-size: 2.5rem;
 }
 
 .login_btn{

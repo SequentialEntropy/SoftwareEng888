@@ -228,6 +228,71 @@
     color: #d9d9d9;
 }
 
+/* Chance Popup */
+
+.chance_popup{
+   
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: #d9d9d9;
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+    
+}
+
+.chance_header{
+    background-color: green;
+    width: 100%;
+    height: 25%;
+    border-radius: 10px;
+    margin-top: 0;
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: row;
+    text-align: center;
+    align-items: center;
+
+}
+
+.chance_header h1{
+    font-family: 'Londrina Solid';
+    font-size: 1.5rem;
+    margin: auto;
+    color: black;
+
+}
+
+.chance_header button{
+    color:black;
+    font-size: 25px;
+    position: absolute;
+    right: 20px;
+    padding: 0;
+    border: none;
+    background: none;
+
+}
+
+.chance_content h2{
+    margin-top: 25px;
+    margin-bottom: 10px;
+    font-family: 'Londrina Solid';
+    padding: 20px;
+}
+
+
+
 /* Spinner */
 .spinner {
     position: absolute;
@@ -239,7 +304,9 @@
     z-index: 10;
 }
 
-/* Popup modal */
+
+
+/* Task Popup */
 .popup {
     position: fixed;
     top: 50%;
@@ -308,4 +375,106 @@
 
 .popup_content  button:hover {
     background: #45a049;
+}
+
+/* How To Play Button */
+.how_to_play_btn {
+    position: fixed;
+    top: 20px; 
+    right: 25px; 
+    width: 60px; 
+    height: 60px; 
+    background: #D9D9D9;
+    opacity:100%;
+    font-family: "Inter", serif;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-size: 18px;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.how_to_play_btn:hover {
+    background-color: #9f9d9d; 
+    transform: scale(1.1); 
+}
+
+.how_to_play_btn:active {
+    transform: scale(0.95); /* Click effect */
+}
+
+.how_to_play_container2 {
+    background-color: #D9D9D9;
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center !important;
+    align-items: center !important;
+    text-align: center !important;
+    padding: 5%;
+    width: 23vw;
+    height: 40vh;
+    border-radius: 25px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+}
+
+.exit_btn {
+    color:black;
+    position: fixed;
+    top: -5px; 
+    right: 10px; 
+    width: 30px; 
+    height: 30px; 
+    background: #3C3E4C;
+    opacity:100%;
+    font-family: "Inter", serif;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    font-size: 20px;
+    margin-top: 10px;
+    cursor: pointer;
+    text-align: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+.how_to_play_container3 {
+    background-color: #3C3E4C;
+    width:178%;
+    height:70%;
+    border-radius: 10px;
+    top:0;
+}
+
+.how_to_play_title {
+    color: white;
+    font-family: "Londrina Solid";
+    margin-top: 8px;
+    width: 100%;
+}
+
+.how_to_play_instructions {
+    color: black;
+    font-family: "Londrina Solid";
+    margin-top: 20px;
+    font-size: 25px;
+}
+
+.overlay {
+    position: fixed;
+    inset: 0; 
+    background: rgba(0, 0, 0, 0.717); 
+    display: flex;
+    justify-content: center;
+    align-items: start; 
+    z-index: 50; 
 }
