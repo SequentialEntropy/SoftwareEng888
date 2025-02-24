@@ -40,6 +40,10 @@ function Board() {
     const [userLocation, setUserLocation] = useState(null);
     const [canClick, setCanClick] = useState(true);
     const [taskComplete, setTaskComplete] = useState(true);
+    
+    {/*Chance card activatio*/}
+    const [getChance, setGetChance] = useState(null);
+
 
     /**
      * Initialises the spinning wheel effect
@@ -114,6 +118,14 @@ function Board() {
 
             setResult(landedNumber); // display result
 
+            if(landedNumber == 6){
+                setGetChance(true);
+                setShowChance(true);
+            } else{
+                setGetChance(false);
+                setShowChance(false);
+            }
+
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
             setTaskComplete(false)
             checkLocation()
@@ -129,6 +141,7 @@ function Board() {
     const completeTask =() => {
         setResult(null)
         setTaskComplete(true)
+        setGetChance(false)
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
@@ -159,7 +172,9 @@ function Board() {
         BoardSquare(15, "Business School"  , "#558564"),
     ]
 
-    const [showTask, setShowTask] = useState(false);
+   
+    const [showChance, setShowChance] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     return (
         <div className={styles.game}>
@@ -247,6 +262,7 @@ function Board() {
                         <button 
                             onClick={() => setResult(null)} 
                             disabled={!canClick} 
+    
                             style={{ 
                                 opacity: canClick ? 1 : 0.5, 
                                 cursor: canClick ? "pointer" : "not-allowed" 
@@ -258,8 +274,33 @@ function Board() {
                 )}
             </div>
                 </div>
+
                 <div className={styles.chance_deck}>
-                    <h1>Chance</h1>
+                    {/* Chance Card Button */}
+
+                    <button className={styles.task_btn} onClick={() => setShowChance(true)} disabled = {!getChance}>Chance</button>
+
+                    {/* Chance Card Popup - only available after landing on 6 */}
+
+
+                    {getChance && showChance && (
+                        <div className = {styles.chance_popup}>
+                            <div className = {styles.chance_header}> 
+                                <h1>Chance</h1>
+                                <button
+                                    className={styles.exit_btn}
+                                    onClick={() => setShowChance(false)}>x
+                                </button>
+                            </div>
+                            <div className={styles.chance_content}>
+                                <h2>+5 Points!</h2>
+                            </div>
+                            
+                        </div>
+
+                    )}
+                    
+                    
         
                 </div>
                 {squares[15]}
@@ -268,7 +309,7 @@ function Board() {
                 {squares[3]}
                 {squares[2]}
                 {squares[1]}
-                <div className={styles.item} style={{backgroundColor: '#3c4c3e'}} key={0} ref={e => {squareRefs.current[0] = e}}>
+                <div className={styles.item} style={{backgroundColor: '#3c3c4c'}} key={0} ref={e => {squareRefs.current[0] = e}}>
                     <h3 style={{color: '#d9d9d9', fontSize: '50px', transform: 'rotate(-25deg)', margin:'auto', letterSpacing: '5px'}}>START</h3>
                 </div>
                 <div>  
@@ -299,7 +340,29 @@ function Board() {
                 )}
             </div>
             </div>
+             <div>
+
+                {/* How to play popup */}
+                <button className={styles.how_to_play_btn} onClick={() => setShowPopup(true)}>?</button>
+    
+                {showPopup && (
+                    <div className={styles.overlay}>
+                        <div className={styles.how_to_play_container2}>
+                            <div className={styles.how_to_play_container3}>
+                                <h2 className={styles.how_to_play_title}>How to Play</h2>
+                            </div>
+                            <p className={styles.how_to_play_instructions}>1. Spin the wheel <br></br>2. Do task at specified location <br></br>3. Scan QR to verify completion <br></br> 4. Get trees</p>
+                            <button
+                            className={styles.exit_btn}
+                            onClick={() => setShowPopup(false)}>x
+                            </button>
+                        </div>
+                    </div>
+                )}
+            </div>
         </div>
+
+        
     )
 }
 
