@@ -79,3 +79,29 @@ Database: Stores user data, completed tasks, and leaderboard rankings.
 QR Code System: Used to verify task completion by scanning codes at designated locations.
 
 This modular approach ensures scalability and ease of maintenance.
+
+## Testing
+To run the tests, this project has implemented the use of GitHub actions to automate the tests.
+
+The section below guides you through the manual testing for Django functionalities via Python:
+1. If you currently are at the root directory (SoftwareEng888), use the following command to navigate to the backend directory:
+   ```sh
+   cd backend
+   ```
+2. Install the required dependencies:
+   ```sh
+   pip install -r requirements.txt
+   ```
+3. Apply database migrations:
+   ```sh
+   python3 manage.py migrate
+   ```
+4. Run the tests:
+   ```sh
+   python3 manage.py test accounts
+   ```
+
+The `tests.py` file under `backend/accounts` tests the following:
+1. Login functionality: correct login template, login success, login failure
+2. Password reset functionality: correct password reset template, password reset success, password reset failure
+3. Signup functionality: correct signup template, signup success, signup failure
