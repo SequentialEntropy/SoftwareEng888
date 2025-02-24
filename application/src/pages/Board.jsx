@@ -38,7 +38,8 @@ function Board() {
     const [avatarPos, setAvatarPos] = useState([0, 0])
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
-    const [canClick, setCanClick] = useState(false);
+    const [canClick, setCanClick] = useState(true);
+    const [taskComplete, setTaskComplete] = useState(true);
 
     /**
      * Initialises the spinning wheel effect
@@ -60,10 +61,9 @@ function Board() {
                     const threshold = 0.1; // Allow slight variation
                     if (
                         Math.abs(latitude - allowedLatitude) < threshold &&
-                        Math.abs(longitude - allowedLongitude) < threshold
-                        || true) {
+                        Math.abs(longitude - allowedLongitude) < threshold) {
                         setCanClick(true);
-                    } else {
+                    } else {    
                         setCanClick(false);
                         setError("You're not in the required location.");
                     }
@@ -115,13 +115,21 @@ function Board() {
             setResult(landedNumber); // display result
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
+            setTaskComplete(false)
             checkLocation()
         };
 
         setAnimation(newAnimation)
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
-
+    const taskFunction = () => {
+        checkLocation()
+        setResult(true)
+    }
+    const completeTask =() => {
+        setResult(null)
+        setTaskComplete(true)
+    }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
             <div className={styles.item} key={id} ref={e => {squareRefs.current[id] = e}}>
@@ -209,14 +217,19 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={wheelOfFortune} type="button">SPIN</button>
+                        <button onClick={wheelOfFortune} type="button"
+                        disabled={!taskComplete} 
+                        style={{ 
+                            opacity: canClick ? 1 : 0.5, 
+                            cursor: canClick ? "pointer" : "not-allowed" 
+                        }}>SPIN</button>
                     </fieldset>
                 </div>
                 <div />
                 <div />
                 <div className={styles.task_deck}>
                     {/* Task Button */}
-                    <button className={styles.task_btn} onClick={() => setResult(true)}>Task</button>
+                    <button className={styles.task_btn} onClick={() => taskFunction()}>Task</button>
                     <div>  
                 {/* Popup to show task reminder */}
                 {result != null && (
@@ -273,7 +286,7 @@ function Board() {
                         {/* <h2>You are at: {result}</h2> */}
                         <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
                         <button 
-                            onClick={() => setResult(null)} 
+                            onClick={() => completeTask()} 
                             disabled={!canClick} 
                             style={{ 
                                 opacity: canClick ? 1 : 0.5, 
