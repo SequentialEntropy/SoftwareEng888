@@ -17,7 +17,6 @@ import Board from "./pages/Board"
 import Profile from "./pages/Profile"
 import ProtectedRoute from "./components/ProtectedRoute"
 import Landing from "./pages/Landing"
-import Map from "./pages/Map"
 
 /**
  * Logout Component 
@@ -70,7 +69,6 @@ function App() {
                 <Route path="/register" element={<RegisterAndLogout />}/>
                 <Route path="/board" element={<Board />}/>
                 <Route path="/profile" element={<Profile />}/>
-                <Route path="/map" element={<Map />}/>
 
                 {/* Catch-all route for 404 pages */}
                 <Route path="*" element={<NotFound />}/>
