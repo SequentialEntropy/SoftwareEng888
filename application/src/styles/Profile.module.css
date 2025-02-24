@@ -1,20 +1,8 @@
-/**
-* Profile.module.css - Stylesheet for the Profile page
-*
-* @file Defines styles for the profile layout, sidebar, popups, and user interaction
-* @author Carina Jose 
-* @author Amreet Dhillon 
-* @version 1.0.0 
-* @since 22-02-2025
-*/
-
-/* Main Profile Page Layout */
 .main_profile {
     min-height: 100vh;
     background-color: #C5E4E1;
 }
 
-/* Sidebar Navigation */
 .sidebar{
     background-color:#3C3E4C;
     display: flex;
@@ -41,7 +29,6 @@
     margin-top: 20%;
 }
 
-/* Logo Styling */
 .logoContainer {
     width: 100%;
     display: flex;
@@ -56,7 +43,6 @@
     justify-content: flex-start;
 }
 
-/* How to Play Button */
 .how_to_play_btn {
     position: fixed;
     top: 20px; 
@@ -87,7 +73,6 @@
     transform: scale(0.95); /* Click effect */
 }
 
-/* How to Play popup */
 .how_to_play_container2 {
     background-color: #D9D9D9;
     display: flex !important;
@@ -149,7 +134,7 @@
     font-size: 25px;
 }
 
-/* Profile Container */
+
 .profile_container {
     color: #FAFEFF !important;
     display: flex !important;
@@ -169,6 +154,8 @@
     transform: translate(-50%, -50%);
     
 }
+
+
 
 .profile_container button {
     margin: 5%;
@@ -226,7 +213,6 @@
     margin-bottom: 10%;
 }
 
-/* Logout Button */
 .logout_btn {
     background: #1e1f28;
     opacity:100%;
@@ -244,7 +230,6 @@
     background: #47484f;
 }
 
-/* Reset Password */
 .reset_password {
     font-size: 18px !important;
     text-align: center !important;
@@ -260,7 +245,6 @@
     text-decoration: none;
 }
 
-/* Overlay Background */
 .overlay {
     position: fixed;
     inset: 0; 

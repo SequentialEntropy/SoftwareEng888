@@ -1,19 +1,8 @@
-/*
- * board.css - Stylesheet for the Board component
- *
- * @file Defines styles for the board layout, sidebar, spinner, and interactive elements
- * @author Carina Jose
- * @author Amreet Dhillon
- * @version 1.1.0
- * @since 15-02-2025
- */
-
-/* General Page Styling */
 body{
     background-color: white;
+   
 }
 
-/* Sidebar Navigation */
 .sidebar{
     background-color: #0c3412;
     display: flex;
@@ -29,13 +18,13 @@ body{
 
 .sidebar i{
     color: #96C88E;
+
 }
 
 .sidebar a{
     margin-top: 20%;
 }
 
-/* Spinner Component */
 :where(.spinner) {
     --_items: 12;
     all: unset;
@@ -83,6 +72,9 @@ body{
         align-content: center;
         aspect-ratio: 1 / calc(2 * tan(180deg / var(--_items)));
         background: hsl(calc(360deg / var(--_items) * calc(var(--_idx))), 100%, 75%);
+        /* background: hsl(calc(40deg + (var(--_idx) * 8deg)), 88%, 75%); */
+
+
         clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
         display: grid;
         font-size: 5cqi;
@@ -115,7 +107,8 @@ body{
     }
   }
 
-/* Main Board Layout */
+
+
 .main-board {
     display: grid;
     grid-template-columns: repeat(6, 1fr);
@@ -128,7 +121,6 @@ body{
     position: relative;
 }
 
-/* Board Items */
 .item {
     border: 2px solid #464545;
     display: flex;
@@ -140,7 +132,6 @@ body{
     text-align: center;
 }
 
-/* Spinner */
 .spinner {
     position: absolute;
     top: 50%;
