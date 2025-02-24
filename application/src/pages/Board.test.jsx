@@ -48,16 +48,16 @@ describe("Board Component", () => {
 
     /**
      * Test if the spin button is enabled in correct location
-     */
+    */
 
-     /**
+    /**
      * Test if the spin button is disabled in wrong location
-     */
+    */
 
-     /**
+    /**
      * Test if the spin animation triggers when clicked
-     */
-     test("Clicking spin triggers animation", async () => {
+    */
+    test("Clicking spin triggers animation", async () => {
         render(<Board />);
         const spinButton = await screen.findByText("SPIN");
 
@@ -68,7 +68,23 @@ describe("Board Component", () => {
         expect(HTMLElement.prototype.animate).toHaveBeenCalled();
     });
 
-     /**
-     * Test if completion of task hides popup
-     */
+    /**
+     * Test if completion of task resets result state
+    */
+    test("task completion resets result state", async () => {
+        render(<Board />);
+
+        const spinButton = screen.getByText("SPIN");
+
+        await act(async () => {
+            fireEvent.click(spinButton);
+        });
+
+        setTimeout(() => {
+            const okButton = screen.getByText("OK");
+            fireEvent.click(okButton);
+
+            expect(screen.queryByText(/You are at:/)).not.toBeInTheDocument();
+        }, 4000);
+    });
 });
