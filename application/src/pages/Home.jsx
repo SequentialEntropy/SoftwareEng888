@@ -29,7 +29,11 @@ function Home() {
 
     // State to store the current user 
     const [user, setUser] = useState({
-        username: null
+        username: null,
+        usergamestats: {
+            current_square: 0,
+            score: 0,
+        }
     })
 
     // State for storing content and title 
@@ -137,7 +141,7 @@ function Home() {
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
                         </div>
-                        <div style={{fontSize: "40px", textAlign:"center"}}>35</div>
+                        <div style={{fontSize: "40px", textAlign:"center"}}>{user.usergamestats.score}</div>
                     </div>
                 </div>
             
