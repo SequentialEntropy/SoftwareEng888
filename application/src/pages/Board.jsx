@@ -6,6 +6,7 @@
  * @author Amreet Dhillon 
  * @author Yap Wen Xing 
  * @author Genki Asahi
+ * @author Gareth Zheng Yang Koh
  * @version 1.1.0 
  * @since 19-02-2025
  */
@@ -45,7 +46,7 @@ function Board() {
      * Initialises the spinning wheel effect
      */
     useEffect(() => {
-        teleportAvatar(0)
+        setTimeout(() => teleportAvatar(0), 0);
     }, [])
     const checkLocation = () => {         
         if (navigator.geolocation) {
@@ -73,7 +74,10 @@ function Board() {
         }
     };
     const teleportAvatar = (squareId) => {
-        console.log(squareRefs.current[squareId])
+        if (!squareRefs.current[squareId] || !avatarRef.current.offsetParent) {
+            console.warn("Element reference is null", squareId);
+            return;
+        }
         const pos = squareRefs.current[squareId].getBoundingClientRect()
         const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
         setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
@@ -132,9 +136,9 @@ function Board() {
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
-            <div className={styles.item} key={id} ref={e => {squareRefs.current[id] = e}}>
-                <div className={styles.tile_bar} style={{backgroundColor: backgroundColor}}>
-                <h3>{name}</h3>
+            <div className={styles.item} key={id} ref={(el) => { squareRefs.current[id] = el; }}>
+                <div className={styles.tile_bar} style={{ backgroundColor }}>
+                    <h3>{name}</h3>
                 </div>
             </div>
         )
