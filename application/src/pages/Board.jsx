@@ -12,6 +12,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
+import api from "../api";
 
 /**
  * Board Component
@@ -20,6 +21,32 @@ import styles from "../styles/Board.module.css";
  */
 
 function Board() {
+    const [score, setScore] = useState(0);
+
+    const apiGetScore = () => {
+        return api.get("/accounts/me/")
+        .then(res => res.data.usergamestats.score)
+        .then(score => {setScore(score); return score})
+    }
+
+    const apiSetScore = (score) => {
+        return api.patch("/accounts/me/", {
+            usergamestats: {
+                score: score
+            }
+        })
+    }
+
+    const apiIncrementScore = (additionalScore) => {
+        return apiGetScore().then(score => {apiSetScore(score + additionalScore); setScore(score + additionalScore)})
+    }
+
+    useEffect(() => {
+        apiGetScore()
+    }, [])
+
+    const [canSpin, setCanSpin] = useState(true)
+
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
     // State to store the selected result
@@ -86,17 +113,29 @@ function Board() {
     useEffect(() => {
         let watchId;
         teleportAvatar(0)
-        if (navigator.geolocation) {
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setUserLocation({ latitude, longitude });
-                    checkLocation(latitude, longitude);
-                },
-                (error) => console.error("Error fetching location:", error),
-                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-            );
-        }
+        setCanSpin(true)
+        const startWatch = () => {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log("🔄 Location updated:", latitude, longitude);
+                        setUserLocation({ latitude, longitude });
+                    },
+                    (error) => console.error("❌ Geolocation error:", error),
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+                );
+            }
+        };
+    
+        startWatch();
+    
+        // 🔄 Restart watchPosition() every 10s to prevent location freeze
+        const restartInterval = setInterval(() => {
+            console.warn("⚠️ Restarting location tracking...");
+            navigator.geolocation.clearWatch(watchId);
+            startWatch();
+        }, 10000);
     
         // Cleanup function to stop watching location when the component unmounts
         return () => {
@@ -138,6 +177,7 @@ function Board() {
             setTaskComplete(true); // Set TRUE only if check passes
         } else {
             setTaskComplete(false)
+            setCanSpin(false)
             console.error("Youre not in the correct location");
         }
     };
@@ -148,7 +188,7 @@ function Board() {
         const pos = squareRefs.current[squareId].getBoundingClientRect()
         const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
         setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
-        
+        setCanSpin(false)
         setAvatarSquare(squareId)
 
     }
@@ -195,21 +235,26 @@ function Board() {
             }
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
+            if (avatarSquare + landedNumber >= squares.length) { // passed START
+                // apiIncrementScore(5)
+            }
             setTaskComplete(false)
-            checkLocation()
+            checkLocation(userLocation.latitude, userLocation.longitude)
         };
 
         setAnimation(newAnimation)
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
     const taskFunction = () => {
-        checkLocation()
+        checkLocation(userLocation.latitude, userLocation.longitude)
         setResult(true)
     }
     const completeTask =() => {
         setResult(null)
         setTaskComplete(true)
+        setCanSpin(true)
         setGetChance(false)
+        apiIncrementScore(10)
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
@@ -302,11 +347,11 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={() => { checkLocation(); wheelOfFortune(); }} 
-                        disabled={!taskComplete} 
+                        <button onClick={() => { checkLocation(userLocation.latitude, userLocation.locations); wheelOfFortune(); }} 
+                        disabled={!canSpin} 
                         style={{ 
-                            opacity: taskComplete ? 1 : 0.5, 
-                            cursor: taskComplete ? "pointer" : "not-allowed" 
+                            opacity: canSpin ? 1 : 0.5, 
+                            cursor: canSpin ? "pointer" : "not-allowed" 
                         }}>SPIN</button>
                     </fieldset>
                 </div>
@@ -368,7 +413,6 @@ function Board() {
                         </div>
 
                     )}
-                    <h1>Chance</h1>
         
                 </div>
                 {squares[15]}
@@ -413,7 +457,7 @@ function Board() {
             {/* Points Container */}
 
             <div className={styles.points_container}>
-                <h1>5 points</h1>
+                <h1>{score} points</h1>
             </div>
                 
             <div>
@@ -436,6 +480,7 @@ function Board() {
                     </div>
                 )}
             </div>
+        </div>
         </div>
     )
 }
