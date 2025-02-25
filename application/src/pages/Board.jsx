@@ -12,6 +12,7 @@
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
+import api from "../api";
 
 /**
  * Board Component
@@ -20,6 +21,20 @@ import styles from "../styles/Board.module.css";
  */
 
 function Board() {
+    const [score, setScore] = useState(0);
+
+    const apiGetScore = () => {
+        return api.get("/accounts/me/")
+        .then(res => res.data.usergamestats.score)
+        .then(score => {setScore(score); return score})
+    }
+
+    useEffect(() => {
+        apiGetScore()
+    }, [])
+
+
+
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
     // State to store the selected result
@@ -413,7 +428,7 @@ function Board() {
             {/* Points Container */}
 
             <div className={styles.points_container}>
-                <h1>5 points</h1>
+                <h1>{score} points</h1>
             </div>
                 
             <div>
