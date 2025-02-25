@@ -15,11 +15,24 @@ import "@testing-library/jest-dom";
 
 describe("Board Component", () => {
     beforeAll(() => {
-        // Mock animation functions
-        global.Element.prototype.animate = jest.fn();
+        // Mock animation functions to prevent errors
+        global.Element.prototype.animate = jest.fn(() => ({
+            onfinish: jest.fn(),
+            cancel: jest.fn(),
+        }));
+
+        // Mock geolocation for disabling spin in wrong location
+        global.navigator.geolocation = {
+            watchPosition: jest.fn((success, error, options) => {
+                success({ coords: { latitude: 50.7352, longitude: -3.5332 } });
+                return 1;
+            }),
+            clearWatch: jest.fn()
+        };
     });
+
     /**
-     * Test to check Board components render correctly.
+     * Test to check Board component renders correctly.
     */
     test("renders Board component correctly", () => {
         render(<Board />);
@@ -28,16 +41,24 @@ describe("Board Component", () => {
     });
 
     /**
-     * Test if the spin button is enabled in correct location
+     * Test if the spin button is enabled in the correct location
     */
 
     /**
-     * Test if the spin button is disabled in wrong location
+     * Test if the spin button is disabled in the wrong location
     */
 
     /**
      * Test if the Avatar moves after spin is made
     */
+    test("avatar moves after spin", async () => {
+        render(<Board />);
+        const spinButton = screen.getByText("SPIN");
+        fireEvent.click(spinButton);
+        await waitFor(() => {
+            expect(global.Element.prototype.animate).toHaveBeenCalled();
+        });
+    });
 
     /**
      * Test if completion of task resets result state
