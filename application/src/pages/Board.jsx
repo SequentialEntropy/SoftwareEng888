@@ -37,6 +37,10 @@ function Board() {
         })
     }
 
+    const apiIncrementScore = (additionalScore) => {
+        return apiGetScore().then(score => {apiSetScore(score + additionalScore); setScore(score + additionalScore)})
+    }
+
     useEffect(() => {
         apiGetScore()
     }, [])
@@ -230,9 +234,7 @@ function Board() {
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
             if (avatarSquare + landedNumber >= squares.length) { // passed START
-                apiSetScore(score + 5).then(() => {
-                    apiGetScore()
-                })
+                // apiIncrementScore(5)
             }
             setTaskComplete(false)
             checkLocation(userLocation.latitude, userLocation.longitude)
@@ -249,6 +251,7 @@ function Board() {
         setResult(null)
         setTaskComplete(true)
         setGetChance(false)
+        apiIncrementScore(10)
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
