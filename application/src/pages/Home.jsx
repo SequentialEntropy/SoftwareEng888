@@ -97,7 +97,7 @@ function Home() {
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <h1>Level 1</h1>
+                <a href="board">Level 1</a>
                 <h2>Innovation Centre</h2>
             </div>
 
@@ -130,7 +130,7 @@ function Home() {
                 <progress value="50" max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
-                <h1>Map</h1>
+                <a href="map">Map</a>
             </div>
 
             {/* Points section */}
