@@ -75,15 +75,19 @@ function Board() {
     };
     const teleportAvatar = (squareId) => {
         if (!squareRefs.current[squareId] || !avatarRef.current.offsetParent) {
-            console.warn("Element reference is null", squareId);
-            return;
+          console.warn("Element reference is null", squareId);
+          return;
         }
-        const pos = squareRefs.current[squareId].getBoundingClientRect()
+        const pos = squareRefs.current[squareId].getBoundingClientRect();
         const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
-        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
-        
-        setAvatarSquare(squareId)
-    }
+        const newTop = pos.top + window.scrollY - offsetPos.top;
+        const newLeft = pos.left + window.scrollX - offsetPos.left;
+      
+        console.log("Teleporting avatar to square:", squareId);
+        console.log("New position:", avatarPos);
+        setAvatarPos([newTop, newLeft]);
+        setAvatarSquare(squareId);
+      };
 
     const wheelOfFortune = () => {
         if (animation) {
@@ -118,6 +122,7 @@ function Board() {
 
             setResult(landedNumber); // display result
 
+            console.log("Landed number:", landedNumber); // debugging
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
             setTaskComplete(false)
             checkLocation()
@@ -186,7 +191,9 @@ function Board() {
                 <div ref={avatarRef} className={styles.avatar} style={{
                         top: avatarPos[0] + 42,
                         left: avatarPos[1] + 38,
-                    }}>
+                    }}
+                    data-testid="avatar"
+                >
                         <i className="bi bi-bicycle"></i>
                 </div>
                 {/* Board items representing locations on campus */}
