@@ -144,13 +144,18 @@ function Board() {
     
     
     const teleportAvatar = (squareId) => {
-        console.log(squareRefs.current[squareId])
-        const pos = squareRefs.current[squareId].getBoundingClientRect()
-        const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
-        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
-        
-        setAvatarSquare(squareId)
-
+        console.log(squareRefs.current[squareId]);
+    
+        if (!squareRefs.current[squareId] || !avatarRef.current) {
+            console.warn("Attempted to access a non-existing element.");
+            return;
+        }
+    
+        const pos = squareRefs.current[squareId]?.getBoundingClientRect();
+        const offsetPos = avatarRef.current.offsetParent?.getBoundingClientRect() || { top: 0, left: 0 };
+    
+        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left]);
+        setAvatarSquare(squareId);
     }
 
     const wheelOfFortune = () => {
