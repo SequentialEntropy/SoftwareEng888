@@ -339,6 +339,13 @@ function Board() {
             </div>
             </div>
             <div>
+            {/* Points Container */}
+
+            <div className={styles.points_container}>
+                <h1>5 points</h1>
+            </div>
+                
+            <div>
 
                 {/* How to play popup */}
                 <button className={styles.how_to_play_btn} onClick={() => setShowPopup(true)}>?</button>
