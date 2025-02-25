@@ -20,13 +20,3 @@ class UserGameStats(models.Model):
 
     def __str__(self):
         return f"{self.user.username} - Stats"
-
-# Automatically create UserGameStats when a new User is created
-@receiver(post_save, sender=User)
-def create_user_game_stats(sender, instance, created, **kwargs):
-    if created:
-        UserGameStats.objects.create(user=instance)
-
-@receiver(post_save, sender=User)
-def save_user_game_stats(sender, instance, **kwargs):
-    instance.usergamestats.save()

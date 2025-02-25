@@ -8,7 +8,7 @@ class UserGameStatsSerializer(serializers.ModelSerializer):
         fields = ["current_square", "score"]
 
 class UserSerializer(serializers.ModelSerializer):
-    usergamestats = UserGameStatsSerializer()
+    usergamestats = UserGameStatsSerializer(required=False)
 
     class Meta:
         model = User
@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data["username"],
             password=validated_data["password"],
         )
+        UserGameStats.objects.get_or_create(user=user)
         return user
     
 class UserProfileSerializer(serializers.ModelSerializer):
