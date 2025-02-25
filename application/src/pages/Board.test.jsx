@@ -63,4 +63,16 @@ describe("Board Component", () => {
     /**
      * Test if completion of task resets result state
     */
+    test("task completion resets result state", async () => {
+        render(<Board />);
+        const spinButton = screen.getByText("SPIN");
+        await act(async () => {
+            fireEvent.click(spinButton);
+        });
+        setTimeout(() => {
+            const okButton = screen.getByText("OK");
+            fireEvent.click(okButton);
+            expect(screen.queryByText(/You are at:/)).not.toBeInTheDocument();
+        }, 4000);
+    });
 });
