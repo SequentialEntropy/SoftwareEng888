@@ -6,7 +6,7 @@
  * @author Crystal
  * @version 1.1.0 
  * @since 25-02-2025
- */
+*/
 
 import React from "react";
 import { render, screen, fireEvent, act, waitFor } from "@testing-library/react";
@@ -52,6 +52,10 @@ describe("Board Component", () => {
 
     /**
      * Test if the spin button is disabled in wrong location
+    */
+
+    /**
+     * Test if the Avatar moves after spin is made
     */
 
     /**
