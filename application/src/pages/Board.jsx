@@ -45,7 +45,7 @@ function Board() {
         apiGetScore()
     }, [])
 
-
+    const [canSpin, setCanSpin] = useState(true)
 
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
@@ -113,6 +113,7 @@ function Board() {
     useEffect(() => {
         let watchId;
         teleportAvatar(0)
+        setCanSpin(true)
         const startWatch = () => {
             if (navigator.geolocation) {
                 watchId = navigator.geolocation.watchPosition(
@@ -176,6 +177,7 @@ function Board() {
             setTaskComplete(true); // Set TRUE only if check passes
         } else {
             setTaskComplete(false)
+            setCanSpin(false)
             console.error("Youre not in the correct location");
         }
     };
@@ -186,7 +188,7 @@ function Board() {
         const pos = squareRefs.current[squareId].getBoundingClientRect()
         const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
         setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
-        
+        setCanSpin(false)
         setAvatarSquare(squareId)
 
     }
@@ -250,6 +252,7 @@ function Board() {
     const completeTask =() => {
         setResult(null)
         setTaskComplete(true)
+        setCanSpin(true)
         setGetChance(false)
         apiIncrementScore(10)
     }
@@ -345,10 +348,10 @@ function Board() {
                             
                         </ul>
                         <button onClick={() => { checkLocation(userLocation.latitude, userLocation.locations); wheelOfFortune(); }} 
-                        disabled={!taskComplete} 
+                        disabled={!canSpin} 
                         style={{ 
-                            opacity: taskComplete ? 1 : 0.5, 
-                            cursor: taskComplete ? "pointer" : "not-allowed" 
+                            opacity: canSpin ? 1 : 0.5, 
+                            cursor: canSpin ? "pointer" : "not-allowed" 
                         }}>SPIN</button>
                     </fieldset>
                 </div>
