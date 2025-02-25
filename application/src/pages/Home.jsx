@@ -29,7 +29,11 @@ function Home() {
 
     // State to store the current user 
     const [user, setUser] = useState({
-        username: null
+        username: null,
+        usergamestats: {
+            current_square: 0,
+            score: 0,
+        }
     })
 
     // State for storing content and title 
@@ -93,28 +97,28 @@ function Home() {
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <h1>Level 1</h1>
+                <a href="board">Level 1</a>
                 <h2>Innovation Centre</h2>
             </div>
 
             {/* Leaderboard section */}
             <div className={styles.item}>
-                <h1>Leaderboard</h1>
+                <h1 style={{marginTop: "20px"}}>Leaderboard</h1>
                 <div className={styles.profileItem}style={{backgroundColor: "#EA526F"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username1</div>
                 </div>
                 <div className={styles.profileItem} style={{backgroundColor: "#7F95D1"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username2</div>
                 </div>
                 <div className={styles.profileItem} style={{backgroundColor:"#558564"}}>
                     <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                        <i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i>
                     </div>
                     <div className={styles.profileName}>Username3</div>
                 </div>
@@ -126,10 +130,21 @@ function Home() {
                 <progress value="50" max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
-                <h1>Map</h1>
+                <a href="map">Map</a>
             </div>
+
+            {/* Points section */}
             <div className={styles.item}>
-                <h1>Rewards</h1>
+                <h1 style={{marginTop: "20px", fontSize:"30px"}}>Your points</h1>
+                <div className={styles.points_container}>
+                    <div className={styles.pointsItem} style={{marginLeft:"40px", alignItems:"center", height:"70%"}}>
+                        <div className={styles.pointsIcon}>
+                            <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
+                        </div>
+                        <div style={{fontSize: "40px", textAlign:"center"}}>{user.usergamestats.score}</div>
+                    </div>
+                </div>
+            
             </div>
         </div>
     </div>
