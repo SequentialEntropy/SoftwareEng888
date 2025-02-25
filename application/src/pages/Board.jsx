@@ -410,7 +410,6 @@ function Board() {
                         </div>
 
                     )}
-                    <h1>Chance</h1>
         
                 </div>
                 {squares[15]}
