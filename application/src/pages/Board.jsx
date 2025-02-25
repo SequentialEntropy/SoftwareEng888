@@ -29,6 +29,14 @@ function Board() {
         .then(score => {setScore(score); return score})
     }
 
+    const apiSetScore = (score) => {
+        return api.patch("/accounts/me/", {
+            usergamestats: {
+                score: score
+            }
+        })
+    }
+
     useEffect(() => {
         apiGetScore()
     }, [])
@@ -221,6 +229,11 @@ function Board() {
             }
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
+            if (avatarSquare + landedNumber >= squares.length) { // passed START
+                apiSetScore(score + 5).then(() => {
+                    apiGetScore()
+                })
+            }
             setTaskComplete(false)
             checkLocation(userLocation.latitude, userLocation.longitude)
         };
