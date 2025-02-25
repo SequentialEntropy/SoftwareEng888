@@ -101,17 +101,28 @@ function Board() {
     useEffect(() => {
         let watchId;
         teleportAvatar(0)
-        if (navigator.geolocation) {
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setUserLocation({ latitude, longitude });
-                    checkLocation(latitude, longitude);
-                },
-                (error) => console.error("Error fetching location:", error),
-                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-            );
-        }
+        const startWatch = () => {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log("🔄 Location updated:", latitude, longitude);
+                        setUserLocation({ latitude, longitude });
+                    },
+                    (error) => console.error("❌ Geolocation error:", error),
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+                );
+            }
+        };
+    
+        startWatch();
+    
+        // 🔄 Restart watchPosition() every 10s to prevent location freeze
+        const restartInterval = setInterval(() => {
+            console.warn("⚠️ Restarting location tracking...");
+            navigator.geolocation.clearWatch(watchId);
+            startWatch();
+        }, 10000);
     
         // Cleanup function to stop watching location when the component unmounts
         return () => {
@@ -211,14 +222,14 @@ function Board() {
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
             setTaskComplete(false)
-            checkLocation()
+            checkLocation(userLocation.latitude, userLocation.longitude)
         };
 
         setAnimation(newAnimation)
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
     const taskFunction = () => {
-        checkLocation()
+        checkLocation(userLocation.latitude, userLocation.longitude)
         setResult(true)
     }
     const completeTask =() => {
@@ -317,7 +328,7 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={() => { checkLocation(); wheelOfFortune(); }} 
+                        <button onClick={() => { checkLocation(userLocation.latitude, userLocation.locations); wheelOfFortune(); }} 
                         disabled={!taskComplete} 
                         style={{ 
                             opacity: taskComplete ? 1 : 0.5, 
