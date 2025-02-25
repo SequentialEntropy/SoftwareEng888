@@ -32,49 +32,117 @@ function Board() {
     const sectionSize = 360 / totalSections; // each section is 30 degrees
     const pointerOffset = 15; // adjust to align with the pointer
     const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
-    
+    const locations = {
+        0: [0, 0],
+        1: [50.7352025, -3.5331998], // TODO: copied from #4 for demo
+        2: [50.7352025, -3.5331998], // TODO: copied from #4 for demo
+        3: [50.7352025, -3.5331998], // TODO: copied from #4 for demo
+        4: [50.7352025, -3.5331998],
+        5: [ 50.7354678, -3.5346157],
+        6: [50.7288, -3.5060],
+        7: [50.7288, -3.5060],
+        8: [50.7383339, -3.5307875],
+        9: [50.7288, -3.5060],
+        10: [50.7288, -3.5060],
+        11: [50.734187, -3.533157],
+        12: [50.7333275, -3.5343472],
+        13: [50.7342858, -3.5344508],
+        14: [50.7364241, -3.5316993],
+        15: [50.7288, -3.5060]
+    }   
+
+    const names = {
+        0: "Start",
+        1: "Birks Grange",
+        2: "East Park",
+        3: "Peter Chalk",
+        4: "Forum",
+        5: "Great Hall" ,
+        6: "Reed Hall" ,
+        7: "Harrison" ,
+        8: "Innovation Centre",
+        9: "INTO Building" ,
+        10: "Streatham Court",
+        11: "Hatherly"  ,
+        12: "Old Library"  ,
+        13: "Queens" ,
+        14: "Amory" ,
+        15: "Business School" 
+    }   
     const squareRefs = useRef({});
     const avatarRef = useRef(null);
     const [avatarPos, setAvatarPos] = useState([0, 0])
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
-    const [canClick, setCanClick] = useState(true);
     const [taskComplete, setTaskComplete] = useState(true);
 
       {/*Chance card activatio*/}
       const [getChance, setGetChance] = useState(null);
+    const [chosenTask, setChosenTask] = useState ("Pick up a cup")
 
     /**
      * Initialises the spinning wheel effect
      */
     useEffect(() => {
+        let watchId;
         teleportAvatar(0)
-    }, [])
-    const checkLocation = () => {         
         if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(
+            watchId = navigator.geolocation.watchPosition(
                 (position) => {
                     const { latitude, longitude } = position.coords;
-
                     setUserLocation({ latitude, longitude });
-
-                    // Define your allowed location (Example: New York)
-                    const allowedLatitude = 50.7288;
-                    const allowedLongitude = -3.5060;
-                    const threshold = 0.1; // Allow slight variation
-                    if (
-                        Math.abs(latitude - allowedLatitude) < threshold &&
-                        Math.abs(longitude - allowedLongitude) < threshold) {
-                        setCanClick(true);
-                    } else {    
-                        setCanClick(false);
-                        setError("You're not in the required location.");
-                    }
+                    checkLocation(latitude, longitude);
                 },
-                (error) => console.error("Error fetching location:", error)
+                (error) => console.error("Error fetching location:", error),
+                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
             );
         }
+    
+        // Cleanup function to stop watching location when the component unmounts
+        return () => {
+            if (watchId) {
+                navigator.geolocation.clearWatch(watchId);
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (userLocation && avatarSquare !== null) {
+            checkLocation(userLocation.latitude, userLocation.longitude);
+        }
+    }, [userLocation, avatarSquare]); // Run only when both are updated    
+
+    const checkLocation = (latitude, longitude) => {
+        if (!latitude || !longitude) {
+            console.warn("Location not available yet. Skipping check...");
+            return;
+        }
+        console.log("Checking location...");
+        console.log("User Location:", latitude, longitude);
+        console.log("Target Location:", locations[avatarSquare][0], locations[avatarSquare][1]);
+        console.log("Avatar Square:", avatarSquare);
+    
+        const allowedLatitude = locations[avatarSquare][0];
+        const allowedLongitude = locations[avatarSquare][1];
+    
+        const latDiff = Math.abs(latitude - allowedLatitude);
+        const lonDiff = Math.abs(longitude - allowedLongitude);
+    
+        console.log("Latitude Difference:", latDiff);
+        console.log("Longitude Difference:", lonDiff);
+    
+        const threshold = 0.1; // Should be enough
+    
+        if ((latDiff < threshold && lonDiff < threshold) || avatarSquare === 0) {
+            console.log("Youre at the correct location!");
+            setTaskComplete(true); // Set TRUE only if check passes
+        } else {
+            setTaskComplete(false)
+            console.error("Youre not in the correct location");
+        }
     };
+    
+    
     const teleportAvatar = (squareId) => {
         console.log(squareRefs.current[squareId])
         const pos = squareRefs.current[squareId].getBoundingClientRect()
@@ -82,6 +150,7 @@ function Board() {
         setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
         
         setAvatarSquare(squareId)
+
     }
 
     const wheelOfFortune = () => {
@@ -233,11 +302,11 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={wheelOfFortune} type="button"
+                        <button onClick={() => { checkLocation(); wheelOfFortune(); }} 
                         disabled={!taskComplete} 
                         style={{ 
-                            opacity: canClick ? 1 : 0.5, 
-                            cursor: canClick ? "pointer" : "not-allowed" 
+                            opacity: taskComplete ? 1 : 0.5, 
+                            cursor: taskComplete ? "pointer" : "not-allowed" 
                         }}>SPIN</button>
                     </fieldset>
                 </div>
@@ -259,13 +328,14 @@ function Board() {
                         </div>
                         <div className={styles.popup_content}>
                         {/* <h2>You are at: {result}</h2> */}
-                        <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
+                        <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
+                        {/* <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2> */}
                         <button 
                             onClick={() => setResult(null)} 
-                            disabled={!canClick} 
+                            disabled={!taskComplete} 
                             style={{ 
-                                opacity: canClick ? 1 : 0.5, 
-                                cursor: canClick ? "pointer" : "not-allowed" 
+                                opacity: taskComplete ? 1 : 0.5, 
+                                cursor: taskComplete ? "pointer" : "not-allowed" 
                             }}>
                             OK
                         </button>
@@ -323,13 +393,14 @@ function Board() {
                         </div>
                         <div className={styles.popup_content}>
                         {/* <h2>You are at: {result}</h2> */}
-                        <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2>
+                        <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
+                        {/* <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2> */}
                         <button 
                             onClick={() => completeTask()} 
-                            disabled={!canClick} 
+                            disabled={!taskComplete} 
                             style={{ 
-                                opacity: canClick ? 1 : 0.5, 
-                                cursor: canClick ? "pointer" : "not-allowed" 
+                                opacity: taskComplete ? 1 : 0.5, 
+                                cursor: taskComplete ? "pointer" : "not-allowed" 
                             }}>
                             OK
                         </button>
