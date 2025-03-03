@@ -6,6 +6,7 @@
  * @author Amreet Dhillon 
  * @author Yap Wen Xing 
  * @author Genki Asahi
+ * @author Dany Kelzi
  * @version 1.1.0 
  * @since 19-02-2025
  */
@@ -46,7 +47,6 @@ function Board() {
     }, [])
 
     const [canSpin, setCanSpin] = useState(true)
-
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
     // State to store the selected result
@@ -102,10 +102,10 @@ function Board() {
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
     const [taskComplete, setTaskComplete] = useState(true);
+    const chosenTask = useState("Pick up one cup")
 
-      {/*Chance card activatio*/}
+      {/*Chance card activation*/}
       const [getChance, setGetChance] = useState(null);
-    const [chosenTask, setChosenTask] = useState ("Pick up a cup")
 
     /**
      * Initialises the spinning wheel effect
@@ -123,7 +123,8 @@ function Board() {
                         setUserLocation({ latitude, longitude });
                     },
                     (error) => console.error("❌ Geolocation error:", error),
-                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 }
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
+                    setCanSpin(false)
                 );
             }
         };
@@ -218,7 +219,7 @@ function Board() {
             // normalize the final rotation angle 
             let finalAngle = newEndDegree % 360;
 
-            // adjust to align with the top pointer correctly
+            // adjust to align with the top pointer 
             let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
 
             // get the correct number from the order listed 
@@ -246,8 +247,11 @@ function Board() {
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
     const taskFunction = () => {
-        checkLocation(userLocation.latitude, userLocation.longitude)
-        setResult(true)
+        if (userLocation != null) {
+            checkLocation(userLocation.latitude, userLocation.longitude)}
+        setResult(true) 
+
+
     }
     const completeTask =() => {
         setResult(null)
@@ -255,6 +259,11 @@ function Board() {
         setCanSpin(true)
         setGetChance(false)
         apiIncrementScore(10)
+    }
+    const spinButton =() => {
+        if (userLocation != null) {
+            checkLocation(userLocation.latitude, userLocation.longitude)}       
+        wheelOfFortune();
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
@@ -287,7 +296,6 @@ function Board() {
 
     const [showChance, setShowChance] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
-    const [showTask, setShowTask] = useState(false);
 
    
 
@@ -347,7 +355,7 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={() => { checkLocation(userLocation.latitude, userLocation.locations); wheelOfFortune(); }} 
+                        <button onClick={() => spinButton()} 
                         disabled={!canSpin} 
                         style={{ 
                             opacity: canSpin ? 1 : 0.5, 
