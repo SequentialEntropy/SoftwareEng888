@@ -17,6 +17,7 @@ import api from "../api";
 import Spinner from "../components/Spinner";
 import HowToPlay from "../components/HowToPlay";
 import Chance from "../components/Chance";
+import Task from "../components/Task";
 
 /**
  * Board Component
@@ -296,34 +297,6 @@ function Board() {
                 <div className={styles.task_deck}>
                     {/* Task Button */}
                     <button className={styles.task_btn} onClick={() => taskFunction()}>Task</button>
-                    <div>  
-                {/* Popup to show task reminder */}
-                {result != null && (
-                    <div className={styles.popup}>
-                        <div className={styles.popup_header}>
-                            <h1>Task</h1>
-                            <button
-                                className={styles.exit_btn}
-                                onClick={() => setResult(null)}>x
-                            </button>
-                        </div>
-                        <div className={styles.popup_content}>
-                        {/* <h2>You are at: {result}</h2> */}
-                        <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
-                        {/* <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2> */}
-                        <button 
-                            onClick={() => setResult(null)} 
-                            disabled={!taskComplete} 
-                            style={{ 
-                                opacity: taskComplete ? 1 : 0.5, 
-                                cursor: taskComplete ? "pointer" : "not-allowed" 
-                            }}>
-                            OK
-                        </button>
-                        </div>
-                    </div>
-                )}
-            </div>
                 </div>
                 <Chance
                     setShowChance={setShowChance}
@@ -339,45 +312,28 @@ function Board() {
                 <div className={styles.item} style={{backgroundColor: '#3c3e4c'}} key={0} ref={e => {squareRefs.current[0] = e}}>
                     <h3 style={{color: '#d9d9d9', fontSize: '50px', transform: 'rotate(-25deg)', margin:'auto', letterSpacing: '5px'}}>START</h3>
                 </div>
-                <div>  
-                {/* Popup to show result */}
-                {result != null && (
-                    <div className={styles.popup}>
-                        <div className={styles.popup_header}>
-                            <h1>Task</h1>
-                            <button
-                                className={styles.exit_btn}
-                                onClick={() => setResult(null)}>x
-                            </button>
-                        </div>
-                        <div className={styles.popup_content}>
-                        {/* <h2>You are at: {result}</h2> */}
-                        <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
-                        {/* <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2> */}
-                        <button 
-                            onClick={() => completeTask()} 
-                            disabled={!taskComplete} 
-                            style={{ 
-                                opacity: taskComplete ? 1 : 0.5, 
-                                cursor: taskComplete ? "pointer" : "not-allowed" 
-                            }}>
-                            OK
-                        </button>
-                        </div>
-                    </div>
-                )}
-            </div>
+
+                <Task
+                    result={result}
+                    setResult={setResult}
+                    names={names}
+                    avatarSquare={avatarSquare}
+                    chosenTask={chosenTask}
+                    completeTask={completeTask}
+                    taskComplete={taskComplete}
+                />
+
             </div>
             <div>
-            {/* Points Container */}
+                {/* Points Container */}
 
-            <div className={styles.points_container}>
-                <h1>{score} points</h1>
+                <div className={styles.points_container}>
+                    <h1>{score} points</h1>
+                </div>
+                
+                {/* How to play popup */}
+                <HowToPlay />
             </div>
-            
-            {/* How to play popup */}
-            <HowToPlay />
-        </div>
         </div>
     )
 }
