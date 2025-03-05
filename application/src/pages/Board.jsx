@@ -15,6 +15,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 import api from "../api";
 import Spinner from "../components/Spinner";
+import HowToPlay from "../components/HowToPlay";
 
 /**
  * Board Component
@@ -230,9 +231,6 @@ function Board() {
     ]
 
     const [showChance, setShowChance] = useState(false);
-    const [showPopup, setShowPopup] = useState(false);
-
-   
 
     return (
         <div className={styles.game}>
@@ -396,27 +394,9 @@ function Board() {
             <div className={styles.points_container}>
                 <h1>{score} points</h1>
             </div>
-                
-            <div>
-
-                {/* How to play popup */}
-                <button className={styles.how_to_play_btn} onClick={() => setShowPopup(true)}>?</button>
-
-                {showPopup && (
-                    <div className={styles.overlay}>
-                        <div className={styles.how_to_play_container2}>
-                            <div className={styles.how_to_play_container3}>
-                                <h2 className={styles.how_to_play_title}>How to Play</h2>
-                            </div>
-                            <p className={styles.how_to_play_instructions}>1. Spin the wheel <br></br>2. Do task at specified location <br></br>3. Scan QR to verify completion <br></br> 4. Get trees</p>
-                            <button
-                            className={styles.exit_btn}
-                            onClick={() => setShowPopup(false)}>x
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
+            
+            {/* How to play popup */}
+            <HowToPlay />
         </div>
         </div>
     )
