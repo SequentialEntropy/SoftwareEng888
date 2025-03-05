@@ -14,6 +14,7 @@
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 import api from "../api";
+import Spinner from "../components/Spinner";
 
 /**
  * Board Component
@@ -47,18 +48,9 @@ function Board() {
     }, [])
 
     const [canSpin, setCanSpin] = useState(true)
-    // Reference to the spinning wheel element
-    const spinnerRef = useRef(null);
     // State to store the selected result
     const [result, setResult] = useState(null);
 
-    const [previousEndDegree, setPreviousEndDegree] = useState(0)
-    const [animation, setAnimation] = useState(null)
-
-    const totalSections = 12; // 12 sections in the wheel 
-    const sectionSize = 360 / totalSections; // each section is 30 degrees
-    const pointerOffset = 15; // adjust to align with the pointer
-    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
     const locations = {
         0: [0, 0],
         1: [50.7352025, -3.5331998], // TODO: copied from #4 for demo
@@ -194,58 +186,6 @@ function Board() {
 
     }
 
-    const wheelOfFortune = () => {
-        if (animation) {
-            animation.cancel();
-        }
-
-        const randomAdditionalDegrees = Math.random() * 360 + 1800; 
-        const newEndDegree = previousEndDegree + randomAdditionalDegrees;
-
-        // animate rotation
-        const newAnimation = spinnerRef.current.animate(
-            [
-                { transform: `rotate(${previousEndDegree}deg)` },
-                { transform: `rotate(${newEndDegree}deg)` },
-            ],  
-            {
-                duration: 4000,
-                easing: "cubic-bezier(0.440, -0.205, 0.000, 1.130)", 
-                fill: "forwards",
-            }
-        );
-        
-        newAnimation.onfinish = () => {
-            // normalize the final rotation angle 
-            let finalAngle = newEndDegree % 360;
-
-            // adjust to align with the top pointer 
-            let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
-
-            // get the correct number from the order listed 
-            let landedNumber = numberOrder[landedIndex];
-
-            setResult(landedNumber); // display result
-
-            if(landedNumber == 6){
-                setGetChance(true);
-                setShowChance(true);
-            } else{
-                setGetChance(false);
-                setShowChance(false);
-            }
-
-            teleportAvatar((avatarSquare + landedNumber) % squares.length)
-            if (avatarSquare + landedNumber >= squares.length) { // passed START
-                // apiIncrementScore(5)
-            }
-            setTaskComplete(false)
-            checkLocation(userLocation.latitude, userLocation.longitude)
-        };
-
-        setAnimation(newAnimation)
-        setPreviousEndDegree(newEndDegree % 360) // store last rotation
-    }
     const taskFunction = () => {
         if (userLocation != null) {
             checkLocation(userLocation.latitude, userLocation.longitude)}
@@ -259,11 +199,6 @@ function Board() {
         setCanSpin(true)
         setGetChance(false)
         apiIncrementScore(10)
-    }
-    const spinButton =() => {
-        if (userLocation != null) {
-            checkLocation(userLocation.latitude, userLocation.longitude)}       
-        wheelOfFortune();
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
@@ -339,29 +274,23 @@ function Board() {
                 {squares[6]}
                 <div />
                 <div>
-                    <fieldset className={styles.spinner}>
-                        <ul ref={spinnerRef}>
-                            <li>1</li>
-                            <li>2</li>
-                            <li>3</li>
-                            <li>4</li>
-                            <li>5</li>
-                            <li>6</li>
-                            <li>1</li>
-                            <li>2</li>
-                            <li>3</li>
-                            <li>4</li>
-                            <li>5</li>
-                            <li>6</li>
-                            
-                        </ul>
-                        <button onClick={() => spinButton()} 
-                        disabled={!canSpin} 
-                        style={{ 
-                            opacity: canSpin ? 1 : 0.5, 
-                            cursor: canSpin ? "pointer" : "not-allowed" 
-                        }}>SPIN</button>
-                    </fieldset>
+                    <Spinner
+                        canSpin={canSpin}
+                        setResult={setResult}
+                        setGetChance={setGetChance}
+                        setShowChance={setShowChance}
+                        teleportAvatar={teleportAvatar}
+                        setTaskComplete={setTaskComplete}
+                        checkLocation={checkLocation}
+                        avatarSquare={avatarSquare}
+                        squares={squares}
+                        userLocation={userLocation}
+                        callback={() => {
+                            if (userLocation != null) {
+                                checkLocation(userLocation.latitude, userLocation.longitude)
+                            }
+                            console.log("Callback!")
+                    }} />
                 </div>
                 <div />
                 <div />
