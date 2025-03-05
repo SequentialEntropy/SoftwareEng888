@@ -1,10 +1,10 @@
 from django.contrib.auth.models import User
 from rest_framework import generics, status
-from .serializers import UserSerializer, UserProfileSerializer
+from .serializers import UserSerializer, UserProfileSerializer, UserGameStatsSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import UserProfile
+from .models import UserProfile, UserGameStats
 
 # Create your views here.
 from django.contrib.auth.forms import UserCreationForm
@@ -50,6 +50,10 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
 #     queryset = User.objects.all()
 #     serializer_class = UserSerializer
 #     permission_classes = [IsAuthenticated]
+
+class RankedUsersView(generics.ListAPIView):
+    queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
+    serializer_class = UserSerializer
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]
