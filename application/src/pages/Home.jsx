@@ -24,9 +24,6 @@ import styles from "../styles/Dashboard.module.css"
  */
 
 function Home() {
-    // State to store user profiles
-    const [userProfiles, setUserProfiles] = useState([])
-
     // State to store the current user 
     const [user, setUser] = useState({
         username: null,
@@ -36,41 +33,22 @@ function Home() {
         }
     })
 
-    // State for storing content and title 
-    const [content, setContent] = useState("")
-    const [title, setTitle] = useState("")
-
     /**
      * Fetches user details and profiles when the component initialises 
      */
-
     useEffect(() => {
         document.title = "Dashboard"
-        getUserProfiles()
         getUserDetails()
     }, [])
 
     /**
      * Fetches logged-in user details from the API 
      */
-
     const getUserDetails = () => {
         api
             .get("/accounts/me/")
             .then(res => res.data)
             .then(data => {setUser(data); console.log(data)})
-            .catch(err => alert(err))
-    }
-
-    /**
-     * Fetches user profiles from the API 
-     */
-
-    const getUserProfiles = () => {
-        api
-            .get("/accounts/profiles/")
-            .then(res => res.data)
-            .then(data => {setUserProfiles(data)})
             .catch(err => alert(err))
     }
 
