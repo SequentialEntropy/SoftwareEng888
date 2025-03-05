@@ -1,8 +1,13 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from . import views
+from .views import SignUpView, RetrieveUserView, RankedUsersView
 
 urlpatterns = [
-    path("me/", views.RetrieveUserView.as_view(), name="user-detail"),
-    path("ranked-users/", views.RankedUsersView.as_view(), name="ranked-users")
+    path("user/register/", SignUpView.as_view(), name="register"),
+    path("me/", RetrieveUserView.as_view(), name="user-detail"),
+    path("ranked-users/", RankedUsersView.as_view(), name="ranked-users"),
+
+    path("token/", TokenObtainPairView.as_view(), name="get_token"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="refresh"),
 ]
