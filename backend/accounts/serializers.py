@@ -22,7 +22,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         UserGameStats.objects.get_or_create(user=user)
         return user
-    
+
     def update(self, instance, validated_data):
         usergamestats_data = validated_data.pop('usergamestats', None)
 

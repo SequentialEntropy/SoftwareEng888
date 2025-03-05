@@ -1,15 +1,12 @@
 from django.contrib.auth.models import User
+from django.shortcuts import render
+
 from rest_framework import generics, status
-from .serializers import UserSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-# Create your views here.
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import View
-from django.shortcuts import render
+from .serializers import UserSerializer
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -22,11 +19,6 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
     def get_object(self):
         return self.request.user
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = [IsAuthenticated]
-
 class RankedUsersView(generics.ListAPIView):
     queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
     serializer_class = UserSerializer
@@ -35,13 +27,13 @@ class SignUpView(APIView):
     permission_classes = [AllowAny]
     template_name = 'registration/signup.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         """
         Handle GET request to render the signup form.
         """
         return render(request, self.template_name)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         """
         Handle POST request to create a new user.
         """
