@@ -9,7 +9,7 @@
  * @since 15-02-2025
  */
 
-import { useState, useEffect, use } from "react"
+import { useState, useEffect } from "react"
 import api from "../api"
 import styles from "../styles/Dashboard.module.css"
 
@@ -34,10 +34,6 @@ function Home() {
     })
 
     const [rankedUsers, setRankedUsers] = useState([])
-
-    // State for storing content and title 
-    const [content, setContent] = useState("")
-    const [title, setTitle] = useState("")
 
     const leaderboardColors = [
         "#EA526F",
