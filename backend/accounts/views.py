@@ -27,6 +27,10 @@ class UserDetailView(generics.RetrieveUpdateAPIView):
 #     serializer_class = UserSerializer
 #     permission_classes = [IsAuthenticated]
 
+class RankedUsersView(generics.ListAPIView):
+    queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
+    serializer_class = UserSerializer
+
 class SignUpView(APIView):
     permission_classes = [AllowAny]
     template_name = 'registration/signup.html'
