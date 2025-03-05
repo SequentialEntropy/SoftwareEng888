@@ -16,6 +16,7 @@ import styles from "../styles/Board.module.css";
 import api from "../api";
 import Spinner from "../components/Spinner";
 import HowToPlay from "../components/HowToPlay";
+import Chance from "../components/Chance";
 
 /**
  * Board Component
@@ -97,8 +98,8 @@ function Board() {
     const [taskComplete, setTaskComplete] = useState(true);
     const chosenTask = useState("Pick up one cup")
 
-      {/*Chance card activation*/}
-      const [getChance, setGetChance] = useState(null);
+    // Chance card activation
+    const [getChance, setGetChance] = useState(null);
 
     /**
      * Initialises the spinning wheel effect
@@ -324,32 +325,11 @@ function Board() {
                 )}
             </div>
                 </div>
-                <div className={styles.chance_deck}>
-                    {/* Chance Card Button */}
-
-                    <button className={styles.task_btn} onClick={() => setShowChance(true)} disabled = {!getChance}>Chance</button>
-
-                    {/* Chance Card Popup - only available after landing on 6 */}
-
-
-                    {getChance && showChance && (
-                        <div className = {styles.chance_popup}>
-                            <div className = {styles.chance_header}> 
-                                <h1>Chance</h1>
-                                <button
-                                    className={styles.exit_btn}
-                                    onClick={() => setShowChance(false)}>x
-                                </button>
-                            </div>
-                            <div className={styles.chance_content}>
-                                <h2>+5 Points!</h2>
-                            </div>
-
-                        </div>
-
-                    )}
-        
-                </div>
+                <Chance
+                    setShowChance={setShowChance}
+                    getChance={getChance}
+                    showChance={showChance}
+                />
                 {squares[15]}
                 {squares[5]}
                 {squares[4]}
