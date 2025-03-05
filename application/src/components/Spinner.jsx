@@ -12,7 +12,7 @@ function Spinner({
     setTaskComplete,
     checkLocation,
     avatarSquare,
-    squares,
+    squareRefs,
     userLocation
 }) {
     // Reference to the spinning wheel element
@@ -68,8 +68,11 @@ function Spinner({
                 setShowChance(false);
             }
 
-            teleportAvatar((avatarSquare + landedNumber) % squares.length)
-            if (avatarSquare + landedNumber >= squares.length) { // passed START
+            const totalSquares = Object.keys(squareRefs.current).length
+
+            teleportAvatar((avatarSquare + landedNumber) % totalSquares)
+            console.log("squareRefs.current.length =", totalSquares)
+            if (avatarSquare + landedNumber >= totalSquares) { // passed START
                 // apiIncrementScore(5)
             }
             setTaskComplete(false)

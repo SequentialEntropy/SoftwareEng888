@@ -1,6 +1,6 @@
 import styles from "../styles/Board.module.css"
 
-export default function Task({result, setResult, names, avatarSquare, chosenTask, completeTask, taskComplete}) {
+export default function Task({result, setResult, squares, avatarSquare, chosenTask, completeTask, taskComplete}) {
     return (
         <div>
             {result != null && (
@@ -13,7 +13,7 @@ export default function Task({result, setResult, names, avatarSquare, chosenTask
                         </button>
                     </div>
                     <div className={styles.popup_content}>
-                    <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
+                    <h2>You are at: {squares[avatarSquare].name} <br/> The task is: {chosenTask} </h2>
                     <button
                         onClick={() => completeTask()}
                         disabled={!taskComplete}
