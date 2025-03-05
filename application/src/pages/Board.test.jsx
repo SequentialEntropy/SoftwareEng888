@@ -9,9 +9,24 @@
 */
 
 // Board.test.jsx
+import React from 'react';
 import { render, screen, fireEvent, act, waitFor} from "@testing-library/react";
 import Board from "./Board";
 import "@testing-library/jest-dom";
+
+// Mock getBoundingClientRect for all elements
+Element.prototype.getBoundingClientRect = jest.fn(() => ({
+    width: 100,
+    height: 100,
+    top: 100,
+    left: 100,
+    right: 200,
+    bottom: 200
+}));
+
+Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
+    get() { return document.createElement('div'); }
+});
 
 describe("Board Component", () => {
     beforeAll(() => {
@@ -29,6 +44,10 @@ describe("Board Component", () => {
             }),
             clearWatch: jest.fn()
         };
+    });
+
+    afterEach(() => {
+        jest.clearAllMocks();
     });
 
     /**
