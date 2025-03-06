@@ -31,7 +31,8 @@ function Board() {
     // Game states
     const [score, setScore] = useState(0)
     const [avatarSquare, setAvatarSquare] = useState(0)
-    const chosenTask = useState("Pick up one cup")
+    const chosenTask = useState(() => ["Pick up a cup", "Recycle an item"][Math.floor(Math.random() * 2)]);
+      
 
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
