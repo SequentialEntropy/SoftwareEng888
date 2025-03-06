@@ -2,19 +2,14 @@ import { useRef, useState } from "react"
 
 import styles from "../styles/Board.module.css"
 
+const totalSections = 12; // 12 sections in the wheel 
+const sectionSize = 360 / totalSections; // each section is 30 degrees
+const pointerOffset = 15; // adjust to align with the pointer
+const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
+
 function Spinner({
     canSpin,
-    setCanSpin,
-    callback,
-    setResult,
-    setGetChance,
-    setShowChance,
-    setTaskComplete,
-    checkLocation,
-    avatarSquare,
-    setAvatarSquare,
-    squareRefs,
-    userLocation
+    onSpinnerAnimationEnd,
 }) {
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null)
@@ -23,15 +18,9 @@ function Spinner({
     const [animation, setAnimation] = useState(null)
     const [previousEndDegree, setPreviousEndDegree] = useState(0)
 
-    const totalSections = 12; // 12 sections in the wheel 
-    const sectionSize = 360 / totalSections; // each section is 30 degrees
-    const pointerOffset = 15; // adjust to align with the pointer
-    const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
-
     const wheelOfFortune = () => {
-        if (animation) {
-            animation.cancel();
-        }
+        // Cancel onSpinnerAnimationEnd if already spinning
+        if (animation) animation.cancel();
 
         const randomAdditionalDegrees = Math.random() * 360 + 1800; 
         const newEndDegree = previousEndDegree + randomAdditionalDegrees;
@@ -50,35 +39,12 @@ function Spinner({
         );
         
         newAnimation.onfinish = () => {
-            // normalize the final rotation angle 
+            // get the correct number from the order listed
             let finalAngle = newEndDegree % 360;
-
-            // adjust to align with the top pointer 
             let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
-
-            // get the correct number from the order listed 
             let landedNumber = numberOrder[landedIndex];
 
-            setResult(landedNumber); // display result
-
-            if(landedNumber == 6){
-                setGetChance(true);
-                setShowChance(true);
-            } else{
-                setGetChance(false);
-                setShowChance(false);
-            }
-
-            const totalSquares = Object.keys(squareRefs.current).length
-
-            setAvatarSquare((avatarSquare + landedNumber) % totalSquares)
-            setCanSpin(false)
-            console.log("squareRefs.current.length =", totalSquares)
-            if (avatarSquare + landedNumber >= totalSquares) { // passed START
-                // apiIncrementScore(5)
-            }
-            setTaskComplete(false)
-            checkLocation(userLocation.latitude, userLocation.longitude)
+            onSpinnerAnimationEnd(landedNumber) // run the callback function
         };
 
         setAnimation(newAnimation)
@@ -101,15 +67,14 @@ function Spinner({
                 <li>5</li>
                 <li>6</li>
             </ul>
-            <button onClick={() => {
-                callback()
-                wheelOfFortune()
-            }}
-            disabled={!canSpin}
-            style={{
-                opacity: canSpin ? 1 : 0.5,
-                cursor: canSpin ? "pointer" : "not-allowed",
-            }}>SPIN</button>
+            <button
+                onClick={wheelOfFortune}
+                disabled={!canSpin}
+                style={{
+                    opacity: canSpin ? 1 : 0.5,
+                    cursor: canSpin ? "pointer" : "not-allowed",
+                }}
+            >SPIN</button>
         </fieldset>
     )
 }

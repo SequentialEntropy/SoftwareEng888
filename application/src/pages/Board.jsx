@@ -156,6 +156,24 @@ function Board() {
         setGetChance(false)
         apiIncrementScore(10)
     }
+
+    const onSpinnerAnimationEnd = landedNumber => {
+        if (landedNumber === 6) { // enable chance when spinner lands on 6
+            setGetChance(true)
+            setShowChance(true)
+        } else{
+            setGetChance(false)
+            setShowChance(false)
+        }
+        setResult(landedNumber); // display result
+        setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
+        setCanSpin(false)
+        if (avatarSquare + landedNumber >= squares.length) { // passed START
+            // apiIncrementScore(5)
+        }
+        setTaskComplete(false)
+        checkLocation(userLocation.latitude, userLocation.longitude)
+    }
     
     const squares = [
         {id:  0, name: "Start"            , backgroundColor: "#3c3e4c", location: [ 0        ,  0        ]},
@@ -216,22 +234,8 @@ function Board() {
                 <div>
                     <Spinner
                         canSpin={canSpin}
-                        setCanSpin={setCanSpin}
-                        setResult={setResult}
-                        setGetChance={setGetChance}
-                        setShowChance={setShowChance}
-                        setTaskComplete={setTaskComplete}
-                        checkLocation={checkLocation}
-                        avatarSquare={avatarSquare}
-                        setAvatarSquare={setAvatarSquare}
-                        squareRefs={squareRefs}
-                        userLocation={userLocation}
-                        callback={() => {
-                            if (userLocation != null) {
-                                checkLocation(userLocation.latitude, userLocation.longitude)
-                            }
-                            console.log("Callback!")
-                    }} />
+                        onSpinnerAnimationEnd={onSpinnerAnimationEnd}
+                    />
                 </div>
                 <div />
                 <div />
