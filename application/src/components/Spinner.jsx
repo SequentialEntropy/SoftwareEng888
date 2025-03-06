@@ -52,30 +52,32 @@ function Spinner({
     }
 
     return (
-        <fieldset className={styles.spinner}>
-            <ul ref={spinnerRef}>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-                <li>6</li>
-            </ul>
-            <button
-                onClick={wheelOfFortune}
-                disabled={!canSpin}
-                style={{
-                    opacity: canSpin ? 1 : 0.5,
-                    cursor: canSpin ? "pointer" : "not-allowed",
-                }}
-            >SPIN</button>
-        </fieldset>
+        <div>
+            <fieldset className={styles.spinner}>
+                <ul ref={spinnerRef}>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                </ul>
+                <button
+                    onClick={wheelOfFortune}
+                    disabled={!canSpin}
+                    style={{
+                        opacity: canSpin ? 1 : 0.5,
+                        cursor: canSpin ? "pointer" : "not-allowed",
+                    }}
+                >SPIN</button>
+            </fieldset>
+        </div>
     )
 }
 

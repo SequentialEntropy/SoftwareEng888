@@ -143,12 +143,10 @@ function Board() {
                 {Square(squares[14], squareRefs)}
                 {Square(squares[ 6], squareRefs)}
                 <div />
-                <div>
-                    <Spinner
-                        canSpin={canSpin}
-                        onSpinnerAnimationEnd={onSpinnerAnimationEnd}
-                    />
-                </div>
+                <Spinner
+                    canSpin={canSpin}
+                    onSpinnerAnimationEnd={onSpinnerAnimationEnd}
+                />
                 <div />
                 <div />
                 <div className={styles.task_deck}>
