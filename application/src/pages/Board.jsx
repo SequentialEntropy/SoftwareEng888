@@ -89,6 +89,7 @@ function Board() {
         }
     }
 
+    // Board layout
     const squares = [
         {id:  0, name: "Start"            , backgroundColor: "#3c3e4c", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
         {id:  1, name: "Birks Grange"     , backgroundColor: "#7f95d1", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
@@ -129,19 +130,19 @@ function Board() {
                 <Avatar avatarSquare={avatarSquare} squareRefs={squareRefs} />
 
                 {/* Board items representing locations on campus */}
-                {Square(squares[ 8], squareRefs)}
-                {Square(squares[ 9], squareRefs)}
-                {Square(squares[10], squareRefs)}
-                {Square(squares[11], squareRefs)}
-                {Square(squares[12], squareRefs)}
-                {Square(squares[13], squareRefs)}
-                {Square(squares[ 7], squareRefs)}
+                <Square {...squares[ 8]} squareRefs={squareRefs}/>
+                <Square {...squares[ 9]} squareRefs={squareRefs}/>
+                <Square {...squares[10]} squareRefs={squareRefs}/>
+                <Square {...squares[11]} squareRefs={squareRefs}/>
+                <Square {...squares[12]} squareRefs={squareRefs}/>
+                <Square {...squares[13]} squareRefs={squareRefs}/>
+                <Square {...squares[ 7]} squareRefs={squareRefs}/>
                 <div />
                 <div />
                 <div />
                 <div />
-                {Square(squares[14], squareRefs)}
-                {Square(squares[ 6], squareRefs)}
+                <Square {...squares[ 14]} squareRefs={squareRefs}/>
+                <Square {...squares[ 6]} squareRefs={squareRefs}/>
                 <div />
                 <Spinner
                     canSpin={canSpin}
@@ -161,13 +162,13 @@ function Board() {
                     getChance={getChance}
                     showChance={showChance}
                 />
-                {Square(squares[15], squareRefs)}
-                {Square(squares[ 5], squareRefs)}
-                {Square(squares[ 4], squareRefs)}
-                {Square(squares[ 3], squareRefs)}
-                {Square(squares[ 2], squareRefs)}
-                {Square(squares[ 1], squareRefs)}
-                {Square(squares[ 0], squareRefs)}
+                <Square {...squares[ 15]} squareRefs={squareRefs}/>
+                <Square {...squares[ 5]} squareRefs={squareRefs}/>
+                <Square {...squares[ 4]} squareRefs={squareRefs}/>
+                <Square {...squares[ 3]} squareRefs={squareRefs}/>
+                <Square {...squares[ 2]} squareRefs={squareRefs}/>
+                <Square {...squares[ 1]} squareRefs={squareRefs}/>
+                <Square {...squares[ 0]} squareRefs={squareRefs}/>
             </div>
             <div>
                 {/* Points Container */}

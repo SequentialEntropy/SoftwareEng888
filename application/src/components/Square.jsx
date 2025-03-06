@@ -1,6 +1,6 @@
 import styles from "../styles/Board.module.css"
 
-export default function Square({id, name, backgroundColor}, squareRefs) {
+export default function Square({id, name, backgroundColor, squareRefs}) {
     const isStartSquare = id === 0
 
     return (
