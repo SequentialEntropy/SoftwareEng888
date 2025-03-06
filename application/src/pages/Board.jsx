@@ -141,7 +141,7 @@ function Board() {
                 <div />
                 <div />
                 <div />
-                <Square {...squares[ 14]} squareRefs={squareRefs}/>
+                <Square {...squares[14]} squareRefs={squareRefs}/>
                 <Square {...squares[ 6]} squareRefs={squareRefs}/>
                 <div />
                 <Spinner
@@ -162,7 +162,7 @@ function Board() {
                     getChance={getChance}
                     showChance={showChance}
                 />
-                <Square {...squares[ 15]} squareRefs={squareRefs}/>
+                <Square {...squares[15]} squareRefs={squareRefs}/>
                 <Square {...squares[ 5]} squareRefs={squareRefs}/>
                 <Square {...squares[ 4]} squareRefs={squareRefs}/>
                 <Square {...squares[ 3]} squareRefs={squareRefs}/>
