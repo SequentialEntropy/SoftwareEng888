@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "../styles/Board.module.css"
 
-export default function Task({showTask, setShowTask, square, taskName, completeTask}) {
+export default function Task({showTask, setShowTask, square, taskName, onCompleteTask}) {
     const [isTaskCompletable, setIsTaskCompletable] = useState(false)
 
     const gpsThreshold = 0.1; // Should be enough
@@ -58,7 +58,7 @@ export default function Task({showTask, setShowTask, square, taskName, completeT
                         <div className={styles.popup_content}>
                         <h2>You are at: {square.name} <br/> The task is: {taskName} </h2>
                         <button
-                            onClick={() => completeTask()}
+                            onClick={() => onCompleteTask()}
                             disabled={!isTaskCompletable}
                             style={{
                                 opacity: isTaskCompletable ? 1 : 0.5,

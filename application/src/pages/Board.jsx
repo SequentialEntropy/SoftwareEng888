@@ -66,7 +66,7 @@ function Board() {
     }
 
     // Event handlers
-    const completeTask = () => {
+    const onCompleteTask = () => {
         setShowTask(false)
         setCanSpin(true)
         setGetChance(false)
@@ -154,7 +154,7 @@ function Board() {
                     setShowTask={setShowTask}
                     square={squares[avatarSquare]}
                     taskName={chosenTask}
-                    completeTask={completeTask}
+                    onCompleteTask={onCompleteTask}
                 />
                 <Chance
                     setShowChance={setShowChance}
