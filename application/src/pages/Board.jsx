@@ -31,8 +31,7 @@ function Board() {
     // Game states
     const [score, setScore] = useState(0)
     const [avatarSquare, setAvatarSquare] = useState(0)
-    const chosenTask = useState(() => ["Pick up a cup", "Recycle an item"][Math.floor(Math.random() * 2)]);
-      
+    const [chosenTask, setChosenTask] = useState("Loading task...");
 
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
@@ -51,6 +50,7 @@ function Board() {
         )
         // teleport avatar to START
         setAvatarSquare(0)
+        setChosenTask(generateRandomTask())
     }, [])
 
     // Helper functions
@@ -66,11 +66,15 @@ function Board() {
         })
     }
 
+    const tasks = ["Use a reusable cup", "Recycle an item", "Use the water fountain","Recycled used paper","Visit a green space","Pick up a piece of litter","Turn off the lights","Donate to the food fridge","Take something from the food fridge","Turn off power outlet after use","Buy a sustainable product","Fill up your water bottle", "Walk to campus", "Try a vegan food", "Read an article on sustainability"]
+    const generateRandomTask = () => tasks[Math.floor(Math.random() * tasks.length)]
+
     // Event handlers
     const onCompleteTask = () => {
         setShowTask(false)
         setCanSpin(true)
         setGetChance(false)
+        setChosenTask(generateRandomTask())
         awardScore(10)
     }
 
