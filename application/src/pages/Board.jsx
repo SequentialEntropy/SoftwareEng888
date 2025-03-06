@@ -102,7 +102,15 @@ function Board() {
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
     const [taskComplete, setTaskComplete] = useState(true);
-    const chosenTask = useState(() => ["Pick up a cup", "Recycle an item"][Math.floor(Math.random() * 2)]);
+    // const [chosenTask] = useState(() => {
+    //     const tasks = ["Use a reusable cup", "Recycle an item", "Use the water fountain"];
+    //     return tasks[Math.floor(Math.random() * tasks.length)];
+    // });
+
+    const tasks = ["Use a reusable cup", "Recycle an item", "Use the water fountain","Recycled used paper","Visit a green space","Pick up a piece of litter","Turn off the lights","Donate to the food fridge","Take something from the food fridge","Turn off power outlet after use","Buy a sustainable product","Fill up your water bottle", "Walk to campus", "Try a vegan food", "Read an article on sustainability"];
+    const generateRandomTask = () => tasks[Math.floor(Math.random() * tasks.length)];
+
+    const [chosenTask, setChosenTask] = useState(generateRandomTask);
       
 
       {/*Chance card activation*/}
@@ -263,7 +271,8 @@ function Board() {
     }
     const spinButton =() => {
         if (userLocation != null) {
-            checkLocation(userLocation.latitude, userLocation.longitude)}       
+            checkLocation(userLocation.latitude, userLocation.longitude)}   
+        setChosenTask(generateRandomTask());    
         wheelOfFortune();
     }
     const BoardSquare = (id, name, backgroundColor) => {
@@ -382,7 +391,7 @@ function Board() {
                         </div>
                         <div className={styles.popup_content}>
                         {/* <h2>You are at: {result}</h2> */}
-                        <h2>You are at: {names[avatarSquare]} <br/> The task is: {chosenTask} </h2>
+                        <h2>{names[avatarSquare]} <br/>{chosenTask} </h2>
                         {/* <h2>You are at: {userLocation ? `Lat: ${userLocation.latitude}, Lon: ${userLocation.longitude}` : "Fetching location..."}</h2> */}
                         <button 
                             onClick={() => setResult(null)} 
