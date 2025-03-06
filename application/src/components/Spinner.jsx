@@ -4,14 +4,15 @@ import styles from "../styles/Board.module.css"
 
 function Spinner({
     canSpin,
+    setCanSpin,
     callback,
     setResult,
     setGetChance,
     setShowChance,
-    teleportAvatar,
     setTaskComplete,
     checkLocation,
     avatarSquare,
+    setAvatarSquare,
     squareRefs,
     userLocation
 }) {
@@ -70,7 +71,8 @@ function Spinner({
 
             const totalSquares = Object.keys(squareRefs.current).length
 
-            teleportAvatar((avatarSquare + landedNumber) % totalSquares)
+            setAvatarSquare((avatarSquare + landedNumber) % totalSquares)
+            setCanSpin(false)
             console.log("squareRefs.current.length =", totalSquares)
             if (avatarSquare + landedNumber >= totalSquares) { // passed START
                 // apiIncrementScore(5)

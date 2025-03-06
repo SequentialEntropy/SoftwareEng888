@@ -19,6 +19,7 @@ import HowToPlay from "../components/HowToPlay";
 import Chance from "../components/Chance";
 import Task from "../components/Task";
 import Square from "../components/Square";
+import Avatar from "../components/Avatar";
 
 /**
  * Board Component
@@ -56,8 +57,6 @@ function Board() {
     const [result, setResult] = useState(null);
 
     const squareRefs = useRef({});
-    const avatarRef = useRef(null);
-    const [avatarPos, setAvatarPos] = useState([0, 0])
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
     const [taskComplete, setTaskComplete] = useState(true);
@@ -71,7 +70,7 @@ function Board() {
      */
     useEffect(() => {
         let watchId;
-        teleportAvatar(0)
+        setAvatarSquare(0)
         setCanSpin(true)
         const startWatch = () => {
             if (navigator.geolocation) {
@@ -142,17 +141,6 @@ function Board() {
             console.error("Youre not in the correct location");
         }
     };
-    
-    
-    const teleportAvatar = (squareId) => {
-        console.log(squareRefs.current[squareId])
-        const pos = squareRefs.current[squareId].getBoundingClientRect()
-        const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
-        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
-        setCanSpin(false)
-        setAvatarSquare(squareId)
-
-    }
 
     const taskFunction = () => {
         if (userLocation != null) {
@@ -208,12 +196,8 @@ function Board() {
             </nav>
             <div className={styles.main_board}>
                 {/* Avatar */}
-                <div ref={avatarRef} className={styles.avatar} style={{
-                        top: avatarPos[0] + 42,
-                        left: avatarPos[1] + 38,
-                    }}>
-                        <i className="bi bi-bicycle"></i>
-                </div>
+                <Avatar avatarSquare={avatarSquare} squareRefs={squareRefs} />
+
                 {/* Board items representing locations on campus */}
                 {Square(squares[ 8], squareRefs)}
                 {Square(squares[ 9], squareRefs)}
@@ -232,13 +216,14 @@ function Board() {
                 <div>
                     <Spinner
                         canSpin={canSpin}
+                        setCanSpin={setCanSpin}
                         setResult={setResult}
                         setGetChance={setGetChance}
                         setShowChance={setShowChance}
-                        teleportAvatar={teleportAvatar}
                         setTaskComplete={setTaskComplete}
                         checkLocation={checkLocation}
                         avatarSquare={avatarSquare}
+                        setAvatarSquare={setAvatarSquare}
                         squareRefs={squareRefs}
                         userLocation={userLocation}
                         callback={() => {
