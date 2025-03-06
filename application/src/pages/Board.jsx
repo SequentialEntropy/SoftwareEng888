@@ -31,7 +31,7 @@ function Board() {
     // Game states
     const [score, setScore] = useState(0)
     const [avatarSquare, setAvatarSquare] = useState(0)
-    const [chosenTask, setChosenTask] = useState(generateRandomTask);
+    const [chosenTask, setChosenTask] = useState("Loading task...");
 
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
@@ -50,6 +50,7 @@ function Board() {
         )
         // teleport avatar to START
         setAvatarSquare(0)
+        setChosenTask(generateRandomTask())
     }, [])
 
     // Helper functions
