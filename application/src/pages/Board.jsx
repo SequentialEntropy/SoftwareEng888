@@ -30,26 +30,24 @@ import Avatar from "../components/Avatar";
 function Board() {
     const [score, setScore] = useState(0);
 
-    const apiGetScore = () => {
-        return api.get("/accounts/me/")
-        .then(res => res.data.usergamestats.score)
-        .then(score => {setScore(score); return score})
-    }
-
-    const apiSetScore = (score) => {
-        return api.patch("/accounts/me/", {
-            usergamestats: {
-                score: score
-            }
+    const awardScore = async awardedScore => {
+        return api.get("/accounts/me/").then(res => res.data.usergamestats?.score)
+        .then(currentScore => {
+            setScore(currentScore + awardedScore)
+            return api.patch("/accounts/me/", {
+                usergamestats: {
+                    score: currentScore + awardedScore
+                }
+            })
         })
     }
 
-    const apiIncrementScore = (additionalScore) => {
-        return apiGetScore().then(score => {apiSetScore(score + additionalScore); setScore(score + additionalScore)})
-    }
-
     useEffect(() => {
-        apiGetScore()
+        // fetch current score and update rendered value
+        api.get("/accounts/me/").then(res => res.data.usergamestats?.score).then(
+            currentScore => setScore(currentScore)
+        )
+        // teleport avatar to START
         setAvatarSquare(0)
     }, [])
 
@@ -66,7 +64,7 @@ function Board() {
         setShowTask(false)
         setCanSpin(true)
         setGetChance(false)
-        apiIncrementScore(10)
+        awardScore(10)
     }
 
     const onSpinnerAnimationEnd = landedNumber => {
