@@ -102,8 +102,7 @@ function Board() {
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
     const [taskComplete, setTaskComplete] = useState(true);
-    const chosenTask = useState(() => ["Pick up a cup", "Recycle an item"][Math.floor(Math.random() * 2)]);
-      
+    const chosenTask = useState("Pick up one cup")
 
       {/*Chance card activation*/}
       const [getChance, setGetChance] = useState(null);
