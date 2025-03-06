@@ -43,7 +43,7 @@ export default function Task({showTask, setShowTask, square, taskName, onComplet
     
         // Cleanup function to stop watching location when the component unmounts
         return () => clearInterval(intervalId)
-    }, [])
+    }, [square])
 
     return (
         <div className={styles.task_deck}>
