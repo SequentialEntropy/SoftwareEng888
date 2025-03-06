@@ -5,7 +5,7 @@ export default function Square({id, name, backgroundColor, squareRefs}) {
 
     return (
         isStartSquare ? (
-            <div className={styles.item} key={id} ref={e => {squareRefs.current[id] = e}} style={id === 0 ? {backgroundColor} : {}}>
+            <div className={styles.item} key={id} ref={e => {squareRefs.current[id] = e}} style={{backgroundColor}}>
                 <h3 style={{color: '#d9d9d9', fontSize: '50px', transform: 'rotate(-25deg)', margin:'auto', letterSpacing: '5px'}}>
                     START
                 </h3>
