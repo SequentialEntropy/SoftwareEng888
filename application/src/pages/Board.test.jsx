@@ -205,6 +205,7 @@ describe("Board Component", () => {
         // Wait with specific timeout for chance popup to appear
         await waitFor(() => {
             const pointsText = screen.queryByText("+5 Points!");
+            if (!pointsText) console.warn("Chance popup not found yet...");
             expect(pointsText).toBeInTheDocument();
         }, { timeout: 2000 });
         
