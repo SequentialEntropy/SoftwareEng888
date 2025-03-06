@@ -1,6 +1,46 @@
+import { useEffect, useState } from "react"
 import styles from "../styles/Board.module.css"
 
-export default function Task({showTask, setShowTask, squareName, taskName, completeTask, isTaskCompletable}) {
+export default function Task({showTask, setShowTask, square, taskName, completeTask}) {
+    const [isTaskCompletable, setIsTaskCompletable] = useState(false)
+
+    const gpsThreshold = 0.1; // Should be enough
+
+    // check location and update isTaskCompletable
+    const checkLocation = (latitude, longitude) => {
+        setIsTaskCompletable(isWithinRange(
+            latitude,
+            longitude,
+            square.location[0],
+            square.location[1],
+            gpsThreshold,
+        ))
+    }
+
+    const getLocation = () => {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    const { latitude, longitude } = position.coords
+                    console.log("🔄 Location updated:", latitude, longitude)
+                    checkLocation(latitude, longitude)
+                },
+                (error) => console.error("❌ Geolocation error:", error),
+                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 },
+            );
+        }
+    };
+
+    useEffect(() => {
+        let intervalId
+    
+        getLocation()
+        intervalId = setInterval(getLocation, 5000) // continuously get location every 5 seconds
+    
+        // Cleanup function to stop watching location when the component unmounts
+        return () => clearInterval(intervalId)
+    }, [])
+
     return (
         <div>
             {showTask && (
@@ -13,7 +53,7 @@ export default function Task({showTask, setShowTask, squareName, taskName, compl
                         </button>
                     </div>
                     <div className={styles.popup_content}>
-                    <h2>You are at: {squareName} <br/> The task is: {taskName} </h2>
+                    <h2>You are at: {square.name} <br/> The task is: {taskName} </h2>
                     <button
                         onClick={() => completeTask()}
                         disabled={!isTaskCompletable}
@@ -28,4 +68,16 @@ export default function Task({showTask, setShowTask, squareName, taskName, compl
             )}
         </div>
     )
+}
+
+function isWithinRange(currentLatitude, currentLongitude, targetLatitude, targetLongitude, range) {
+    if ( !currentLatitude || !currentLongitude ) {
+        console.warn("Location not available yet. Skipping check...")
+        return
+    }
+
+    const latDiff = Math.abs(currentLatitude - targetLatitude)
+    const lonDiff = Math.abs(currentLongitude - targetLongitude)
+
+    return (latDiff < range && lonDiff < range)
 }

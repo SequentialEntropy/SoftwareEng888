@@ -50,99 +50,20 @@ function Board() {
 
     useEffect(() => {
         apiGetScore()
+        setAvatarSquare(0)
     }, [])
 
-    const [canSpin, setCanSpin] = useState(true)
+    const [canSpin, setCanSpin] = useState(false)
 
     const squareRefs = useRef({});
     const [avatarSquare, setAvatarSquare] = useState(0)
-    const [userLocation, setUserLocation] = useState(null);
-    const [isTaskCompletable, setIsTaskCompletable] = useState(true);
     const chosenTask = useState("Pick up one cup")
 
     // Chance card activation
     const [getChance, setGetChance] = useState(null);
 
-    /**
-     * Initialises the spinning wheel effect
-     */
-    useEffect(() => {
-        let watchId;
-        setAvatarSquare(0)
-        setCanSpin(true)
-        const startWatch = () => {
-            if (navigator.geolocation) {
-                watchId = navigator.geolocation.watchPosition(
-                    (position) => {
-                        const { latitude, longitude } = position.coords;
-                        console.log("🔄 Location updated:", latitude, longitude);
-                        setUserLocation({ latitude, longitude });
-                    },
-                    (error) => console.error("❌ Geolocation error:", error),
-                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
-                    setCanSpin(false)
-                );
-            }
-        };
-    
-        startWatch();
-    
-        // 🔄 Restart watchPosition() every 10s to prevent location freeze
-        const restartInterval = setInterval(() => {
-            console.warn("⚠️ Restarting location tracking...");
-            navigator.geolocation.clearWatch(watchId);
-            startWatch();
-        }, 10000);
-    
-        // Cleanup function to stop watching location when the component unmounts
-        return () => {
-            if (watchId) {
-                navigator.geolocation.clearWatch(watchId);
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        if (userLocation && avatarSquare !== null) {
-            checkLocation(userLocation.latitude, userLocation.longitude);
-        }
-    }, [userLocation, avatarSquare]); // Run only when both are updated    
-
-    const checkLocation = (latitude, longitude) => {
-        if (!latitude || !longitude) {
-            console.warn("Location not available yet. Skipping check...");
-            return;
-        }
-        console.log("Checking location...");
-        console.log("User Location:", latitude, longitude);
-        console.log("Target Location:", squares[avatarSquare].location[0], squares[avatarSquare].location[1]);
-        // console.log("Target Location:", locations[avatarSquare][0], locations[avatarSquare][1]);
-        console.log("Avatar Square:", avatarSquare);
-    
-        const allowedLatitude = squares[avatarSquare].location[0];
-        const allowedLongitude = squares[avatarSquare].location[1];
-    
-        const latDiff = Math.abs(latitude - allowedLatitude);
-        const lonDiff = Math.abs(longitude - allowedLongitude);
-    
-        console.log("Latitude Difference:", latDiff);
-        console.log("Longitude Difference:", lonDiff);
-    
-        const threshold = 0.1; // Should be enough
-    
-        if ((latDiff < threshold && lonDiff < threshold) || avatarSquare === 0) {
-            console.log("Youre at the correct location!");
-            setIsTaskCompletable(true) // Set TRUE only if check passes
-        } else {
-            setIsTaskCompletable(false)
-            setCanSpin(false)
-            console.error("Youre not in the correct location");
-        }
-    };
-
     const completeTask = () => {
         setShowTask(false)
-        setIsTaskCompletable(true)
         setCanSpin(true)
         setGetChance(false)
         apiIncrementScore(10)
@@ -162,12 +83,10 @@ function Board() {
         if (avatarSquare + landedNumber >= squares.length) { // passed START
             // apiIncrementScore(5)
         }
-        setIsTaskCompletable(false)
-        checkLocation(userLocation.latitude, userLocation.longitude)
     }
     
     const squares = [
-        {id:  0, name: "Start"            , backgroundColor: "#3c3e4c", location: [ 0        ,  0        ]},
+        {id:  0, name: "Start"            , backgroundColor: "#3c3e4c", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
         {id:  1, name: "Birks Grange"     , backgroundColor: "#7f95d1", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
         {id:  2, name: "East Park"        , backgroundColor: "#558564", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
         {id:  3, name: "Peter Chalk"      , backgroundColor: "#7f2982", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
@@ -233,10 +152,7 @@ function Board() {
                 <div />
                 <div className={styles.task_deck}>
                     {/* Task Button */}
-                    <button className={styles.task_btn} onClick={() => {
-                        if (userLocation != null) checkLocation(userLocation.latitude, userLocation.longitude)
-                        setShowTask(true)
-                    }}>Task</button>
+                    <button className={styles.task_btn} onClick={() => { setShowTask(true) }}>Task</button>
                 </div>
                 <Chance
                     setShowChance={setShowChance}
@@ -254,10 +170,9 @@ function Board() {
                 <Task
                     showTask={showTask}
                     setShowTask={setShowTask}
-                    squareName={squares[avatarSquare].name}
+                    square={squares[avatarSquare]}
                     taskName={chosenTask}
                     completeTask={completeTask}
-                    isTaskCompletable={isTaskCompletable}
                 />
 
             </div>
