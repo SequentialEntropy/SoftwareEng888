@@ -37,7 +37,7 @@ function Board() {
     const [canSpin, setCanSpin] = useState(false)
     const [showTask, setShowTask] = useState(false)
     const [showChance, setShowChance] = useState(false)
-    const [getChance, setGetChance] = useState(null);
+    const [getChance, setGetChance] = useState(false);
 
     // Component refs
     const squareRefs = useRef({});
