@@ -53,13 +53,11 @@ function Board() {
     }, [])
 
     const [canSpin, setCanSpin] = useState(true)
-    // State to store the selected result
-    const [result, setResult] = useState(null);
 
     const squareRefs = useRef({});
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
-    const [taskComplete, setTaskComplete] = useState(true);
+    const [isTaskCompletable, setIsTaskCompletable] = useState(true);
     const chosenTask = useState("Pick up one cup")
 
     // Chance card activation
@@ -134,24 +132,17 @@ function Board() {
     
         if ((latDiff < threshold && lonDiff < threshold) || avatarSquare === 0) {
             console.log("Youre at the correct location!");
-            setTaskComplete(true); // Set TRUE only if check passes
+            setIsTaskCompletable(true) // Set TRUE only if check passes
         } else {
-            setTaskComplete(false)
+            setIsTaskCompletable(false)
             setCanSpin(false)
             console.error("Youre not in the correct location");
         }
     };
 
-    const taskFunction = () => {
-        if (userLocation != null) {
-            checkLocation(userLocation.latitude, userLocation.longitude)}
-        setResult(true) 
-
-
-    }
-    const completeTask =() => {
-        setResult(null)
-        setTaskComplete(true)
+    const completeTask = () => {
+        setShowTask(false)
+        setIsTaskCompletable(true)
         setCanSpin(true)
         setGetChance(false)
         apiIncrementScore(10)
@@ -165,13 +156,13 @@ function Board() {
             setGetChance(false)
             setShowChance(false)
         }
-        setResult(landedNumber); // display result
+        setShowTask(true)
         setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
         setCanSpin(false)
         if (avatarSquare + landedNumber >= squares.length) { // passed START
             // apiIncrementScore(5)
         }
-        setTaskComplete(false)
+        setIsTaskCompletable(false)
         checkLocation(userLocation.latitude, userLocation.longitude)
     }
     
@@ -195,6 +186,7 @@ function Board() {
     ]
 
     const [showChance, setShowChance] = useState(false);
+    const [showTask, setShowTask] = useState(false)
 
     return (
         <div className={styles.game}>
@@ -241,7 +233,10 @@ function Board() {
                 <div />
                 <div className={styles.task_deck}>
                     {/* Task Button */}
-                    <button className={styles.task_btn} onClick={() => taskFunction()}>Task</button>
+                    <button className={styles.task_btn} onClick={() => {
+                        if (userLocation != null) checkLocation(userLocation.latitude, userLocation.longitude)
+                        setShowTask(true)
+                    }}>Task</button>
                 </div>
                 <Chance
                     setShowChance={setShowChance}
@@ -257,13 +252,12 @@ function Board() {
                 {Square(squares[ 0], squareRefs)}
 
                 <Task
-                    result={result}
-                    setResult={setResult}
-                    squares={squares}
-                    avatarSquare={avatarSquare}
-                    chosenTask={chosenTask}
+                    showTask={showTask}
+                    setShowTask={setShowTask}
+                    squareName={squares[avatarSquare].name}
+                    taskName={chosenTask}
                     completeTask={completeTask}
-                    taskComplete={taskComplete}
+                    isTaskCompletable={isTaskCompletable}
                 />
 
             </div>
