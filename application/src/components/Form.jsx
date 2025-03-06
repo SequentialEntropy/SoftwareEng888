@@ -6,6 +6,7 @@
  * @author Amreet Dhillon
  * @author Genki Asahi 
  * @author Yap Wen Xing
+ * @author Dany Kelzi
  * @version 1.1.0
  * @since 23-02-2025
  */
@@ -55,10 +56,12 @@ function Form({ route, method }) {
      * @param {Event} e - Form submission event.
      */
 
+    const [errorMessage, setErrorMessage] = useState(""); // New state for errors
+
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
-
+    
         // Password confirmation validation for registration
         if (method === "register" && password !== confirmPassword) {
             setPasswordError("Passwords do not match.");
@@ -67,27 +70,31 @@ function Form({ route, method }) {
         } else {
             setPasswordError("");
         }
-
+    
         try {
             const res = await api.post(route, { username, password });
-
+    
             if (method === "login") {
                 // Store the authentication tokens
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 navigate("/home");
             } else {
-                // Redirect user to login page after registration
                 navigate("/login");
             }
         } catch (error) {
-            alert(error); // Display error alert
+            if (error.response && error.response.data) {
+                setErrorMessage(error.response.data.error || "Invalid credentials. Please try again.");
+            } else {
+                setErrorMessage("An error occurred. Please try again later.");
+            }
         } finally {
             setLoading(false);
         }
     };
-
+    
     return (
+        
         <div className={styles.main_form}>
     
             {/* Header section */}
@@ -101,9 +108,9 @@ function Form({ route, method }) {
     
             <div className={styles.login}>
                 <div className={styles.login_container}>
+                
                     {/* Display form title based on method (Login/Register) */}
                     <h2>{name}</h2>
-    
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             {/* Username input field */}
@@ -122,7 +129,9 @@ function Form({ route, method }) {
                                 </>
                             )}
                         </div>
-    
+                        {/* Display error message after signip forms*/}
+                        {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
+
                         {/* Submit button */}
                         <button type="submit" className={styles.login_btn} disabled={loading}>
                             {loading ? "Processing..." : name}
