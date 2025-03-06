@@ -11,7 +11,7 @@
  * @since 19-02-2025
  */
 
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
 import api from "../api";
 import Spinner from "../components/Spinner";
