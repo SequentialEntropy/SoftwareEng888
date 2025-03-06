@@ -12,17 +12,28 @@
 import React from 'react';
 import { render, screen, fireEvent, act, waitFor} from "@testing-library/react";
 import Board from "./Board";
-import "@testing-library/jest-dom";
+import "@testing-library/jest-dom";  
+
+
+// Mock geolocation for disabling spin in wrong location
+const mockGeolocation = {
+    watchPosition: jest.fn(),
+    clearWatch: jest.fn()
+};
+
+global.navigator.geolocation = mockGeolocation;
 
 // Mock getBoundingClientRect for all elements
-Element.prototype.getBoundingClientRect = jest.fn(() => ({
-    width: 100,
-    height: 100,
-    top: 100,
-    left: 100,
-    right: 200,
-    bottom: 200
-}));
+Element.prototype.getBoundingClientRect = jest.fn().mockImplementation(() => {
+    return {
+      width: 120,
+      height: 120,
+      top: 0,
+      left: 0,
+      bottom: 0,
+      right: 0,
+    };
+});
 
 Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
     get() { return document.createElement('div'); }
@@ -36,14 +47,6 @@ describe("Board Component", () => {
             cancel: jest.fn(),
         }));
 
-        // Mock geolocation for disabling spin in wrong location
-        global.navigator.geolocation = {
-            watchPosition: jest.fn((success, error, options) => {
-                success({ coords: { latitude: 50.7352, longitude: -3.5332 } });
-                return 1;
-            }),
-            clearWatch: jest.fn()
-        };
     });
 
     afterEach(() => {
@@ -63,34 +66,86 @@ describe("Board Component", () => {
      * Test if the spin button is enabled in the correct location
     */
     test("Spin button enabled if user is in the correct location", async () => {
-        await act(async () => {
-            render(<Board />);
+        let watchPositionCallback;
+        mockGeolocation.watchPosition.mockImplementation((success) => {
+        watchPositionCallback = success;
+        return 1;
         });
-
-        await waitFor(() => expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled());
-        await waitFor(() => expect(navigator.geolocation.watchPosition).toHaveBeenCalled());
-
-        const spinButton = await screen.findByText("SPIN");
-
-        await waitFor(() => {
-            expect(spinButton).not.toBeDisabled();
+        render(<Board />);
+        
+        // Avatar at start to allow spin
+        const spinButton = screen.getByText('SPIN');
+        expect(spinButton).toBeEnabled();
+        fireEvent.click(spinButton);
+        
+        // Assume now at Forum on the board based on the spin result
+        act(() => {
+        // Simulate Forum location
+        watchPositionCallback({
+            coords: {
+            latitude: 50.7352025,
+            longitude: -3.5331998, // Forum Coordinates?
+            }
         });
+        });
+        expect(spinButton).toBeEnabled();
     });
 
     /**
      * Test if the spin button is disabled in the wrong location
     */
     test("Spin button disabled if user is in wrong location", async () => {
-        global.navigator.geolocation.watchPosition.mockImplementationOnce((_, error) => {
-            error({ message: "User is in the wrong location" });
+        let watchPositionCallback;
+        mockGeolocation.watchPosition.mockImplementation((success) => {
+            watchPositionCallback = success;
+            return 1;
         });
 
-        await act(async () => {
-            render(<Board />);
+        // Mock to trigger the onfinish callback
+        global.Element.prototype.animate.mockImplementation(() => {
+            const animation = {
+                onfinish: null,
+                cancel: jest.fn()
+            };
+            // Set a timeout to simulate animation completing
+            setTimeout(() => {
+                if (animation.onfinish) {
+                    animation.onfinish();
+                }
+            }, 10);
+            return animation;
         });
-
-        const spinButton = await screen.findByText("SPIN");
-        expect(spinButton).toBeDisabled();
+        render(<Board />);
+        
+        // Avatar at start to allow spin
+        const spinButton = screen.getByText('SPIN');
+        expect(spinButton).toBeEnabled();
+        fireEvent.click(spinButton);
+        
+        // Wait for animation to finish
+        await waitFor(() => {
+            expect(global.Element.prototype.animate).toHaveBeenCalled();
+        });
+        
+        // Simulate the avatar moving to a new position
+        // Simulate user at wrong location
+        act(() => {
+            watchPositionCallback({
+                coords: {
+                    latitude: 51.5074,
+                    longitude: -0.1278 // random coords
+                }
+            });
+        });
+        
+        // Wait for the taskComplete state to be set to false after location check
+        await waitFor(() => {
+            expect(spinButton).toBeDisabled();
+        }, { timeout: 3000 });
+        
+        // Style checks
+        expect(spinButton).toHaveStyle('opacity: 0.5');
+        expect(spinButton).toHaveStyle('cursor: not-allowed');
     });
 
     /**
@@ -104,6 +159,58 @@ describe("Board Component", () => {
             expect(global.Element.prototype.animate).toHaveBeenCalled();
         });
     });
+
+    /**
+     * Test if chance popup appears when landing on 6
+    */
+    test("chance popup appears when landing on 6", async () => {
+        jest.setTimeout(10000);
+        
+        // Mock to trigger the onfinish callback
+        global.Element.prototype.animate.mockImplementation(() => {
+            const animation = {
+                onfinish: null,
+                cancel: jest.fn()
+            };
+            // Set a timeout to simulate animation completing
+            setTimeout(() => {
+                if (animation.onfinish) {
+                    animation.onfinish();
+                }
+            }, 10);
+            
+            return animation;
+        });
+        
+        // Mock of wheelOfFortune
+        const originalMath = Object.create(global.Math);
+        const mockMath = Object.create(global.Math);
+
+        // Always land on 6
+        mockMath.random = () => 0.5;
+        mockMath.floor = function(x) {
+            if (x >= 0 && x < 12) {
+                return 2;
+            }
+            return originalMath.floor(x);
+        };
+        global.Math = mockMath;
+        render(<Board />);
+        const spinButton = screen.getByText("SPIN");
+        fireEvent.click(spinButton);
+        await act(async () => {
+            await new Promise(resolve => setTimeout(resolve, 50));
+        });
+        
+        // Wait with specific timeout for chance popup to appear
+        await waitFor(() => {
+            const pointsText = screen.queryByText("+5 Points!");
+            expect(pointsText).toBeInTheDocument();
+        }, { timeout: 2000 });
+        
+        // Restore the original Math object
+        global.Math = originalMath;
+    }, 10000);
 
     /**
      * Test if completion of task resets result state
