@@ -9,7 +9,7 @@
  * @since 15-02-2025
  */
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, use } from "react"
 import api from "../api"
 import styles from "../styles/Dashboard.module.css"
 
@@ -28,13 +28,25 @@ function Home() {
     const [userProfiles, setUserProfiles] = useState([])
 
     // State to store the current user 
-    const [user, setUser] = useState({
-        username: null
+    const [currentUser, setCurrentUser] = useState({
+        username: null,
+        usergamestats: {
+            current_square: 0,
+            score: 0,
+        }
     })
+
+    const [rankedUsers, setRankedUsers] = useState([])
 
     // State for storing content and title 
     const [content, setContent] = useState("")
     const [title, setTitle] = useState("")
+
+    const leaderboardColors = [
+        "#EA526F",
+        "#7F95D1",
+        "#558564"
+    ]
 
     /**
      * Fetches user details and profiles when the component initialises 
@@ -44,6 +56,7 @@ function Home() {
         document.title = "Dashboard"
         getUserProfiles()
         getUserDetails()
+        getRankedUsers()
     }, [])
 
     /**
@@ -54,7 +67,7 @@ function Home() {
         api
             .get("/accounts/me/")
             .then(res => res.data)
-            .then(data => {setUser(data); console.log(data)})
+            .then(data => {setCurrentUser(data); console.log(data)})
             .catch(err => alert(err))
     }
 
@@ -70,9 +83,17 @@ function Home() {
             .catch(err => alert(err))
     }
 
+    const getRankedUsers = () => {
+        api
+            .get("/accounts/ranked-users/")
+            .then(res => res.data)
+            .then(data => {setRankedUsers(data)})
+            .catch(err => alert(err))
+    }
+
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
-        <h1 className={styles.heading}>Welcome back {user.username}</h1>
+        <h1 className={styles.heading}>Welcome back {currentUser.username}</h1>
 
         {/* Sidebar navigation */}
         <nav>
@@ -93,32 +114,25 @@ function Home() {
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <h1>Level 1</h1>
+                <a href="board">Level 1</a>
                 <h2>Innovation Centre</h2>
             </div>
 
             {/* Leaderboard section */}
             <div className={styles.item}>
-                <h1>Leaderboard</h1>
-                <div className={styles.profileItem}style={{backgroundColor: "#EA526F"}}>
-                    <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
+                <h1 style={{marginTop: "20px"}}>Leaderboard</h1>
+
+                { /* Get the top 3 users */
+                rankedUsers.slice(0, 3).map((user, index) => (
+                    <div key={user.id} className={styles.profileItem} style={{backgroundColor: leaderboardColors[index]}}>
+                        <div className={styles.profileIcon}>
+                            <i className="bi bi-person-circle" style={{fontSize: "48px"}}></i>
+                        </div>
+                        <div className={styles.profileName}>{user.username} - {user.usergamestats?.score}</div>
                     </div>
-                    <div className={styles.profileName}>Username1</div>
-                </div>
-                <div className={styles.profileItem} style={{backgroundColor: "#7F95D1"}}>
-                    <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
-                    </div>
-                    <div className={styles.profileName}>Username2</div>
-                </div>
-                <div className={styles.profileItem} style={{backgroundColor:"#558564"}}>
-                    <div className={styles.profileIcon}>
-                        <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
-                    </div>
-                    <div className={styles.profileName}>Username3</div>
-                </div>
-                <h3>You are at: Position #12</h3>
+                ))}
+
+                <h3>You are at: Position #{rankedUsers.findIndex(user => user.id === currentUser.id) + 1}</h3>
             </div>
 
             {/* Progress bar */}
@@ -126,10 +140,21 @@ function Home() {
                 <progress value="50" max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
-                <h1>Map</h1>
+                <a href="map">Map</a>
             </div>
+
+            {/* Points section */}
             <div className={styles.item}>
-                <h1>Rewards</h1>
+                <h1 style={{marginTop: "20px", fontSize:"30px"}}>Your points</h1>
+                <div className={styles.points_container}>
+                    <div className={styles.pointsItem} style={{marginLeft:"40px", alignItems:"center", height:"70%"}}>
+                        <div className={styles.pointsIcon}>
+                            <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
+                        </div>
+                        <div style={{fontSize: "40px", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
+                    </div>
+                </div>
+            
             </div>
         </div>
     </div>

@@ -93,10 +93,10 @@
         "hero hero hero hero aside2 aside2"
         "hero hero hero hero aside2 aside2"
         "progress progress progress progress aside2 aside2"
-        "aside4 aside4 aside4 aside5 aside5 aside5"
-        "aside4 aside4 aside4 aside5 aside5 aside5"
-        "aside4 aside4 aside4 aside5 aside5 aside5"
-        "aside4 aside4 aside4 aside5 aside5 aside5 ";
+        "aside4 aside4 aside4 aside4 aside5 aside5"
+        "aside4 aside4 aside4 aside4 aside5 aside5"
+        "aside4 aside4 aside4 aside4 aside5 aside5"
+        "aside4 aside4 aside4 aside4 aside5 aside5 ";
     margin-left: 10%;
 }
 
@@ -110,6 +110,12 @@
     place-items: "center";
 }
 
+.item a{
+    text-decoration: none;
+    font-size: 2rem;
+    color: #fff;
+}
+
 .grid .item:nth-child(1) {
     grid-area: hero;
     background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url('../assets/tile1.jpg');
@@ -118,6 +124,8 @@
     align-content: center;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.804); /* Semi-transparent background */
+    height:145%;
+    
 }
 
 
@@ -132,6 +140,9 @@
     gap: 20px;
     border-radius: 30px;
     width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    margin-left: 20px;
+    height: 120%;
 
 }
 
@@ -146,6 +157,7 @@
     width: 80%;
     color:white;
     border-radius: 30px;
+    height: 45px;
 }
 
 .profileIcon {
@@ -156,6 +168,9 @@
     grid-area: progress;
     align-content:center;
     margin-left: 0;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height:150%;
     text-align: center;
 }
 
@@ -164,28 +179,68 @@
     grid-area: aside4;
     align-content: center;
     text-align: center;
-    background-image: url("https://miro.medium.com/v2/resize:fill:1200:675/g:fp:0.73:0.06/1*dBe7OoCKPI4HKNQ1_79x2A.jpeg");
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5) ), url("https://miro.medium.com/v2/resize:fill:1200:675/g:fp:0.73:0.06/1*dBe7OoCKPI4HKNQ1_79x2A.jpeg");
     background-size: cover;
     background-repeat: no-repeat;
     background-color: rgb(0, 0, 0); /* Semi-transparent background */
+    height: 300px;
+    margin-top: 20px;
 
 }
 
 .grid .item:nth-child(5) {
     grid-area: aside5;
-    align-content: center;
+    /* background-color: rgba(0, 0, 0, 0.5); */
+    background-color: #7F2982;
+    margin-left: 30px;
+    margin-top: 20%;
+    border-radius: 30px;
+    flex-direction: column;
+    align-items: center;
     text-align: center;
-    background-color: rgba(0, 0, 0, 0.5);
+    height: 75%;
+    width: 95%;
+    
+}
+
+.points_container {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+
+
+/* Individual profile items */
+.pointsItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0;
+    margin-top: 2%;
+    
+    /* background-color: #3C3E4C; */
+    width: 80%;
+    color:white;
+    border-radius: 30px;
+    height: 60px;
+}
+
+.pointsIcon {
+    margin-top: 0;
+   
 }
 
 /* Progress bar */
 .progressBar {
     width: 100%;
-    height: 70px;
+    height: 60px;
     appearance: none;
     border-radius: 30px;
     margin-left: 0;
     box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    
 }
 
 .progressBar::-webkit-progress-bar {

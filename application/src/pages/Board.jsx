@@ -6,12 +6,14 @@
  * @author Amreet Dhillon 
  * @author Yap Wen Xing 
  * @author Genki Asahi
+ * @author Dany Kelzi
  * @version 1.1.0 
  * @since 19-02-2025
  */
 
 import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import styles from "../styles/Board.module.css";
+import api from "../api";
 
 /**
  * Board Component
@@ -20,6 +22,31 @@ import styles from "../styles/Board.module.css";
  */
 
 function Board() {
+    const [score, setScore] = useState(0);
+
+    const apiGetScore = () => {
+        return api.get("/accounts/me/")
+        .then(res => res.data.usergamestats.score)
+        .then(score => {setScore(score); return score})
+    }
+
+    const apiSetScore = (score) => {
+        return api.patch("/accounts/me/", {
+            usergamestats: {
+                score: score
+            }
+        })
+    }
+
+    const apiIncrementScore = (additionalScore) => {
+        return apiGetScore().then(score => {apiSetScore(score + additionalScore); setScore(score + additionalScore)})
+    }
+
+    useEffect(() => {
+        apiGetScore()
+    }, [])
+
+    const [canSpin, setCanSpin] = useState(true)
     // Reference to the spinning wheel element
     const spinnerRef = useRef(null);
     // State to store the selected result
@@ -75,10 +102,10 @@ function Board() {
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [userLocation, setUserLocation] = useState(null);
     const [taskComplete, setTaskComplete] = useState(true);
+    const chosenTask = useState("Pick up one cup")
 
-      {/*Chance card activatio*/}
+      {/*Chance card activation*/}
       const [getChance, setGetChance] = useState(null);
-    const [chosenTask, setChosenTask] = useState ("Pick up a cup")
 
     /**
      * Initialises the spinning wheel effect
@@ -86,17 +113,30 @@ function Board() {
     useEffect(() => {
         let watchId;
         teleportAvatar(0)
-        if (navigator.geolocation) {
-            watchId = navigator.geolocation.watchPosition(
-                (position) => {
-                    const { latitude, longitude } = position.coords;
-                    setUserLocation({ latitude, longitude });
-                    checkLocation(latitude, longitude);
-                },
-                (error) => console.error("Error fetching location:", error),
-                { enableHighAccuracy: true, maximumAge: 0, timeout: 5000 }
-            );
-        }
+        setCanSpin(true)
+        const startWatch = () => {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition(
+                    (position) => {
+                        const { latitude, longitude } = position.coords;
+                        console.log("🔄 Location updated:", latitude, longitude);
+                        setUserLocation({ latitude, longitude });
+                    },
+                    (error) => console.error("❌ Geolocation error:", error),
+                    { enableHighAccuracy: true, maximumAge: 0, timeout: 10000 },
+                    setCanSpin(false)
+                );
+            }
+        };
+    
+        startWatch();
+    
+        // 🔄 Restart watchPosition() every 10s to prevent location freeze
+        const restartInterval = setInterval(() => {
+            console.warn("⚠️ Restarting location tracking...");
+            navigator.geolocation.clearWatch(watchId);
+            startWatch();
+        }, 10000);
     
         // Cleanup function to stop watching location when the component unmounts
         return () => {
@@ -138,24 +178,24 @@ function Board() {
             setTaskComplete(true); // Set TRUE only if check passes
         } else {
             setTaskComplete(false)
+            setCanSpin(false)
             console.error("Youre not in the correct location");
         }
     };
     
     
     const teleportAvatar = (squareId) => {
-        console.log(squareRefs.current[squareId]);
-    
+        console.log(squareRefs.current[squareId])
         if (!squareRefs.current[squareId] || !avatarRef.current) {
             console.warn("Attempted to access a non-existing element.");
             return;
         }
-    
-        const pos = squareRefs.current[squareId]?.getBoundingClientRect();
-        const offsetPos = avatarRef.current.offsetParent?.getBoundingClientRect() || { top: 0, left: 0 };
-    
-        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left]);
-        setAvatarSquare(squareId);
+        const pos = squareRefs.current[squareId].getBoundingClientRect()
+        const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect();
+        setAvatarPos([pos.top + window.scrollY - offsetPos.top, pos.left + window.scrollX - offsetPos.left])
+        setCanSpin(false)
+        setAvatarSquare(squareId)
+
     }
 
     const wheelOfFortune = () => {
@@ -183,7 +223,7 @@ function Board() {
             // normalize the final rotation angle 
             let finalAngle = newEndDegree % 360;
 
-            // adjust to align with the top pointer correctly
+            // adjust to align with the top pointer 
             let landedIndex = Math.floor(((360 - finalAngle) + pointerOffset) / sectionSize) % totalSections;
 
             // get the correct number from the order listed 
@@ -200,21 +240,34 @@ function Board() {
             }
 
             teleportAvatar((avatarSquare + landedNumber) % squares.length)
+            if (avatarSquare + landedNumber >= squares.length) { // passed START
+                // apiIncrementScore(5)
+            }
             setTaskComplete(false)
-            checkLocation()
+            checkLocation(userLocation.latitude, userLocation.longitude)
         };
 
         setAnimation(newAnimation)
         setPreviousEndDegree(newEndDegree % 360) // store last rotation
     }
     const taskFunction = () => {
-        checkLocation()
-        setResult(true)
+        if (userLocation != null) {
+            checkLocation(userLocation.latitude, userLocation.longitude)}
+        setResult(true) 
+
+
     }
     const completeTask =() => {
         setResult(null)
         setTaskComplete(true)
+        setCanSpin(true)
         setGetChance(false)
+        apiIncrementScore(10)
+    }
+    const spinButton =() => {
+        if (userLocation != null) {
+            checkLocation(userLocation.latitude, userLocation.longitude)}       
+        wheelOfFortune();
     }
     const BoardSquare = (id, name, backgroundColor) => {
         return (
@@ -307,11 +360,11 @@ function Board() {
                             <li>6</li>
                             
                         </ul>
-                        <button onClick={() => { checkLocation(); wheelOfFortune(); }} 
-                        disabled={!taskComplete} 
+                        <button onClick={() => spinButton()} 
+                        disabled={!canSpin} 
                         style={{ 
-                            opacity: taskComplete ? 1 : 0.5, 
-                            cursor: taskComplete ? "pointer" : "not-allowed" 
+                            opacity: canSpin ? 1 : 0.5, 
+                            cursor: canSpin ? "pointer" : "not-allowed" 
                         }}>SPIN</button>
                     </fieldset>
                 </div>
@@ -373,7 +426,6 @@ function Board() {
                         </div>
 
                     )}
-                    <h1>Chance</h1>
         
                 </div>
                 {squares[15]}
@@ -413,27 +465,7 @@ function Board() {
                     </div>
                 )}
             </div>
-            </div>
-            <div>
-
-                {/* How to play popup */}
-                <button className={styles.how_to_play_btn} onClick={() => setShowPopup(true)}>?</button>
-
-                {showPopup && (
-                    <div className={styles.overlay}>
-                        <div className={styles.how_to_play_container2}>
-                            <div className={styles.how_to_play_container3}>
-                                <h2 className={styles.how_to_play_title}>How to Play</h2>
-                            </div>
-                            <p className={styles.how_to_play_instructions}>1. Spin the wheel <br></br>2. Do task at specified location <br></br>3. Scan QR to verify completion <br></br> 4. Get trees</p>
-                            <button
-                            className={styles.exit_btn}
-                            onClick={() => setShowPopup(false)}>x
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
+        </div>
         </div>
     )
 }
