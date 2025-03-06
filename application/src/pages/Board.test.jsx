@@ -3,7 +3,7 @@
  * 
  * @file Handles rendering of the board and tests the board functions. 
  * @author Gareth Zheng Yang Koh
- * @author Crystal
+ * @author Crystal Tsui
  * @version 1.1.0 
  * @since 25-02-2025
 */
@@ -62,10 +62,36 @@ describe("Board Component", () => {
     /**
      * Test if the spin button is enabled in the correct location
     */
+    test("Spin button enabled if user is in the correct location", async () => {
+        await act(async () => {
+            render(<Board />);
+        });
+
+        await waitFor(() => expect(navigator.geolocation.getCurrentPosition).toHaveBeenCalled());
+        await waitFor(() => expect(navigator.geolocation.watchPosition).toHaveBeenCalled());
+
+        const spinButton = await screen.findByText("SPIN");
+
+        await waitFor(() => {
+            expect(spinButton).not.toBeDisabled();
+        });
+    });
 
     /**
      * Test if the spin button is disabled in the wrong location
     */
+    test("Spin button disabled if user is in wrong location", async () => {
+        global.navigator.geolocation.watchPosition.mockImplementationOnce((_, error) => {
+            error({ message: "User is in the wrong location" });
+        });
+
+        await act(async () => {
+            render(<Board />);
+        });
+
+        const spinButton = await screen.findByText("SPIN");
+        expect(spinButton).toBeDisabled();
+    });
 
     /**
      * Test if the Avatar moves after spin is made
