@@ -28,8 +28,31 @@ import Avatar from "../components/Avatar";
  */
 
 function Board() {
-    const [score, setScore] = useState(0);
+    // Game states
+    const [score, setScore] = useState(0)
+    const [avatarSquare, setAvatarSquare] = useState(0)
+    const chosenTask = useState("Pick up one cup")
 
+    // Toggles
+    const [canSpin, setCanSpin] = useState(false)
+    const [showTask, setShowTask] = useState(false)
+    const [showChance, setShowChance] = useState(false)
+    const [getChance, setGetChance] = useState(null);
+
+    // Component refs
+    const squareRefs = useRef({});
+
+    // Initialise Avatar location & score
+    useEffect(() => {
+        // fetch current score and update rendered value
+        api.get("/accounts/me/").then(res => res.data.usergamestats?.score).then(
+            currentScore => setScore(currentScore)
+        )
+        // teleport avatar to START
+        setAvatarSquare(0)
+    }, [])
+
+    // Helper functions
     const awardScore = async awardedScore => {
         return api.get("/accounts/me/").then(res => res.data.usergamestats?.score)
         .then(currentScore => {
@@ -42,24 +65,7 @@ function Board() {
         })
     }
 
-    useEffect(() => {
-        // fetch current score and update rendered value
-        api.get("/accounts/me/").then(res => res.data.usergamestats?.score).then(
-            currentScore => setScore(currentScore)
-        )
-        // teleport avatar to START
-        setAvatarSquare(0)
-    }, [])
-
-    const [canSpin, setCanSpin] = useState(false)
-
-    const squareRefs = useRef({});
-    const [avatarSquare, setAvatarSquare] = useState(0)
-    const chosenTask = useState("Pick up one cup")
-
-    // Chance card activation
-    const [getChance, setGetChance] = useState(null);
-
+    // Event handlers
     const completeTask = () => {
         setShowTask(false)
         setCanSpin(true)
@@ -79,10 +85,10 @@ function Board() {
         setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
         setCanSpin(false)
         if (avatarSquare + landedNumber >= squares.length) { // passed START
-            // apiIncrementScore(5)
+            // awardScore(5)
         }
     }
-    
+
     const squares = [
         {id:  0, name: "Start"            , backgroundColor: "#3c3e4c", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
         {id:  1, name: "Birks Grange"     , backgroundColor: "#7f95d1", location: [50.7352025, -3.5331998]}, // TODO: copied from #4 for demo
@@ -102,9 +108,6 @@ function Board() {
         {id: 15, name: "Business School"  , backgroundColor: "#558564", location: [50.7288   , -3.5060   ]},
     ]
 
-    const [showChance, setShowChance] = useState(false);
-    const [showTask, setShowTask] = useState(false)
-
     return (
         <div className={styles.game}>
             <nav>
@@ -119,7 +122,7 @@ function Board() {
                     <a href="logout"><i className="bi bi-box-arrow-right" style={{fontSize: "48px"}} ></i></a>
                     {/* <a href="{% url 'password_change' %}">Password Change</a> */}
                 </div>
-                
+
             </nav>
             <div className={styles.main_board}>
                 {/* Avatar */}
@@ -180,7 +183,7 @@ function Board() {
                 <div className={styles.points_container}>
                     <h1>{score} points</h1>
                 </div>
-                
+
                 {/* How to play popup */}
                 <HowToPlay />
             </div>
