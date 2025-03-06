@@ -45,11 +45,14 @@ function Board() {
     // Initialise Avatar location & score
     useEffect(() => {
         // fetch current score and update rendered value
-        api.get("/accounts/me/").then(res => res.data.usergamestats?.score).then(
-            currentScore => setScore(currentScore)
+        api.get("/accounts/me/").then(res => res.data.usergamestats).then(
+            usergamestats => {
+                // initialise score
+                setScore(usergamestats.score)
+                // teleport avatar to START
+                setAvatarSquare(usergamestats.current_square)
+            }
         )
-        // teleport avatar to START
-        setAvatarSquare(0)
         setChosenTask(generateRandomTask())
     }, [])
 
@@ -61,6 +64,19 @@ function Board() {
             return api.patch("/accounts/me/", {
                 usergamestats: {
                     score: currentScore + awardedScore
+                }
+            })
+        })
+    }
+
+    const advanceSquare = squareCount => {
+        return api.get("/accounts/me/").then(res => res.data.usergamestats?.current_square)
+        .then(currentSquare => {
+            const newSquare = (currentSquare + squareCount) % squares.length
+            setAvatarSquare(newSquare)
+            return api.patch("/accounts/me/", {
+                usergamestats: {
+                    current_square: newSquare
                 }
             })
         })
@@ -87,7 +103,8 @@ function Board() {
             setShowChance(false)
         }
         setShowTask(true)
-        setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
+        advanceSquare(landedNumber)
+        // setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
         setCanSpin(false)
         if (avatarSquare + landedNumber >= squares.length) { // passed START
             // awardScore(5)
