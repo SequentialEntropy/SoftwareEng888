@@ -11,15 +11,15 @@
  * @since 19-02-2025
  */
 
-import { useEffect, useRef, useState } from "react";
-import styles from "../styles/Board.module.css";
-import api from "../api";
-import Spinner from "../components/Spinner";
-import HowToPlay from "../components/HowToPlay";
-import Chance from "../components/Chance";
-import Task from "../components/Task";
-import Square from "../components/Square";
-import Avatar from "../components/Avatar";
+import { useEffect, useRef, useState } from "react"
+import styles from "../styles/Board.module.css"
+import api from "../api"
+import Spinner from "../components/Spinner"
+import HowToPlay from "../components/HowToPlay"
+import Chance from "../components/Chance"
+import Task from "../components/Task"
+import Square from "../components/Square"
+import Avatar from "../components/Avatar"
 
 /**
  * Board Component
@@ -37,10 +37,10 @@ function Board() {
     const [canSpin, setCanSpin] = useState(false)
     const [showTask, setShowTask] = useState(false)
     const [showChance, setShowChance] = useState(false)
-    const [getChance, setGetChance] = useState(false);
+    const [getChance, setGetChance] = useState(false)
 
     // Component refs
-    const squareRefs = useRef({});
+    const squareRefs = useRef({})
 
     // Initialise Avatar location & score
     useEffect(() => {
@@ -77,7 +77,7 @@ function Board() {
         if (landedNumber === 6) { // enable chance when spinner lands on 6
             setGetChance(true)
             setShowChance(true)
-        } else{
+        } else {
             setGetChance(false)
             setShowChance(false)
         }
