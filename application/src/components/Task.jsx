@@ -42,30 +42,34 @@ export default function Task({showTask, setShowTask, square, taskName, completeT
     }, [])
 
     return (
-        <div>
-            {showTask && (
-                <div className={styles.popup}>
-                    <div className={styles.popup_header}>
-                        <h1>Task</h1>
-                        <button 
-                            className={styles.exit_btn}
-                            onClick={() => setShowTask(false)}>x
+        <div className={styles.task_deck}>
+            {/* Task Button */}
+            <button className={styles.task_btn} onClick={() => { setShowTask(true) }}>Task</button>
+            <div>
+                {showTask && (
+                    <div className={styles.popup}>
+                        <div className={styles.popup_header}>
+                            <h1>Task</h1>
+                            <button 
+                                className={styles.exit_btn}
+                                onClick={() => setShowTask(false)}>x
+                            </button>
+                        </div>
+                        <div className={styles.popup_content}>
+                        <h2>You are at: {square.name} <br/> The task is: {taskName} </h2>
+                        <button
+                            onClick={() => completeTask()}
+                            disabled={!isTaskCompletable}
+                            style={{
+                                opacity: isTaskCompletable ? 1 : 0.5,
+                                cursor: isTaskCompletable ? "pointer" : "not-allowed"
+                            }}>
+                            OK
                         </button>
+                        </div>
                     </div>
-                    <div className={styles.popup_content}>
-                    <h2>You are at: {square.name} <br/> The task is: {taskName} </h2>
-                    <button
-                        onClick={() => completeTask()}
-                        disabled={!isTaskCompletable}
-                        style={{
-                            opacity: isTaskCompletable ? 1 : 0.5,
-                            cursor: isTaskCompletable ? "pointer" : "not-allowed"
-                        }}>
-                        OK
-                    </button>
-                    </div>
-                </div>
-            )}
+                )}
+            </div>
         </div>
     )
 }

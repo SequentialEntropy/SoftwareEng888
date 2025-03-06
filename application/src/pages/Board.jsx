@@ -149,10 +149,13 @@ function Board() {
                 />
                 <div />
                 <div />
-                <div className={styles.task_deck}>
-                    {/* Task Button */}
-                    <button className={styles.task_btn} onClick={() => { setShowTask(true) }}>Task</button>
-                </div>
+                <Task
+                    showTask={showTask}
+                    setShowTask={setShowTask}
+                    square={squares[avatarSquare]}
+                    taskName={chosenTask}
+                    completeTask={completeTask}
+                />
                 <Chance
                     setShowChance={setShowChance}
                     getChance={getChance}
@@ -165,15 +168,6 @@ function Board() {
                 {Square(squares[ 2], squareRefs)}
                 {Square(squares[ 1], squareRefs)}
                 {Square(squares[ 0], squareRefs)}
-
-                <Task
-                    showTask={showTask}
-                    setShowTask={setShowTask}
-                    square={squares[avatarSquare]}
-                    taskName={chosenTask}
-                    completeTask={completeTask}
-                />
-
             </div>
             <div>
                 {/* Points Container */}
