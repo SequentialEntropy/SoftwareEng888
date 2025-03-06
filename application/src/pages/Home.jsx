@@ -9,7 +9,7 @@
  * @since 15-02-2025
  */
 
-import { useState, useEffect, use } from "react"
+import { useState, useEffect } from "react"
 import api from "../api"
 import styles from "../styles/Dashboard.module.css"
 
@@ -24,9 +24,6 @@ import styles from "../styles/Dashboard.module.css"
  */
 
 function Home() {
-    // State to store user profiles
-    const [userProfiles, setUserProfiles] = useState([])
-
     // State to store the current user 
     const [currentUser, setCurrentUser] = useState({
         username: null,
@@ -38,10 +35,6 @@ function Home() {
 
     const [rankedUsers, setRankedUsers] = useState([])
 
-    // State for storing content and title 
-    const [content, setContent] = useState("")
-    const [title, setTitle] = useState("")
-
     const leaderboardColors = [
         "#EA526F",
         "#7F95D1",
@@ -51,10 +44,8 @@ function Home() {
     /**
      * Fetches user details and profiles when the component initialises 
      */
-
     useEffect(() => {
         document.title = "Dashboard"
-        getUserProfiles()
         getUserDetails()
         getRankedUsers()
     }, [])
@@ -62,24 +53,11 @@ function Home() {
     /**
      * Fetches logged-in user details from the API 
      */
-
     const getUserDetails = () => {
         api
             .get("/accounts/me/")
             .then(res => res.data)
             .then(data => {setCurrentUser(data); console.log(data)})
-            .catch(err => alert(err))
-    }
-
-    /**
-     * Fetches user profiles from the API 
-     */
-
-    const getUserProfiles = () => {
-        api
-            .get("/accounts/profiles/")
-            .then(res => res.data)
-            .then(data => {setUserProfiles(data)})
             .catch(err => alert(err))
     }
 
