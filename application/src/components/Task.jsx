@@ -8,6 +8,10 @@ export default function Task({showTask, setShowTask, square, taskName, onComplet
 
     // check location and update isTaskCompletable
     const checkLocation = (latitude, longitude) => {
+        if (square.id === 0) { // override for START as they don't need any locations
+            setIsTaskCompletable(true)
+            return
+        }
         setIsTaskCompletable(isWithinRange(
             latitude,
             longitude,
