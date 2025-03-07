@@ -95,12 +95,17 @@ function Form({ route, method }) {
             }
         } catch (error) {
             if (error.response && error.response.data) {
-                setErrorMessage(error.response.data.error || "Invalid credentials. Please try again.");
+                // Check if the error is about the username being taken
+                if (error.response.data.username) {
+                    setErrorMessage(error.response.data.username);
+                } else {
+                    setErrorMessage(error.response.data.error || "An error occurred. Please try again.");
+                }
             } else {
                 setErrorMessage("An error occurred. Please try again later.");
             }
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
     };
     
@@ -219,6 +224,6 @@ function Form({ route, method }) {
             </div>
         </div>
     )
-                            }
+}
     
     export default Form;
