@@ -330,7 +330,7 @@
     
     /* Progress Bar */
     .grid .item:nth-child(3){
-        min-height: 10vw;
+        height: 10vw;
     }
 
     
@@ -358,7 +358,7 @@
     }
 
     .grid .item:nth-child(5) h2{
-        font-size: 7vw;
+        font-size: 8vw;
         line-height: 1.5;
         margin-top: 1vw;
         
@@ -576,7 +576,7 @@
 
         width: 33vw;
         margin-left: 2vw;
-        height: 23vw;
+        height: 18vw;
     
     }
 

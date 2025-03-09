@@ -24,11 +24,8 @@ import styles from "../styles/Dashboard.module.css"
  */
 
 function Home() {
-    // State to store user profiles
-    const [userProfiles, setUserProfiles] = useState([])
-
     // State to store the current user 
-    const [user, setUser] = useState({
+    const [currentUser, setCurrentUser] = useState({
         username: null,
         usergamestats: {
             current_square: 0,
@@ -36,47 +33,45 @@ function Home() {
         }
     })
 
-    // State for storing content and title 
-    const [content, setContent] = useState("")
-    const [title, setTitle] = useState("")
+    const [rankedUsers, setRankedUsers] = useState([])
+
+    const leaderboardColors = [
+        "#EA526F",
+        "#7F95D1",
+        "#558564"
+    ]
 
     /**
      * Fetches user details and profiles when the component initialises 
      */
-
     useEffect(() => {
         document.title = "Dashboard"
-        getUserProfiles()
         getUserDetails()
+        getRankedUsers()
     }, [])
 
     /**
      * Fetches logged-in user details from the API 
      */
-
     const getUserDetails = () => {
         api
             .get("/accounts/me/")
             .then(res => res.data)
-            .then(data => {setUser(data); console.log(data)})
+            .then(data => {setCurrentUser(data); console.log(data)})
             .catch(err => alert(err))
     }
 
-    /**
-     * Fetches user profiles from the API 
-     */
-
-    const getUserProfiles = () => {
+    const getRankedUsers = () => {
         api
-            .get("/accounts/profiles/")
+            .get("/accounts/ranked-users/")
             .then(res => res.data)
-            .then(data => {setUserProfiles(data)})
+            .then(data => {setRankedUsers(data)})
             .catch(err => alert(err))
     }
 
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
-        <h1 className={styles.heading}>Welcome back {user.username}</h1>
+        <h1 className={styles.heading}>Welcome back {currentUser.username}</h1>
 
         {/* Sidebar navigation */}
         <nav>
@@ -89,9 +84,9 @@ function Home() {
                 <a href="map"><i className="bi bi-map-fill"  ></i></a>
                 <a href="profile"><i className="bi bi-person-circle"  ></i></a>
                 <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
-                
+                {/* <a href="{% url 'password_change' %}">Password Change</a> */}
             </div>
-
+            
         </nav>
 
         {/* Dashboard grid layout */}
@@ -103,47 +98,38 @@ function Home() {
 
             {/* Leaderboard section */}
             <div className={styles.item}>
-                <h1>Leaderboard</h1>
-                <div className={styles.profileItem}style={{backgroundColor: "#EA526F"}}>
-                    <div className={styles.profileIcon}>
-                        <i className="bi bi-person-circle" ></i>
+                <h1 style={{marginTop: "20px"}}>Leaderboard</h1>
+
+                { /* Get the top 3 users */
+                rankedUsers.slice(0, 3).map((user, index) => (
+                    <div key={user.id} className={styles.profileItem} style={{backgroundColor: leaderboardColors[index]}}>
+                        <div className={styles.profileIcon}>
+                            <i className="bi bi-person-circle"></i>
+                        </div>
+                        <div className={styles.profileName}>{user.username} - {user.usergamestats?.score}</div>
                     </div>
-                    <div className={styles.profileName}>Username1</div>
-                </div>
-                <div className={styles.profileItem} style={{backgroundColor: "#7F95D1"}}>
-                    <div className={styles.profileIcon}>
-                        <i className="bi bi-person-circle"  ></i>
-                    </div>
-                    <div className={styles.profileName}>Username2</div>
-                </div>
-                <div className={styles.profileItem} style={{backgroundColor:"#558564"}}>
-                    <div className={styles.profileIcon}>
-                        <i className="bi bi-person-circle" ></i>
-                    </div>
-                    <div className={styles.profileName}>Username3</div>
-                </div>
-                <h3>You are at: Position #12</h3>
+                ))}
+
+                <h3>You are at: Position #{rankedUsers.findIndex(user => user.id === currentUser.id) + 1}</h3>
             </div>
 
             {/* Progress bar */}
-            <div className={styles.item} style = {{height: "8vw"}}>
-                <progress value="50" max="100" className={styles.progressBar} style = {{height: "70%"}} ></progress>
+            <div className={styles.item}>
+                <progress value="50" max="100" className={styles.progressBar}></progress>
             </div>
-
-            {/* Map */}
             <div className={styles.item}>
                 <a href="map">Map</a>
             </div>
 
             {/* Points section */}
             <div className={styles.item}>
+                <h1>Your points</h1>
                 <div className={styles.points_container}>
-                    <h1>Your points</h1>
                     <div className={styles.pointsItem} style={{alignItems:"center"}}>
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{textAlign:"center"}} ></i>
                         </div>
-                        <h2 style={{textAlign:"center"}}>{user.usergamestats.score}</h2>
+                        <div style={{fontSize: "5vw", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
                     </div>
                 </div>
             
