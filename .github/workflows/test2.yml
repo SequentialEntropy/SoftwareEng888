@@ -16,20 +16,18 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2  
+        
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
+          cache: 'npm'
+          cache-dependency-path: application/package-lock.json
 
-      - name: Install packages from package-lock.json
-        run: |
-          cd application
-          npm ci
-
-      - name: Check for jest environment
-        run: |
-          cd application
-          npm install --save-dev jest jest-environment-jsdom
+      - name: Install dependencies
+        working-directory: application
+        run: npm ci
 
       - name: Run JEST tests
-        run: |
-          cd application
-          npm test
+        working-directory: application
+        run: npm test
