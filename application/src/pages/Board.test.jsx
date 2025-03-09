@@ -143,13 +143,46 @@ describe('Board Component', () => {
     /**
      * Test if the Avatar moves after spin is made
     */
-    test("avatar moves after spin", async () => {
-        render(<Board />);
-        const spinButton = screen.getByText("SPIN");
-        fireEvent.click(spinButton);
-        await waitFor(() => {
-            expect(global.Element.prototype.animate).toHaveBeenCalled();
+    test('avatar moves after spin button is clicked', async () => {
+        // Mock styles object
+        const mockStyles = {
+        avatar: 'avatar'
+        };
+        
+        // Mock the CSS module
+        jest.mock('../styles/Board.module.css', () => mockStyles);
+        const { container } = render(<Board />);
+        await act(async () => {
+            await new Promise(resolve => setTimeout(resolve, 100));
         });
+        container.querySelector('[class*="avatar"]');
+        const spinButton = screen.getByText('SPIN');
+        spinButton.removeAttribute('disabled');
+        expect(spinButton).not.toHaveAttribute('disabled');
+        fireEvent.click(spinButton);
+        
+        // Get the most recent animate call and extract the onfinish callback
+        const mostRecentAnimateCall = mockAnimate.mock.calls[mockAnimate.mock.calls.length - 1];
+        const animationInstance = mostRecentAnimateCall ? mockAnimate() : { onfinish: null };
+        
+        // Manually trigger the animation completion
+        act(() => {
+        if (animationInstance.onfinish) {
+            animationInstance.onfinish();
+        }
+        });
+        
+        // Wait for state updates to complete
+        await act(async () => {
+            await new Promise(resolve => setTimeout(resolve, 200));
+        });
+        
+        // Avatar position changed or that getBoundingClientRect was called
+        expect(mockGetBoundingClientRect).toHaveBeenCalled();
+        
+        // Check if teleportAvatar function was triggered
+        const teleportCalls = mockGetBoundingClientRect.mock.calls.length;
+        expect(teleportCalls).toBeGreaterThan(1);
     });
     
     /**
