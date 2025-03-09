@@ -21,15 +21,16 @@ function Map() {
                     <div className={styles.logoContainer}>
                         <h2 className={styles.logoText}>cliMate</h2>
                     </div>
-                    <a href="home"><i className="bi bi-house-door-fill" style={{fontSize: "48px"}} ></i></a>
-                    <a href="board"><i className="bi bi-dice-3-fill" style={{fontSize: "48px"}} ></i></a>
-                    <a href="map"><i className="bi bi-map-fill" style={{fontSize: "48px"}} ></i></a>
-                    <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
-                    <a href="logout"><i className="bi bi-box-arrow-right" style={{fontSize: "48px"}} ></i></a>
-                    {/* <a href="{% url 'password_change' %}">Password Change</a> */}
+                    <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
+                    <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
+                    <a href="map"><i className="bi bi-map-fill"  ></i></a>
+                    <a href="profile"><i className="bi bi-person-circle"  ></i></a>
+                    <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
+                    
                 </div>
-                
+
             </nav>
+            
 
             <div className={styles.map_taskbar}>
                 <div className={styles.task_icon}>
@@ -48,24 +49,7 @@ function Map() {
                 </iframe>
             </div>
 
-            <div>
-                <button className={styles.how_to_play_btn} onClick={() => setShowPopup(true)}>?</button>
-    
-                {showPopup && (
-                    <div className={styles.overlay}>
-                        <div className={styles.how_to_play_container2}>
-                            <div className={styles.how_to_play_container3}>
-                                <h2 className={styles.how_to_play_title}>How to Play</h2>
-                            </div>
-                            <p className={styles.how_to_play_instructions}>1. Spin the wheel <br></br>2. Do task at specified location <br></br>3. Scan QR to verify completion <br></br> 4. Get trees</p>
-                            <button
-                            className={styles.exit_btn}
-                            onClick={() => setShowPopup(false)}>x
-                            </button>
-                        </div>
-                    </div>
-                )}
-            </div>
+        
 
         </div>
 
