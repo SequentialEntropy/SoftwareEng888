@@ -2,35 +2,37 @@ name: Run frontend tests
 
 on:
     push:
-        branches:
-            - main
+        branches: [main, dev]
     pull_request:
-        branches:
-            - main
+        branches: [main, dev]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: node:20
+
+    strategy:
+      matrix:
+        node-version: [20.x]
+
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2  
-        with:
-          node-version: 20
-
-      - name: Install packages from package-lock.json
-        run: |
-          cd application
-          npm ci
-
-      - name: Check for jest environment
-        run: |
-          cd application
-          npm install --save-dev jest jest-environment-jsdom
-
-      - name: Run JEST tests
-        run: |
-          cd application
-          npx jest --clearCache
-          npm test
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        
+    - name: Install dependencies
+      run: |
+        cd application
+        npm install
+        
+    - name: Run tests
+      run: |
+        cd application
+        npm test
+        
+    - name: Generate test coverage report
+      run: |
+        cd application
+        npm test -- --coverage
