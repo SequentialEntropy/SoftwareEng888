@@ -104,28 +104,31 @@ class SignupTests(TestCase):
         Test successful signup request
         """
         data = {
-            'username': 'newuser',
-            'password': 'complexpassword123',
+            "username": "newuser",
+            "password": "complexpassword123",
+            "password2": "complexpassword123",
         }
         response = self.client.post(
-            reverse('register'),
+            reverse("register"),
             data=json.dumps(data),
-            content_type='application/json'
+            content_type="application/json",
         )
-        self.assertEqual(response.status_code, 201)  # 201 Created for successful POST
-        self.assertTrue(User.objects.filter(username='newuser').exists())
+        self.assertEqual(response.status_code, 201)  # 201 Created
+        self.assertTrue(User.objects.filter(username="newuser").exists())
 
-    def test_signup_failure(self):
+    def test_signup_password_mismatch(self):
         """
-        Test failed signup request
+        Test signup fails when passwords do not match
         """
         data = {
-            'username': '',  # Invalid username
-            'password': 'complexpassword123',
+            "username": "newuser",
+            "password": "complexpassword123",
+            "password2": "wrongpassword",
         }
         response = self.client.post(
-            reverse('register'),
+            reverse("register"),
             data=json.dumps(data),
-            content_type='application/json'
+            content_type="application/json",
         )
-        self.assertEqual(response.status_code, 400)  # 400 Bad Request for invalid data
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request
+        self.assertIn("password2", response.json())  # Check error message exists
