@@ -15,6 +15,7 @@
     box-sizing: border-box;
 }
 
+
 /* Main dashboard layout */
 .main_dashboard {
     min-height: 100vh;
@@ -28,42 +29,40 @@
     text-align: center;
     justify-content: center;
     padding: 10px;
-    width: 40%;
-    color: white;
-    font-family: "Hammersmith One", serif;
+    color: #3C3E4C;
+    font-family: "Hammersmith One";
 }
 
 /* Sidebar navigation */
-.sidebar{
+.sidebar {
     background-color:#3C3E4C;
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 6rem;
-    padding: 20px 0;
-    height: 90%;
-    position: fixed;
-    border-radius: 30px;
-    top: 5.5%;
     justify-content: flex-start;
+    align-items: center;
+    width: 9vw;
+    padding: 1.5vw 0;
+    height: 90vh;
+    position: absolute;
+    border-radius: 30px;
+    gap: 4vw;
+
 }
 
-.sidebar i{
+.sidebar i {
     color: #85AEB3;
-    margin-top: 200px;
-    
+    font-size: 4vw;
+  
 }
 
-.sidebar a{
-    margin-top: 20%;
-}
+
 
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
-    font-size: 1.5rem;
+    font-size: 2vw;
 }
+
 
 /* Logo container */
 .logoContainer {
@@ -82,13 +81,12 @@
 
 /* Dashboard grid layout */
 .grid {
-    width: 88vw;
-    height: 87vh;
+    
     display: grid;
-    row-gap: 0px;
+    gap: 0;
     padding: 1vw;
     grid-template-columns: repeat(6, 1fr);
-    grid-template-rows: 1fr 1fr 2fr 1fr 1fr;
+    grid-template-rows: auto auto auto auto auto;
     grid-template-areas:
         "hero hero hero hero aside2 aside2"
         "hero hero hero hero aside2 aside2"
@@ -97,7 +95,7 @@
         "aside4 aside4 aside4 aside4 aside5 aside5"
         "aside4 aside4 aside4 aside4 aside5 aside5"
         "aside4 aside4 aside4 aside4 aside5 aside5 ";
-    margin-left: 10%;
+    
 }
 
 /* Grid items */
@@ -108,6 +106,7 @@
     color: white;
     text-align: "center";
     place-items: "center";
+    padding: 0;
 }
 
 .item a{
@@ -115,6 +114,8 @@
     font-size: 2rem;
     color: #fff;
 }
+
+/*  Game Widget */
 
 .grid .item:nth-child(1) {
     grid-area: hero;
@@ -124,14 +125,14 @@
     align-content: center;
     text-align: center;
     background-color: rgba(0, 0, 0, 0.804); /* Semi-transparent background */
-    height:145%;
+    
     
 }
 
+/* Leaderboard Widget */
 
 .grid .item:nth-child(2) {
     grid-area: aside2;
-    /* align-content: center; */
     top: 0;
     text-align: center;
     display: flex;
@@ -139,10 +140,8 @@
     align-items: center;
     gap: 20px;
     border-radius: 30px;
-    width: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    margin-left: 20px;
-    height: 120%;
+
 
 }
 
@@ -164,16 +163,18 @@
     margin-top: 5px;
 }
 
+/* Progress Bar */
+
 .grid .item:nth-child(3) {
     grid-area: progress;
     align-content:center;
     margin-left: 0;
-    margin-top: 10px;
-    margin-bottom: 10px;
-    height:150%;
     text-align: center;
 }
 
+
+
+/* Map Widget */
 
 .grid .item:nth-child(4) {
     grid-area: aside4;
@@ -183,30 +184,34 @@
     background-size: cover;
     background-repeat: no-repeat;
     background-color: rgb(0, 0, 0); /* Semi-transparent background */
-    height: 300px;
-    margin-top: 20px;
+    
 
 }
+
+/* Points Widget */
 
 .grid .item:nth-child(5) {
     grid-area: aside5;
     /* background-color: rgba(0, 0, 0, 0.5); */
     background-color: #7F2982;
-    margin-left: 30px;
-    margin-top: 20%;
     border-radius: 30px;
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
-    height: 75%;
     width: 95%;
+    gap: 0;
+    
     
 }
 
 .points_container {
+    display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
+    width: 95%;
+    height: 100%;
 }
 
 
@@ -217,25 +222,22 @@
     flex-direction: column;
     align-items: center;
     text-align: center;
-    gap: 0;
-    margin-top: 2%;
-    
-    /* background-color: #3C3E4C; */
-    width: 80%;
     color:white;
     border-radius: 30px;
-    height: 60px;
+    width: 20vw;
+    margin-top: 0.7vw;
+    
+   
 }
 
 .pointsIcon {
-    margin-top: 0;
+    margin: 0;
    
 }
 
 /* Progress bar */
 .progressBar {
     width: 100%;
-    height: 60px;
     appearance: none;
     border-radius: 30px;
     margin-left: 0;
@@ -252,4 +254,416 @@
 .progressBar::-webkit-progress-value {
     background-color: #3C3E4C;
     border-radius: 30px;
+}
+
+
+
+
+/* Tablet Styling */
+@media (min-width: 481px) and (max-width: 768px){
+    .heading{
+        width: 80vw;
+        
+    }
+
+    .grid{
+        width: 90vw;
+        height: 100%;
+        max-height: 73vw;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 1vw;
+      
+    }
+
+    /* Game Widget */
+
+    .grid .item:nth-child(1){
+        min-height: 28vw;
+    }
+
+    .grid .item:nth-child(1) a,
+    .grid .item:nth-child(1) h2 {
+        font-size: 3.5vw;
+    }
+
+    /* Leaderboard Widget */
+
+    .grid .item:nth-child(2) {
+
+        width: 33vw;
+        margin-left: 2vw;
+        min-height: 20vw;
+        max-height: 40vw;
+    
+    }
+
+    .grid .item:nth-child(2) h1{
+        font-size: 3vw;
+        margin-bottom: 0;
+        margin-top: 2vw;
+        
+    }
+
+    .grid .item:nth-child(2) h3{
+        font-size: 2vw;
+        
+        
+    }
+
+    .grid .item:nth-child(2) .profileName{
+        font-size: 2vw
+    }
+
+    .grid .item:nth-child(2) .profileItem{
+        height: 4.5vw;
+        width: 22vw;
+        
+        
+    }
+
+    .grid .item:nth-child(2) i{
+        font-size: 4.5vw;
+    }
+
+    
+    
+    /* Progress Bar */
+    .grid .item:nth-child(3){
+        min-height: 10vw;
+    }
+
+    
+
+    /* Map Widget */
+
+    .grid .item:nth-child(4) {
+        height: 30vw;
+        margin-top:0;
+      
+    
+    }
+
+
+    /* Points Widget */
+    .grid .item:nth-child(5) {
+        margin-left: 2vw;
+        margin-top: 0; 
+        height: 30vw;
+    }
+
+    .grid .item:nth-child(5) i{
+        font-size: 7vw;
+        line-height: 1;
+    }
+
+    .grid .item:nth-child(5) h2{
+        font-size: 7vw;
+        line-height: 1.5;
+        margin-top: 1vw;
+        
+    }
+
+    .grid .item:nth-child(5) h1{
+        margin-top: 4vw;
+        font-size: 4vw;
+    }
+
+    .pointsItem{
+        margin-top: 3vw;
+    }
+
+    .sidebar{
+        width: 90vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 4.5%;
+        left: 2vw;
+        
+    }
+
+    .sidebar h2{
+        font-size: 4vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    .sidebar i{
+        font-size: 4vw;
+        
+    }
+
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+
+}
+
+/* Desktop Styling */
+
+@media (min-width: 769px) and (max-width: 1012px){
+    .heading{
+        width: 80vw;
+        
+    }
+
+    .grid{
+        width: 85vw;
+        height: 100%;
+        margin-left: 13vw;
+        padding: 0;
+        row-gap: 1vw;
+      
+    }
+
+    /* Game Widget */
+
+    .grid .item:nth-child(1){
+        height: 24vw;
+    }
+
+    .grid .item:nth-child(1) a,
+    .grid .item:nth-child(1) h2 {
+        font-size: 3vw;
+    }
+
+    /* Leaderboard Widget */
+
+    .grid .item:nth-child(2) {
+
+        width: 33vw;
+        margin-left: 2vw;
+        height: 31vw;
+    
+    }
+
+    .grid .item:nth-child(2) h1{
+        font-size: 3vw;
+        margin-bottom: 0;
+        margin-top: 2vw;
+        
+    }
+
+    .grid .item:nth-child(2) h3{
+        font-size: 1.5vw;
+        margin-bottom: 0;
+        
+    }
+
+    .grid .item:nth-child(2) .profileItem{
+        height: 4vw;
+        width: 25vw;
+        
+        
+    }
+
+    .grid .item:nth-child(2) i{
+        font-size: 4vw;
+    }
+
+    
+    
+    /* Progress Bar */
+    .grid .item:nth-child(3){
+        height: 8vw;
+    }
+
+    /* Map Widget */
+
+    .grid .item:nth-child(4) {
+        height: 25vw;
+        margin-top:0;
+    
+    }
+
+
+    /* Points Widget */
+    .grid .item:nth-child(5) {
+        margin-left: 2vw;
+        margin-top: 0; 
+        height: 25vw;
+    }
+
+    .grid .item:nth-child(5) i{
+        font-size: 7vw;
+        line-height: 1;
+    }
+
+    .grid .item:nth-child(5) h1{
+        font-size: 3vw;
+        margin-bottom: 0;
+        margin-top: 2vw;
+        
+    }
+
+    .grid .item:nth-child(5) h2{
+        font-size: 8vw;
+        line-height: 1;
+        
+    }
+
+    .pointsItem{
+        margin-top: 1.5vw;
+    }
+
+    .sidebar {
+        width: 8vw;
+        padding: 1.5vw 0;
+        height: 88vh;
+        position: absolute;
+        border-radius: 30px;
+        gap: 3vw;
+        top: 5.5%;
+    
+    }
+    
+    .sidebar i {
+        color: #85AEB3;
+        font-size: 4vw;
+      
+    }
+    
+    
+    
+    .sidebar h2{
+        color: #85AEB3;
+        font-family: 'Hammersmith One';
+        font-size: 2vw;
+    }
+
+
+
+}
+
+
+/* Large Desktop Styling */
+
+@media (min-width: 1013px){
+    .heading{
+        width: 80vw;
+        
+    }
+
+    .grid{
+        width: 88vw;
+        height: 100%;
+        margin-left: 9vw;
+        
+    }
+
+    /* Game Widget */
+    .grid .item:nth-child(1) {
+        height: 16vw;
+        
+    }
+
+    /* Leaderboard Widget */
+
+    .grid .item:nth-child(2) {
+
+        width: 33vw;
+        margin-left: 2vw;
+        height: 23vw;
+    
+    }
+
+    .grid .item:nth-child(2) h1{
+        font-size: 2.5vw;
+        margin-bottom: 0;
+        margin-top: 1.5vw;
+        
+    }
+
+    .grid .item:nth-child(2) h3{
+        font-size: 1.5vw;
+        
+    }
+
+    .grid .item:nth-child(2) .profileItem{
+        height: 3vw;
+        width: 25vw;   
+     
+    }
+
+    .grid .item:nth-child(2) i{
+        font-size: 3vw;
+    }
+
+
+    /* Progress Bar */
+    .grid .item:nth-child(3) {
+        height: 4vw;
+        margin-bottom: 0;
+        margin-top: 0;
+    }
+
+    /* Map Widget */
+
+    .grid .item:nth-child(4) {
+        height: 16vw;
+        margin-top: 0;
+
+    
+    }
+
+
+    /* Points Widget */
+    .grid .item:nth-child(5) {
+        margin-left: 2vw;
+        margin-top: 0; 
+        height:  16vw;
+    }
+
+    .grid .item:nth-child(5) i{
+        font-size: 4vw;
+        line-height: 1;
+    }
+
+    .grid .item:nth-child(5) h1{
+        margin-top: 1.5vw;
+        font-size: 2vw;
+    }
+
+    .grid .item:nth-child(5) h2{
+        font-size: 4vw;
+        line-height: 1.2;
+        
+    }
+
+    .pointsItem{
+        margin-top: 0.7vw;
+    }
+
+    .sidebar {
+        width: 7vw;
+        height: 90vh;
+        gap: 2vw;
+        top: 5.5%;
+    
+    }
+    
+    .sidebar i {
+        font-size: 3vw;
+      
+    }
+    
+    
+    
+    .sidebar h2{
+        font-size: 1.8vw;
+    }
+
 }
