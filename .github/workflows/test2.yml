@@ -32,5 +32,4 @@ jobs:
       - name: Run JEST tests
         run: |
           cd application
-          npx jest --clearCache
           npm test
