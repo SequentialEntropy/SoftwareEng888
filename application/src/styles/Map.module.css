@@ -10,34 +10,30 @@
 
 .sidebar {
     background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 6rem;
-    padding: 20px 0;
+    padding: 1.5vw 0;
     height: 90vh;
     position: fixed;
     border-radius: 30px;
     top: 5.5%;
-    justify-content: flex-start;
+  
 
 }
 
 .sidebar i {
     color: #85AEB3;
-    margin-top: 200px;
+  
 }
 
-.sidebar a {
-    margin-top: 20%;
-}
+
 
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
+
+
+
 
 .map_taskbar {
     background-color: rgba(0, 0, 0, 0.5);
@@ -45,15 +41,15 @@
     display: flex !important;
     justify-content:left !important;
     text-align:left!important;
-    width: 78%;
-    height: 80px;
+    width: 80vw;
+    height: 10%;
     border-radius: 25px;
     padding-left: 15px;
-    position: fixed;
+    position: absolute;
     top: 80px;
-    left: 50%;
     transform: translate(-50%, -50%);
     margin-bottom: 50px;
+    
 }
 
 .task_icon {
@@ -75,12 +71,11 @@
     align-items: center !important;
     text-align: center !important;
     position: absolute;
-    width: 75%;
+    width: 80vw;
     height: 70%;
     border-radius: 25px;
     position: absolute;
     top: 58%;
-    left: 48%;
     margin-left: 30px;
     margin-top:-30px;
     transform: translate(-50%, -50%);
@@ -92,103 +87,132 @@
     border-radius: 25px;
 }
 
-.how_to_play_btn {
-    position: fixed;
-    top: 20px; 
-    right: 25px; 
-    width: 60px; 
-    height: 60px; 
-    background: #D9D9D9;
-    opacity:100%;
-    font-family: "Inter", serif;
-    color: black;
-    border: none;
-    border-radius: 50px;
-    padding: 10px 20px;
-    font-size: 18px;
-    margin-top: 10px;
-    cursor: pointer;
-    text-align: center;
-    align-items: center;
-    font-weight: bold;
-}
 
-.how_to_play_btn:hover {
-    background-color: #9f9d9d; 
-    transform: scale(1.1); 
-}
 
-.how_to_play_btn:active {
-    transform: scale(0.95); /* Click effect */
-}
+@media (min-width: 481px) and (max-width: 768px){
 
-.how_to_play_container2 {
-    background-color: #D9D9D9;
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-    padding: 5%;
-    width: 23vw;
-    height: 40vh;
-    border-radius: 25px;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    .map_taskbar{
+        left: 53vw;
+        width: 70vw;
+    }
+
+    .map_container{
+        left: 49vw;
+        width: 70vw;
+    }
+
+    .sidebar {
+        width: 9vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 4.5vw;
+    
+    }
+
+    
+    .sidebar h2{
+        font-size: 2.5vw;
+        margin-top: 2vw;
+    }
+
+    .sidebar i{
+        font-size: 5.5vw;
+    }
+
+    .logoContainer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
 
 }
 
-.exit_btn {
-    color:black;
-    position: fixed;
-    top: -5px; 
-    right: 10px; 
-    width: 30px; 
-    height: 30px; 
-    background: #3C3E4C;
-    opacity:100%;
-    font-family: "Inter", serif;
-    color: black;
-    border: none;
-    border-radius: 50px;
-    font-size: 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    text-align: center;
-    align-items: center;
-    font-weight: bold;
+@media (min-width: 769px) and (max-width: 1199px){
+
+    .map_taskbar{
+        left: 53vw;
+    }
+    .map_container{
+        left: 50vw;
+    }
+
+    .sidebar {
+        width: 9vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 3vw;
+    
+    }
+
+    
+    .sidebar h2{
+        font-size: 2.5vw;
+        margin-top: 2vw;
+    }
+
+    .sidebar i{
+        font-size: 4vw;
+    }
+
+    .logoContainer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1vw;
+        margin-right: 1vw;
+    }
+     
+
 }
 
-.how_to_play_container3 {
-    background-color: #3C3E4C;
-    width:178%;
-    height:70%;
-    border-radius: 10px;
-    top:0;
-}
 
-.how_to_play_title {
-    color: white;
-    font-family: "Londrina Solid";
-    margin-top: 8px;
-    width: 100%;
-}
+@media (min-width: 1200px){
 
-.how_to_play_instructions {
-    color: black;
-    font-family: "Londrina Solid";
-    margin-top: 20px;
-    font-size: 25px;
-}
+    .map_taskbar{
+        left: 52vw;
+    }
+    .map_container{
+        left: 50vw;
+    }
 
-.overlay {
-    position: fixed;
-    inset: 0; 
-    background: rgba(0, 0, 0, 0.717); 
-    display: flex;
-    justify-content: center;
-    align-items: start; 
-    z-index: 50; 
+    .sidebar {
+        width: 7vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 1.5vw;
+    
+    }
+
+    
+    .sidebar h2{
+        font-size: 1.5vw;
+        margin-top: 2vw;
+    }
+
+    .sidebar i{
+        font-size: 2.5vw;
+    }
+
+    .logoContainer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1vw;
+        margin-right: 1vw;
+       
+    }
 }

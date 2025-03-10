@@ -79,11 +79,11 @@ function Home() {
                 <div className={styles.logoContainer}>
                     <h2 className={styles.logoText}>cliMate</h2>
                 </div>
-                <a href="home"><i className="bi bi-house-door-fill" style={{fontSize: "48px"}} ></i></a>
-                <a href="board"><i className="bi bi-dice-3-fill" style={{fontSize: "48px"}} ></i></a>
-                <a href="map"><i className="bi bi-map-fill" style={{fontSize: "48px"}} ></i></a>
-                <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "48px"}} ></i></a>
-                <a href="logout"><i className="bi bi-box-arrow-right" style={{fontSize: "48px"}} ></i></a>
+                <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
+                <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
+                <a href="map"><i className="bi bi-map-fill"  ></i></a>
+                <a href="profile"><i className="bi bi-person-circle"  ></i></a>
+                <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
                 {/* <a href="{% url 'password_change' %}">Password Change</a> */}
             </div>
             
@@ -104,7 +104,7 @@ function Home() {
                 rankedUsers.slice(0, 3).map((user, index) => (
                     <div key={user.id} className={styles.profileItem} style={{backgroundColor: leaderboardColors[index]}}>
                         <div className={styles.profileIcon}>
-                            <i className="bi bi-person-circle" style={{fontSize: "48px"}}></i>
+                            <i className="bi bi-person-circle"></i>
                         </div>
                         <div className={styles.profileName}>{user.username} - {user.usergamestats?.score}</div>
                     </div>
@@ -123,13 +123,13 @@ function Home() {
 
             {/* Points section */}
             <div className={styles.item}>
-                <h1 style={{marginTop: "20px", fontSize:"30px"}}>Your points</h1>
+                <h1>Your points</h1>
                 <div className={styles.points_container}>
-                    <div className={styles.pointsItem} style={{marginLeft:"40px", alignItems:"center", height:"70%"}}>
+                    <div className={styles.pointsItem} style={{alignItems:"center"}}>
                         <div className={styles.pointsIcon}>
-                            <i className="bi bi-tree-fill" style={{fontSize: "70px", textAlign:"center", marginTop:"30px"}} ></i>
+                            <i className="bi bi-tree-fill" style={{textAlign:"center"}} ></i>
                         </div>
-                        <div style={{fontSize: "40px", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
+                        <div style={{fontSize: "5vw", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
                     </div>
                 </div>
             

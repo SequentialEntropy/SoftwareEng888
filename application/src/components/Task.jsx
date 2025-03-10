@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "../styles/Board.module.css"
 
-export default function Task({showTask, setShowTask, square, taskName, onCompleteTask}) {
+export default function Task({showTask, setShowTask, square, task, canSpin, onCompleteTask}) {
     const [isTaskCompletable, setIsTaskCompletable] = useState(false)
 
     const gpsThreshold = 0.1; // Should be enough
@@ -48,7 +48,15 @@ export default function Task({showTask, setShowTask, square, taskName, onComplet
     return (
         <div className={styles.task_deck}>
             {/* Task Button */}
-            <button className={styles.task_btn} onClick={() => { setShowTask(true) }}>Task</button>
+            <button
+                className={styles.task_btn}
+                disabled={canSpin}
+                onClick={() => { setShowTask(true) }}
+                style={{
+                    opacity: canSpin ? 0.5 : 1,
+                    cursor: canSpin ? "not-allowed" : "pointer",
+                }}
+            >Task</button>
             <div>
                 {showTask && (
                     <div className={styles.popup}>
@@ -60,7 +68,7 @@ export default function Task({showTask, setShowTask, square, taskName, onComplet
                             </button>
                         </div>
                         <div className={styles.popup_content}>
-                        <h2>You are at: {square.name} <br/> The task is: {taskName} </h2>
+                        <h2>You are at: {square.name} <br/> The task is: {task.description} </h2>
                         <button
                             onClick={() => onCompleteTask()}
                             disabled={!isTaskCompletable}
@@ -68,7 +76,7 @@ export default function Task({showTask, setShowTask, square, taskName, onComplet
                                 opacity: isTaskCompletable ? 1 : 0.5,
                                 cursor: isTaskCompletable ? "pointer" : "not-allowed"
                             }}>
-                            OK
+                            {task.score_to_award} points
                         </button>
                         </div>
                     </div>

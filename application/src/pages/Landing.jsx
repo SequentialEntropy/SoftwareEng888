@@ -1,4 +1,5 @@
 import styles from "../styles/Landing.module.css";
+import MediaQuery from 'react-responsive';
 
 function Landing() {
     return <div className={styles.landing_page}>

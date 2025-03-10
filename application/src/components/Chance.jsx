@@ -1,14 +1,22 @@
 import styles from "../styles/Board.module.css"
 
-export default function Chance({setShowChance, getChance, showChance}) {
+export default function Chance({setShowChance, getChance, showChance, onClickChance}) {
     return (
         <div className={styles.chance_deck}>
             {/* Chance Card Button */}
 
-            <button className={styles.task_btn} onClick={() => setShowChance(true)} disabled = {!getChance}>Chance</button>
+            <button
+                className={styles.task_btn}
+                onClick={() => {setShowChance(true); onClickChance()}}
+                disabled = {!getChance}
+                style={{
+                    opacity: getChance ? 1 : 0.5,
+                    cursor: getChance ? "pointer" : "not-allowed",
+                }}
+            >Chance</button>
 
             {/* Chance Card Popup - only available after landing on 6 */}
-            {getChance && showChance && (
+            {showChance && (
                 <div className = {styles.chance_popup}>
                     <div className = {styles.chance_header}> 
                         <h1>Chance</h1>
