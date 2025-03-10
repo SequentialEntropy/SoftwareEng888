@@ -196,6 +196,7 @@ describe('Board Component', () => {
      * Test to check Board component renders correctly.
      */
     test('renders Board component correctly', async () => {
+        let renderer;
         await act(async () => {
             renderer = render(<Board />);
         });
@@ -242,23 +243,24 @@ describe('Board Component', () => {
             });
             return 123;
         });
-        
+
+        let renderResult;
         await act(async () => {
-            render(<Board />);
+            renderResult = render(<Board />);
         });
 
-        // Create mock button
-        const spinButton = document.createElement('button');
-        spinButton.textContent = 'SPIN';
-        spinButton.disabled = false;
-        spinButton.style.opacity = '1';
-        spinButton.style.cursor = 'pointer';
-        document.body.appendChild(spinButton);
-
-        // Assert button is enabled
-        expect(spinButton.disabled).toBeFalsy();
-        expect(spinButton.style.opacity).toBe('1');
-        expect(spinButton.style.cursor).toBe('pointer');
+        await waitFor(() => {
+            // Create mock button
+            const spinButton = document.createElement('button');
+            spinButton.textContent = 'SPIN';
+            spinButton.disabled = false;
+            spinButton.style.opacity = '1';
+            spinButton.style.cursor = 'pointer';
+            document.body.appendChild(spinButton);
+            expect(spinButton.disabled).toBeFalsy();
+            expect(spinButton.style.opacity).toBe('1');
+            expect(spinButton.style.cursor).toBe('pointer');
+        });
     });
 
     /**
