@@ -385,11 +385,8 @@ describe('Board Component', () => {
         
         const { getByTestId } = render(<MockPopup />);
         const closeButton = getByTestId('close-button');
-        
         expect(closeButton).toBeInTheDocument();
-        
         fireEvent.click(closeButton);
-        
         expect(closeButtonClickMock).toHaveBeenCalled();
     });
 });
