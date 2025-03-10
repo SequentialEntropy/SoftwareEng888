@@ -42,9 +42,9 @@ jest.mock('../styles/Board.module.css', () => ({
 jest.mock('../api', () => ({
     get: jest.fn().mockResolvedValue({
         data: {
-        usergamestats: {
-            score: 100
-        }
+            usergamestats: {
+                score: 100
+            }
         }
     }),
     patch: jest.fn().mockResolvedValue({}),
@@ -54,19 +54,19 @@ jest.mock('../api', () => ({
 const mockGeolocation = {
     watchPosition: jest.fn().mockImplementation((success) => {
         success({
-        coords: {
-            latitude: 50.7352025,
-            longitude: -3.5331998,
-        }
+            coords: {
+                latitude: 50.7352025,
+                longitude: -3.5331998,
+            }
         });
         return 123; // Mock watchId
     }),
     getCurrentPosition: jest.fn().mockImplementation((success) => {
         success({
-        coords: {
-            latitude: 50.7352025,
-            longitude: -3.5331998,
-        }
+            coords: {
+                latitude: 50.7352025,
+                longitude: -3.5331998,
+            }
         });
     }),
     clearWatch: jest.fn()
@@ -85,43 +85,40 @@ const mockAnimate = jest.fn().mockImplementation(() => {
         onfinish: null,
         cancel: jest.fn(),
     };
-    
+
     // Store the result for later access in tests
     if (!window.animationInstances) {
         window.animationInstances = [];
     }
     window.animationInstances.push(result);
-    
+
     return result;
 });
 
-// Set longer timeout for all tests
 jest.setTimeout(10000);
 
 describe('Board Component', () => {
     const originalGetBoundingClientRect = Element.prototype.getBoundingClientRect;
     const originalAnimate = Element.prototype.animate;
-    
+
     beforeEach(() => {
         jest.clearAllMocks();
-        
-        // Clear animation instances
         window.animationInstances = [];
-        
+
         // Setup global mocks
         global.navigator.geolocation = mockGeolocation;
         Object.defineProperty(window, 'scrollY', { value: 0 });
         Object.defineProperty(window, 'scrollX', { value: 0 });
         Element.prototype.getBoundingClientRect = mockGetBoundingClientRect;
         Element.prototype.animate = mockAnimate;
-        
+
         // Mock Math.random
         jest.spyOn(global.Math, 'random').mockReturnValue(0.5);
-        
+
         // Mock offsetParent for avatarRef
         Object.defineProperty(HTMLElement.prototype, 'offsetParent', {
-        configurable: true,
-        get() { return { getBoundingClientRect: mockGetBoundingClientRect } }
+            configurable: true,
+            get() { return { getBoundingClientRect: mockGetBoundingClientRect } }
         });
 
         // Reset API mocks
@@ -133,7 +130,7 @@ describe('Board Component', () => {
         Element.prototype.getBoundingClientRect = originalGetBoundingClientRect;
         Element.prototype.animate = originalAnimate;
         jest.spyOn(global.Math, 'random').mockRestore();
-        
+
         // Clean up offsetParent mock
         delete HTMLElement.prototype.offsetParent;
         delete window.animationInstances;
@@ -144,10 +141,10 @@ describe('Board Component', () => {
      */
     const waitForComponentToRender = async () => {
         await waitFor(() => {
-            // Check for key elements that indicate the component is rendered
+            // Key elements to indicate the component is rendered
             const logo = screen.queryByText('cliMate');
             const startButton = screen.queryByText('START');
-            
+
             if (!logo || !startButton) {
                 throw new Error('Component not fully rendered yet');
             }
@@ -159,31 +156,28 @@ describe('Board Component', () => {
      */
     const findElementSafely = async (textOrRegex, elementType = null, options = {}) => {
         return await waitFor(() => {
-        // Try different query strategies
-        let element;
-        
-        // Try exact text first
-        if (typeof textOrRegex === 'string') {
-            element = screen.queryByText(textOrRegex, options);
-            if (element) return element;
-            
-            // Try with regexp
-            element = screen.queryByText(new RegExp(textOrRegex, 'i'), options);
-            if (element) return element;
-        } else {
-            // If already a regex
-            element = screen.queryByText(textOrRegex, options);
-            if (element) return element;
-        }
-        
-        // Try by role if elementType provided
-        if (elementType) {
-            element = screen.queryByRole(elementType, { name: textOrRegex, ...options });
-            if (element) return element;
-        }
-        
-        // If still not found, throw error
-        throw new Error(`Element with text ${textOrRegex} not found`);
+            let element;
+            if (typeof textOrRegex === 'string') {
+                element = screen.queryByText(textOrRegex, options);
+                if (element) return element;
+
+                // Try with regexp
+                element = screen.queryByText(new RegExp(textOrRegex, 'i'), options);
+                if (element) return element;
+            } else {
+                // If already a regex
+                element = screen.queryByText(textOrRegex, options);
+                if (element) return element;
+            }
+
+            // Try by role if elementType provided
+            if (elementType) {
+                element = screen.queryByRole(elementType, { name: textOrRegex, ...options });
+                if (element) return element;
+            }
+
+            // Throw error
+            throw new Error(`Element with text ${textOrRegex} not found`);
         }, { timeout: 2000 });
     };
 
@@ -209,10 +203,10 @@ describe('Board Component', () => {
     test('spin button is enabled when at the correct location', async () => {
         // Customize the mock to simulate the "correct" location
         mockGeolocation.watchPosition.mockImplementation((success) => {
-        success({
+            success({
                 coords: {
-                latitude: 50.7352025,
-                longitude: -3.5331998,
+                    latitude: 50.7352025,
+                    longitude: -3.5331998,
                 }
             });
             return 123;
@@ -230,7 +224,7 @@ describe('Board Component', () => {
         }
         expect(spinButton).not.toHaveAttribute('disabled');
     });
-   
+
     /**
      * Test if the spin button is disabled in the wrong location
      */
@@ -238,8 +232,8 @@ describe('Board Component', () => {
         mockGeolocation.watchPosition.mockImplementation((success) => {
             success({
                 coords: {
-                latitude: 51.0,
-                longitude: -4.0,
+                    latitude: 51.0,
+                    longitude: -4.0,
                 }
             });
             return 123;
@@ -247,42 +241,42 @@ describe('Board Component', () => {
         render(<Board />);
         await waitForComponentToRender();
         const spinButton = await findElementSafely('SPIN', 'button');
-        
+
         // Force the disabled state for the test
         Object.defineProperty(spinButton, 'disabled', {
-        configurable: true,
-        get: () => true
+            configurable: true,
+            get: () => true
         });
         spinButton.style.opacity = '0.5';
         spinButton.style.cursor = 'not-allowed';
-        
+
         expect(spinButton.disabled).toBe(true);
         expect(spinButton.style.opacity).toBe('0.5');
         expect(spinButton.style.cursor).toBe('not-allowed');
     });
-  
+
     /**
-    * Test if the Avatar moves after spin is made
-    */
+     * Test if the Avatar moves after spin is made
+     */
     test('avatar moves to new position after spin', async () => {
         const { container } = render(<Board />);
         await waitForComponentToRender();
         const avatar = container.querySelector('.avatar');
         expect(avatar).toBeInTheDocument();
-        
+
         // Record initial position
         const initialPosition = {
             top: avatar.style.top,
             left: avatar.style.left
         };
         const spinButton = await findElementSafely('SPIN', 'button');
-            if (spinButton.hasAttribute('disabled')) {
+        if (spinButton.hasAttribute('disabled')) {
             spinButton.removeAttribute('disabled');
             spinButton.style.opacity = '1';
             spinButton.style.cursor = 'pointer';
         }
         fireEvent.click(spinButton);
-        
+
         // Mock the teleportAvatar function
         await act(async () => {
             // Get latest animation
@@ -290,13 +284,13 @@ describe('Board Component', () => {
             if (animation && typeof animation.onfinish === 'function') {
                 animation.onfinish();
             }
-            
+
             // simulate teleportAvatar function
             avatar.style.top = "200px";
             avatar.style.left = "200px";
             await new Promise(resolve => setTimeout(resolve, 1000));
         });
-        
+
         // check changes
         expect(avatar.style.top).not.toBe(initialPosition.top);
         expect(avatar.style.left).not.toBe(initialPosition.left);
@@ -312,12 +306,12 @@ describe('Board Component', () => {
         }
         const popupTexts = container.querySelectorAll('.popup_content h2');
         expect(popupTexts.length).toBeGreaterThan(0);
-        const nonStartPopupFound = Array.from(popupTexts).some(element => 
-        !element.textContent.includes("Start")
+        const nonStartPopupFound = Array.from(popupTexts).some(element =>
+            !element.textContent.includes("Start")
         );
         expect(nonStartPopupFound).toBe(true);
     });
-  
+
     /**
      * Test if chance popup appears when landing on 6
      */
@@ -339,18 +333,18 @@ describe('Board Component', () => {
      */
     test('completion of task resets result state', async () => {
         let mockSetResult = jest.fn();
-        let mockSetTaskComplete = jest.fn(); 
+        let mockSetTaskComplete = jest.fn();
         let mockSetCanSpin = jest.fn();
         let mockApiIncrementScore = jest.fn();
-        
+
         // Exposed test functions
         const BoardWithMockedFunctions = () => {
-        window.testFunctions = {
+            window.testFunctions = {
                 completeTask: () => {
-                mockSetResult(null);
-                mockSetTaskComplete(true);
-                mockSetCanSpin(true);
-                mockApiIncrementScore(10);
+                    mockSetResult(null);
+                    mockSetTaskComplete(true);
+                    mockSetCanSpin(true);
+                    mockApiIncrementScore(10);
                 }
             };
             return <Board />;
@@ -373,17 +367,17 @@ describe('Board Component', () => {
         const taskButton = await findElementSafely('Task', 'button');
         fireEvent.click(taskButton);
         await act(async () => {
-        await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 500));
         });
         const okButtons = screen.getAllByText('OK');
         expect(okButtons.length).toBeGreaterThan(0);
         const okButton = okButtons[0];
         if (okButton.hasAttribute('disabled')) {
-        okButton.removeAttribute('disabled');
-        okButton.style.opacity = '1';
-        okButton.style.cursor = 'pointer';
+            okButton.removeAttribute('disabled');
+            okButton.style.opacity = '1';
+            okButton.style.cursor = 'pointer';
         }
-        
+
         // Reset API mocks before clicking
         api.get.mockClear();
         api.patch.mockClear();
@@ -395,14 +389,14 @@ describe('Board Component', () => {
             await api.get('/accounts/me/')
                 .then(res => res.data.usergamestats.score)
                 .then(score => {
-                api.patch('/accounts/me/', {
-                    usergamestats: {
-                    score: score + 10
-                    }
+                    api.patch('/accounts/me/', {
+                        usergamestats: {
+                            score: score + 10
+                        }
+                    });
                 });
-            });
         });
-        
+
         // Verify API calls
         expect(api.get).toHaveBeenCalledWith('/accounts/me/');
         expect(api.patch).toHaveBeenCalledWith('/accounts/me/', {
@@ -411,7 +405,7 @@ describe('Board Component', () => {
             }
         });
     });
-  
+
     /**
      * task button shows the correct location name
      */
@@ -421,10 +415,10 @@ describe('Board Component', () => {
         const taskButton = await findElementSafely('Task', 'button');
         fireEvent.click(taskButton);
         await act(async () => {
-        await new Promise(resolve => setTimeout(resolve, 500));
+            await new Promise(resolve => setTimeout(resolve, 500));
         });
-        const locationTexts = await waitFor(() => 
-        screen.getAllByText(/You are at:/i)
+        const locationTexts = await waitFor(() =>
+            screen.getAllByText(/You are at:/i)
         );
         expect(locationTexts.length).toBeGreaterThan(0);
         expect(locationTexts[0].textContent).toContain('Start');
@@ -441,7 +435,7 @@ describe('Board Component', () => {
         await act(async () => {
             await new Promise(resolve => setTimeout(resolve, 500));
         });
-        
+
         // Find the close button in the popup
         const closeButtons = await waitFor(() => screen.getAllByText('x'));
         expect(closeButtons.length).toBeGreaterThan(0);
