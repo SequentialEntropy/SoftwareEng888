@@ -6,7 +6,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .serializers import UserSerializer
+from .models import Task
+from .serializers import UserSerializer, TaskSerializer
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -23,6 +24,13 @@ class RetrieveUserView(generics.RetrieveUpdateAPIView):
 class RankedUsersView(generics.ListAPIView):
     queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
     serializer_class = UserSerializer
+
+class RetrieveTasksView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Task.objects.all()
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]

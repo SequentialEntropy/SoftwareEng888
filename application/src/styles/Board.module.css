@@ -375,8 +375,7 @@
     border: none;
     cursor: pointer;
     border-radius: 5px;
-    width: 5vw;
-    height: 30%;
+    padding: 5px 10px;
 }
 
 .popup_content  button:hover {
