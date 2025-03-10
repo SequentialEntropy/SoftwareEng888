@@ -1,3 +1,13 @@
+/**
+ * Board.test.jsx - A React component for testing the functionalities of the board.
+ * 
+ * @file Handles rendering of the board and tests the board functions. 
+ * @author Gareth Zheng Yang Koh
+ * @author Crystal Tsui
+ * @version 1.1.0 
+ * @since 25-02-2025
+*/
+
 // Board.test.jsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor, act } from '@testing-library/react';
