@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import styles from "../styles/Board.module.css"
 
-export default function Task({showTask, setShowTask, square, task, onCompleteTask}) {
+export default function Task({showTask, setShowTask, square, task, canSpin, onCompleteTask}) {
     const [isTaskCompletable, setIsTaskCompletable] = useState(false)
 
     const gpsThreshold = 0.1; // Should be enough
@@ -46,9 +46,14 @@ export default function Task({showTask, setShowTask, square, task, onCompleteTas
     }, [square])
 
     return (
-        <div className={styles.task_deck}>
+        <div className={styles.task_deck} style={{opacity: canSpin ? 0.5 : 1}}>
             {/* Task Button */}
-            <button className={styles.task_btn} onClick={() => { setShowTask(true) }}>Task</button>
+            <button
+                className={styles.task_btn}
+                disabled={canSpin}
+                onClick={() => { setShowTask(true) }}
+                style={{cursor: canSpin ? "not-allowed" : "pointer"}}
+            >Task</button>
             <div>
                 {showTask && (
                     <div className={styles.popup}>

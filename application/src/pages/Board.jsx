@@ -53,6 +53,8 @@ function Board() {
                 setScore(usergamestats.score)
                 // teleport avatar to START
                 setAvatarSquare(usergamestats.current_square)
+                // toggle spinner
+                setCanSpin(usergamestats.task_completed)
                 // display current task
                 api.get("/accounts/tasks/").then(res => res.data).then(
                     tasks => tasks.find(task => task.id === usergamestats.current_task)
@@ -109,9 +111,16 @@ function Board() {
     // Event handlers
     const onCompleteTask = () => {
         setShowTask(false)
-        setCanSpin(true)
         setGetChance(false)
         awardScore(chosenTask.score_to_award)
+        // mark as complete and enable spinner
+        api.patch("/accounts/me/", {
+            usergamestats: {
+                task_completed: true
+            }
+        }).then(
+            setCanSpin(true)
+        )
     }
     
     const onSpinnerAnimationEnd = landedNumber => {
@@ -126,10 +135,17 @@ function Board() {
         advanceSquare(landedNumber).then(newSquare => {
             generateRandomTask(newSquare)
         })
-        setCanSpin(false)
         if (avatarSquare + landedNumber >= squares.length) { // passed START
             // awardScore(5)
         }
+        // mark as incomplete and disable spinner
+        api.patch("/accounts/me/", {
+            usergamestats: {
+                task_completed: false
+            }
+        }).then(
+            setCanSpin(false)
+        )
     }
 
     // Board layout
@@ -198,6 +214,7 @@ function Board() {
                     setShowTask={setShowTask}
                     square={squares[avatarSquare]}
                     task={chosenTask}
+                    canSpin={canSpin}
                     onCompleteTask={onCompleteTask}
                 />
                 <Chance
