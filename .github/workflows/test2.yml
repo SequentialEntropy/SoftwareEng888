@@ -23,7 +23,11 @@ jobs:
           cache-dependency-path: application/package-lock.json
 
       - name: Install dependencies
-        run: npm ci
+        run: | 
+          cd application
+          npm ci
 
       - name: Run JEST tests
-        run: npm test
+        run: | 
+          cd application
+          npm test
