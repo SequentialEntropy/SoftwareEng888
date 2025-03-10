@@ -12,16 +12,17 @@ export default function Avatar({avatarSquare, squareRefs}) {
     useEffect(() => {
         const pos = squareRefs.current[avatarSquare].getBoundingClientRect()
         const offsetPos = avatarRef.current.offsetParent.getBoundingClientRect()
+        const avatarPos = avatarRef.current.getBoundingClientRect()
         setAvatarPos({
-            x: pos.top + window.scrollY - offsetPos.top,
-            y: pos.left + window.scrollX - offsetPos.left,
+            x: pos.top + (pos.height - avatarPos.height) * 0.2 + window.scrollY - offsetPos.top,
+            y: pos.left + (pos.width - avatarPos.width) * 0.5 + window.scrollX - offsetPos.left,
         })
     }, [avatarSquare])
 
     return (
         <div ref={avatarRef} className={styles.avatar} style={{
-            top: avatarPos.x + 42,
-            left: avatarPos.y + 38,
+            top: avatarPos.x,
+            left: avatarPos.y,
         }}>
             <i className="bi bi-bicycle"></i>
         </div>

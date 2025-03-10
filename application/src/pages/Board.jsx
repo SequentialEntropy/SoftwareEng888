@@ -28,10 +28,12 @@ import Avatar from "../components/Avatar"
  */
 
 function Board() {
+    const taskNotFound = {id: -1, description: "No tasks found for this square - Skip task!", score_to_award: 0}
+
     // Game states
     const [score, setScore] = useState(0)
     const [avatarSquare, setAvatarSquare] = useState(0)
-    const [chosenTask, setChosenTask] = useState("Loading task...");
+    const [chosenTask, setChosenTask] = useState(taskNotFound);
 
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
@@ -51,9 +53,16 @@ function Board() {
                 setScore(usergamestats.score)
                 // teleport avatar to START
                 setAvatarSquare(usergamestats.current_square)
+                // toggle spinner
+                setCanSpin(usergamestats.task_completed)
+                // display current task
+                api.get("/accounts/tasks/").then(res => res.data).then(
+                    tasks => tasks.find(task => task.id === usergamestats.current_task)
+                ).then(
+                    task => setChosenTask(task ? task : taskNotFound)
+                )
             }
         )
-        setChosenTask(generateRandomTask())
     }, [])
 
     // Helper functions
@@ -69,46 +78,79 @@ function Board() {
         })
     }
 
-    const advanceSquare = squareCount => {
+    const advanceSquare = async squareCount => {
         return api.get("/accounts/me/").then(res => res.data.usergamestats?.current_square)
         .then(currentSquare => {
             const newSquare = (currentSquare + squareCount) % squares.length
             setAvatarSquare(newSquare)
-            return api.patch("/accounts/me/", {
+            api.patch("/accounts/me/", {
                 usergamestats: {
                     current_square: newSquare
                 }
             })
+            return newSquare
         })
     }
 
-    const tasks = ["Use a reusable cup", "Recycle an item", "Use the water fountain","Recycled used paper","Visit a green space","Pick up a piece of litter","Turn off the lights","Donate to the food fridge","Take something from the food fridge","Turn off power outlet after use","Buy a sustainable product","Fill up your water bottle", "Walk to campus", "Try a vegan food", "Read an article on sustainability"]
-    const generateRandomTask = () => tasks[Math.floor(Math.random() * tasks.length)]
+    const generateRandomTask = async square => {
+        const tasks = await api.get("/accounts/tasks/").then(
+            res => res.data.filter(task => task.applicable_squares.includes(square))
+        )
+
+        const task = (tasks.length === 0) ? taskNotFound : tasks[Math.floor(Math.random() * tasks.length)]
+
+        setChosenTask(task)
+        api.patch("/accounts/me/", {
+            usergamestats: {
+                current_task: task.id
+            }
+        })
+        return task
+    }
 
     // Event handlers
     const onCompleteTask = () => {
         setShowTask(false)
-        setCanSpin(true)
+        awardScore(chosenTask.score_to_award)
+        // mark as complete and enable spinner
+        api.patch("/accounts/me/", {
+            usergamestats: {
+                task_completed: true
+            }
+        }).then(
+            setCanSpin(true)
+        )
+    }
+
+    const onClickSpin = () => {
         setGetChance(false)
-        setChosenTask(generateRandomTask())
-        awardScore(10)
     }
 
     const onSpinnerAnimationEnd = landedNumber => {
         if (landedNumber === 6) { // enable chance when spinner lands on 6
             setGetChance(true)
-            setShowChance(true)
         } else {
             setGetChance(false)
             setShowChance(false)
         }
-        setShowTask(true)
-        advanceSquare(landedNumber)
-        // setAvatarSquare((avatarSquare + landedNumber) % squares.length) // move avatar
-        setCanSpin(false)
+        advanceSquare(landedNumber).then(newSquare => {
+            generateRandomTask(newSquare)
+        })
         if (avatarSquare + landedNumber >= squares.length) { // passed START
             // awardScore(5)
         }
+        // mark as incomplete and disable spinner
+        api.patch("/accounts/me/", {
+            usergamestats: {
+                task_completed: false
+            }
+        }).then(
+            setCanSpin(false)
+        )
+    }
+
+    const onClickChance = () => {
+        setGetChance(false)
     }
 
     // Board layout
@@ -168,6 +210,7 @@ function Board() {
                 <div />
                 <Spinner
                     canSpin={canSpin}
+                    onClickSpin={onClickSpin}
                     onSpinnerAnimationEnd={onSpinnerAnimationEnd}
                 />
                 <div />
@@ -176,12 +219,14 @@ function Board() {
                     showTask={showTask}
                     setShowTask={setShowTask}
                     square={squares[avatarSquare]}
-                    taskName={chosenTask}
+                    task={chosenTask}
+                    canSpin={canSpin}
                     onCompleteTask={onCompleteTask}
                 />
                 <Chance
                     setShowChance={setShowChance}
                     getChance={getChance}
+                    onClickChance={onClickChance}
                     showChance={showChance}
                 />
                 <Square {...squares[15]} squareRefs={squareRefs}/>

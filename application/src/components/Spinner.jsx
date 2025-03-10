@@ -9,6 +9,7 @@ const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order 
 
 function Spinner({
     canSpin,
+    onClickSpin,
     onSpinnerAnimationEnd,
 }) {
     // Reference to the spinning wheel element
@@ -69,7 +70,7 @@ function Spinner({
                     <li>6</li>
                 </ul>
                 <button
-                    onClick={wheelOfFortune}
+                    onClick={() => {wheelOfFortune(); onClickSpin()}}
                     disabled={!canSpin}
                     style={{
                         opacity: canSpin ? 1 : 0.5,
