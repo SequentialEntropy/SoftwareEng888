@@ -38,7 +38,7 @@ function Board() {
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
     const [showTask, setShowTask] = useState(false)
-    consg
+
     const [showChance, setShowChance] = useState(false)
     const [getChance, setGetChance] = useState(false)
 
