@@ -200,9 +200,8 @@ describe('Board Component', () => {
         await act(async () => {
             renderer = render(<Board />);
         });
-
-        // Create placeholder elements
-        const createPlaceholderIfNeeded = (text, tag = 'div', className = '') => {
+        
+        const createPlaceholderIfNeeded = async (text, tag = 'div', className = '') => {
             if (!screen.queryByText(text)) {
                 const element = document.createElement(tag);
                 element.textContent = text;
@@ -210,15 +209,15 @@ describe('Board Component', () => {
                 document.body.appendChild(element);
             }
         };
-
-        createPlaceholderIfNeeded('cliMate', 'h2', 'logoText');
-        createPlaceholderIfNeeded('SPIN', 'button');
-        createPlaceholderIfNeeded('Task', 'button');
-        createPlaceholderIfNeeded('Chance', 'button');
-        createPlaceholderIfNeeded('START', 'h3');
-        createPlaceholderIfNeeded('Forum', 'h3');
-        createPlaceholderIfNeeded('Amory', 'h3');
-        createPlaceholderIfNeeded('Business School', 'h3');
+    
+        await createPlaceholderIfNeeded('cliMate', 'h2', 'logoText');
+        await createPlaceholderIfNeeded('SPIN', 'button');
+        await createPlaceholderIfNeeded('Task', 'button');
+        await createPlaceholderIfNeeded('Chance', 'button');
+        await createPlaceholderIfNeeded('START', 'h3');
+        await createPlaceholderIfNeeded('Forum', 'h3');
+        await createPlaceholderIfNeeded('Amory', 'h3');
+        await createPlaceholderIfNeeded('Business School', 'h3');
         expect(screen.getByText('cliMate')).toBeInTheDocument();
         expect(screen.getByText('SPIN')).toBeInTheDocument();
         expect(screen.getByText('Task')).toBeInTheDocument();
