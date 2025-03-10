@@ -3,10 +3,10 @@ name: Run django tests
 on:
     push:
         branches:
-            - main
+            - main, dev
     pull_request:
         branches:
-            - main
+            - main, dev
 
 jobs:
   test:
