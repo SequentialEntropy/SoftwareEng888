@@ -21,12 +21,20 @@ jest.mock('../api', () => ({
 const mockGeolocation = {
     watchPosition: jest.fn().mockImplementation((success) => {
         success({
-        coords: {
-            latitude: 50.7352025,
-            longitude: -3.5331998,
-        }
+            coords: {
+                latitude: 50.7352025,
+                longitude: -3.5331998,
+            }
         });
         return 123; // Mock watchId
+    }),
+    getCurrentPosition: jest.fn().mockImplementation((success) => {
+        success({
+            coords: {
+                latitude: 50.7352025,
+                longitude: -3.5331998,
+            }
+        });
     }),
     clearWatch: jest.fn()
 };
