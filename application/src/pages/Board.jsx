@@ -111,7 +111,6 @@ function Board() {
     // Event handlers
     const onCompleteTask = () => {
         setShowTask(false)
-        setGetChance(false)
         awardScore(chosenTask.score_to_award)
         // mark as complete and enable spinner
         api.patch("/accounts/me/", {
@@ -122,16 +121,18 @@ function Board() {
             setCanSpin(true)
         )
     }
-    
+
+    const onClickSpin = () => {
+        setGetChance(false)
+    }
+
     const onSpinnerAnimationEnd = landedNumber => {
         if (landedNumber === 6) { // enable chance when spinner lands on 6
             setGetChance(true)
-            setShowChance(true)
         } else {
             setGetChance(false)
             setShowChance(false)
         }
-        setShowTask(true)
         advanceSquare(landedNumber).then(newSquare => {
             generateRandomTask(newSquare)
         })
@@ -146,6 +147,10 @@ function Board() {
         }).then(
             setCanSpin(false)
         )
+    }
+
+    const onClickChance = () => {
+        setGetChance(false)
     }
 
     // Board layout
@@ -205,6 +210,7 @@ function Board() {
                 <div />
                 <Spinner
                     canSpin={canSpin}
+                    onClickSpin={onClickSpin}
                     onSpinnerAnimationEnd={onSpinnerAnimationEnd}
                 />
                 <div />
@@ -220,6 +226,7 @@ function Board() {
                 <Chance
                     setShowChance={setShowChance}
                     getChance={getChance}
+                    onClickChance={onClickChance}
                     showChance={showChance}
                 />
                 <Square {...squares[15]} squareRefs={squareRefs}/>

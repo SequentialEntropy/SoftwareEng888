@@ -46,13 +46,16 @@ export default function Task({showTask, setShowTask, square, task, canSpin, onCo
     }, [square])
 
     return (
-        <div className={styles.task_deck} style={{opacity: canSpin ? 0.5 : 1}}>
+        <div className={styles.task_deck}>
             {/* Task Button */}
             <button
                 className={styles.task_btn}
                 disabled={canSpin}
                 onClick={() => { setShowTask(true) }}
-                style={{cursor: canSpin ? "not-allowed" : "pointer"}}
+                style={{
+                    opacity: canSpin ? 0.5 : 1,
+                    cursor: canSpin ? "not-allowed" : "pointer",
+                }}
             >Task</button>
             <div>
                 {showTask && (

@@ -183,13 +183,11 @@
 
 
 .task_deck{
-    background-color: #3c3e4c;
     position: absolute;
     top: 33%;
     left: 55%;
     width: 15vw;
     height: 15%;
-    border-radius: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,8 +196,9 @@
 }
 
 .task_btn{
-    background: none;
+    background-color: #3c3e4c;
     border: none;
+    border-radius: 25px;
     font-family: 'Londrina Solid';
     margin: auto;
     color: #d9d9d9;
@@ -209,7 +208,6 @@
 }
 
 .chance_deck{
-    background-color: #3c3e4c;
     position: absolute;
     top: 52%;
     left: 55%;
