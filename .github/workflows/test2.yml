@@ -9,18 +9,20 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    container:
-      image: node:20
+    
+    strategy:
+      matrix:
+        node-version: [18.x, 20.x]
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2  
+        uses: actions/checkout@v3  
         
-      - name: Set up Node.js
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: ${{ matrix.node-version }}
           cache: 'npm'
-          cache-dependency-path: application/package-lock.json
 
       - name: Install dependencies
         run: | 
@@ -31,3 +33,8 @@ jobs:
         run: | 
           cd application
           npm test
+
+      - name: Generate test coverage report
+        run: |
+          cd application
+          npm test -- --coverage
