@@ -105,34 +105,59 @@ class SignupTests(TestCase):
         Test successful signup request
         """
         data = {
-            "username": "newuser",
-            "password": "complexpassword123",
-            "password2": "complexpassword123",
+            'username': 'newuser',
+            'password': 'complexpassword123',
         }
         response = self.client.post(
-            reverse("register"),
+            reverse('register'),
             data=json.dumps(data),
-            content_type="application/json",
+            content_type='application/json'
         )
-        self.assertEqual(response.status_code, 201)  # 201 Created
-        self.assertTrue(User.objects.filter(username="newuser").exists())
+        self.assertEqual(response.status_code, 201)  # 201 Created for successful POST
+        self.assertTrue(User.objects.filter(username='newuser').exists())
 
-    def test_signup_password_mismatch(self):
+    def test_signup_failure(self):
         """
-        Test signup fails when passwords do not match
+        Test failed signup request
         """
         data = {
-            "username": "newuser",
-            "password": "complexpassword123",
-            "password2": "wrongpassword",
+            'username': '',  # Invalid username
+            'password': 'complexpassword123',
         }
         response = self.client.post(
-            reverse("register"),
+            reverse('register'),
             data=json.dumps(data),
-            content_type="application/json",
+            content_type='application/json'
         )
         self.assertEqual(response.status_code, 400)  # 400 Bad Request
-        self.assertIn("password2", response.json())  # Check error message exists
+
+class UserGameStatsTests(TestCase):
+    def setUp(self):
+        """
+        Set up test data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(username="player1", password="complexpassword123")
+        self.user_stats = UserGameStats.objects.create(user=self.user, score=0)
+
+    def test_user_score_stored(self):
+        """
+        Test for UserGameStats object starts with a default score of 0 after a user is created.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(user_stats.score, 0)
+
+    def test_update_user_score(self):
+        """
+        Test updating the user's score and the change is stored in the database.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        user_stats.score = 50
+        user_stats.save()
+
+        updated_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(updated_stats.score, 50)
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request for invalid data
 
 class UserGameStatsTests(TestCase):
     def setUp(self):
