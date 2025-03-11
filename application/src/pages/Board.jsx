@@ -29,11 +29,13 @@ import Avatar from "../components/Avatar"
 
 function Board() {
     const taskNotFound = {id: -1, description: "No tasks found for this square - Skip task!", score_to_award: 0}
+    const chanceNotFound = {id: -1, description: "No chance cards registered - Skip chance!", score_to_award: 0}
 
     // Game states
     const [score, setScore] = useState(0)
     const [avatarSquare, setAvatarSquare] = useState(0)
     const [chosenTask, setChosenTask] = useState(taskNotFound);
+    const [chosenChance, setChosenChance] = useState(chanceNotFound)
 
     // Toggles
     const [canSpin, setCanSpin] = useState(false)
@@ -152,6 +154,14 @@ function Board() {
 
     const onClickChance = () => {
         setGetChance(false)
+        api.get("/accounts/chances/")
+        .then(res => res.data)
+        .then(chances => {
+            const chance = (chances.length === 0) ? chanceNotFound : chances[Math.floor(Math.random() * chances.length)]
+
+            setChosenChance(chance)
+            awardScore(chance.score_to_award)
+        })
     }
 
     // Board layout
@@ -225,10 +235,11 @@ function Board() {
                     onCompleteTask={onCompleteTask}
                 />
                 <Chance
+                    showChance={showChance}
                     setShowChance={setShowChance}
                     getChance={getChance}
+                    chance={chosenChance}
                     onClickChance={onClickChance}
-                    showChance={showChance}
                 />
                 <Square {...squares[15]} squareRefs={squareRefs}/>
                 <Square {...squares[ 5]} squareRefs={squareRefs}/>

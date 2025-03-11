@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import UserGameStats, Task
+from .models import UserGameStats, Task, Chance
 
 class UserGameStatsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -50,4 +50,9 @@ class UserSerializer(serializers.ModelSerializer):
 class TaskSerializer(serializers.ModelSerializer):
     class Meta:
         model = Task
+        fields = "__all__"
+
+class ChanceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Chance
         fields = "__all__"
