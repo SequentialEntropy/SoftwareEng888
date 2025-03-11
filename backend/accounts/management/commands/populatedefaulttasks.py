@@ -2,7 +2,7 @@ from django.core.management.base import BaseCommand
 from accounts.models import Task, Chance
 
 class Command(BaseCommand):
-    help = "Populate the database with default task and chance cards"
+    help = "Populate the database with default task cards"
 
     def handle(self, *args, **kwargs):
         Task.objects.create(description="Use a reusable cup"                 , applicable_squares=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
