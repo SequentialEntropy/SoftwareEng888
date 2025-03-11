@@ -6,8 +6,8 @@ from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Task
-from .serializers import UserSerializer, TaskSerializer
+from .models import Task, Chance
+from .serializers import UserSerializer, TaskSerializer, ChanceSerializer
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -31,6 +31,13 @@ class RetrieveTasksView(generics.ListAPIView):
 
     def get_queryset(self):
         return Task.objects.all()
+
+class RetrieveChancesView(generics.ListAPIView):
+    serializer_class = ChanceSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Chance.objects.all()
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]
