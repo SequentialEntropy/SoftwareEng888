@@ -28,8 +28,6 @@ body {
     font-size: 34px;
 }
 
-
-
 .login-container form{
     display: flex;
     flex-direction: column;
