@@ -1,6 +1,6 @@
 import styles from "../styles/Board.module.css"
 
-export default function Chance({setShowChance, getChance, showChance, onClickChance}) {
+export default function Chance({showChance, setShowChance, getChance, chance, onClickChance}) {
     return (
         <div className={styles.chance_deck}>
             {/* Chance Card Button */}
@@ -26,7 +26,8 @@ export default function Chance({setShowChance, getChance, showChance, onClickCha
                         </button>
                     </div>
                     <div className={styles.chance_content}>
-                        <h2>+5 Points!</h2>
+                        <h2>{chance.description}</h2>
+                        <h2>{chance.score_to_award} Points!</h2>
                     </div>
 
                 </div>
