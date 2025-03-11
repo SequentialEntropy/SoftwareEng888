@@ -4,8 +4,6 @@ import styles from "../styles/Board.module.css"
 export default function Task({showTask, setShowTask, square, task, canSpin, onCompleteTask}) {
     const [isTaskCompletable, setIsTaskCompletable] = useState(false)
 
-    const gpsThreshold = 0.1; // Should be enough
-
     // check location and update isTaskCompletable
     const checkLocation = (latitude, longitude) => {
         if (square.id === 0) { // override for START as they don't need any locations
@@ -17,7 +15,7 @@ export default function Task({showTask, setShowTask, square, task, canSpin, onCo
             longitude,
             square.location[0],
             square.location[1],
-            gpsThreshold,
+            square.leniency,
         ))
     }
 
