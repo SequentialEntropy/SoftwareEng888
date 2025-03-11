@@ -1,11 +1,11 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
-from .models import UserProfile, UserGameStats
+from .models import UserGameStats, Task
 
 class UserGameStatsSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserGameStats
-        fields = ["current_square", "score"]
+        fields = ["current_square", "current_task", "task_completed", "score"]
 
 class UserSerializer(serializers.ModelSerializer):
     usergamestats = UserGameStatsSerializer(required=False)
@@ -29,7 +29,7 @@ class UserSerializer(serializers.ModelSerializer):
         )
         UserGameStats.objects.get_or_create(user=user)
         return user
-    
+
     def update(self, instance, validated_data):
         usergamestats_data = validated_data.pop('usergamestats', None)
 
@@ -46,9 +46,8 @@ class UserSerializer(serializers.ModelSerializer):
             user_game_stats.save()
 
         return instance
-    
-class UserProfileSerializer(serializers.ModelSerializer):
+
+class TaskSerializer(serializers.ModelSerializer):
     class Meta:
-        model = UserProfile
-        fields = ["id", "user", "square_id"],
-        extra_kwargs = {"user": {"read_only": True}}
+        model = Task
+        fields = "__all__"

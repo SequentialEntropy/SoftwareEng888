@@ -1,71 +1,48 @@
 from django.contrib.auth.models import User
+from django.shortcuts import render
+
 from rest_framework import generics, status
-from .serializers import UserSerializer, UserProfileSerializer, UserGameStatsSerializer
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import UserProfile, UserGameStats
 
-# Create your views here.
-from django.contrib.auth.forms import UserCreationForm
-from django.urls import reverse_lazy
-from django.views import View
-from django.shortcuts import render
-
-class UserProfileListCreate(generics.ListCreateAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return UserProfile.objects.filter(user=user)
-    
-    def perform_create(self, serializer):
-        if serializer.is_valid():
-            serializer.save(user=self.request.user)
-        else:
-            print(serializer.errors)
-
-class UserProfileDelete(generics.DestroyAPIView):
-    serializer_class = UserProfileSerializer
-    permission_classes = [IsAuthenticated]
-
-    def get_queryset(self):
-        user = self.request.user
-        return UserProfile.objects.filter(user=user)
+from .models import Task
+from .serializers import UserSerializer, TaskSerializer
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
     serializer_class = UserSerializer
     permission_classes = [AllowAny]
 
-class UserDetailView(generics.RetrieveUpdateAPIView):
+class RetrieveUserView(generics.RetrieveUpdateAPIView):
     serializer_class = UserSerializer
     permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user
 
-# class UserViewSet(viewsets.ModelViewSet):
-#     queryset = User.objects.all()
-#     serializer_class = UserSerializer
-#     permission_classes = [IsAuthenticated]
-
 class RankedUsersView(generics.ListAPIView):
     queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
     serializer_class = UserSerializer
+
+class RetrieveTasksView(generics.ListAPIView):
+    serializer_class = TaskSerializer
+    permission_classes = [AllowAny]
+
+    def get_queryset(self):
+        return Task.objects.all()
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]
     template_name = 'registration/signup.html'
 
-    def get(self, request, *args, **kwargs):
+    def get(self, request):
         """
         Handle GET request to render the signup form.
         """
         return render(request, self.template_name)
 
-    def post(self, request, *args, **kwargs):
+    def post(self, request):
         """
         Handle POST request to create a new user.
         """

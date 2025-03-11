@@ -60,15 +60,15 @@ function App() {
     return (
         <BrowserRouter>
             <Routes>
-                {/* Protected home route */}
+                {/* Protected routes */}
                 <Route path="/home" element={<ProtectedRoute><Home /></ProtectedRoute>}/>
+                <Route path="/board" element={<ProtectedRoute><Board /></ProtectedRoute>}/>
 
                 {/* Public routes */}
                 <Route path="/" element={<Landing />}/>  
                 <Route path="/login" element={<Login />}/>
                 <Route path="/logout" element={<Logout />}/>
                 <Route path="/register" element={<RegisterAndLogout />}/>
-                <Route path="/board" element={<Board />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/map" element={<Map />}/>
 

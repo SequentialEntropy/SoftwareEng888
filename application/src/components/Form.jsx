@@ -6,6 +6,7 @@
  * @author Amreet Dhillon
  * @author Genki Asahi 
  * @author Yap Wen Xing
+ * @author Dany Kelzi
  * @version 1.1.0
  * @since 23-02-2025
  */
@@ -66,10 +67,12 @@ function Form({ route, method }) {
      * @param {Event} e - Form submission event.
      */
 
+    const [errorMessage, setErrorMessage] = useState(""); // New state for errors
+
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
-
+    
         // Password confirmation validation for registration
         if (method === "register" && password !== confirmPassword) {
             setPasswordError("Passwords do not match.");
@@ -78,27 +81,36 @@ function Form({ route, method }) {
         } else {
             setPasswordError("");
         }
-
+    
         try {
             const res = await api.post(route, { username, password });
-
+    
             if (method === "login") {
                 // Store the authentication tokens
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
                 navigate("/home");
             } else {
-                // Redirect user to login page after registration
                 navigate("/login");
             }
         } catch (error) {
-            alert(error); // Display error alert
+            if (error.response && error.response.data) {
+                // Check if the error is about the username being taken
+                if (error.response.data.username) {
+                    setErrorMessage(error.response.data.username);
+                } else {
+                    setErrorMessage(error.response.data.error || "An error occurred. Please try again.");
+                }
+            } else {
+                setErrorMessage("An error occurred. Please try again later.");
+            }
         } finally {
-            setLoading(false);
+            setLoading(false)
         }
     };
-
+    
     return (
+        
         <div className={styles.main_form}>
     
             {/* Header section */}
@@ -112,9 +124,9 @@ function Form({ route, method }) {
     
             <div className={styles.login}>
                 <div className={styles.login_container}>
+                
                     {/* Display form title based on method (Login/Register) */}
                     <h2>{name}</h2>
-    
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             {/* Username input field */}
@@ -161,7 +173,11 @@ function Form({ route, method }) {
                                             padding: "20px",
                                             boxShadow: "0px 0px 10px rgba(0, 0, 0, 0.3)",
                                             borderRadius: "25px",
-                                            zIndex: 1000
+                                            zIndex: 1000,
+                                            width: "40vw",
+                                            height: "70%",
+                                            overflowY: "scroll",
+                                            scrollbarWidth: "thin",
                                             }}
                                         >
                                             <span 
@@ -175,20 +191,19 @@ function Form({ route, method }) {
                                             >
                                             X
                                             </span>
-                                            <h1 style={{ color: "black" }}>1. Welcome to cliMate! </h1> <p style={{ color: "black" }}>By accessing or playing the game, you agree to comply with and be bound by these Terms and Conditions. <br></br></p>
-                                            <h3 style={{ color: "black" }}>2. Use of the Website</h3>
-
+                                            <h1 style={{ color: "black" }}>Welcome to cliMate! </h1> <p style={{ color: "black" }}>By accessing or playing the game, you agree to comply with and be bound by these Terms and Conditions. <br></br></p>
+                                            <h3 style={{ color: "black" }}>1.Use of the Website</h3>
                                             <p style={{ color: "black" }}>a) You must be at least 16 years old to use this site.<br></br>
                                             b) You agree to use the website for lawful purposes only and not to engage in any activities that may harm the website or its users.</p>
-                                            <h3 style={{ color: "black" }}>3. User Accounts</h3>
+                                            <h3 style={{ color: "black" }}>2. User Accounts</h3>
                                             <p style={{ color: "black" }}>a) If you create an account, you are responsible for maintaining its confidentiality. <br></br> 
                                             b) We reserve the right to suspend or terminate accounts that violate these terms. </p>
-                                            <h3 style={{ color: "black" }}>4. Location Tracking</h3>
+                                            <h3 style={{ color: "black" }}>3. Location Tracking</h3>
                                             <p style={{ color: "black" }}>a) Our application may collect and use location data to enhance user experience and provide location-based services.<br></br> 
                                             b) Location tracking is only active while the application is in use and is not collected in the background.</p>
-                                            <h3 style={{ color: "black" }}>5. Changes to terms</h3>
+                                            <h3 style={{ color: "black" }}>4. Changes to terms</h3>
                                             <p style={{ color: "black" }}>We reserve the right to update these Terms and Conditions at any time. Your continued use of the website signifies your acceptance of any changes.</p>
-                                            <h3 style={{ color: "black" }}>6. Contact us</h3>
+                                            <h3 style={{ color: "black" }}> Contact us</h3>
                                             <p style={{ color: "black" }}>If you have any questions about these Terms and Conditions, don't hesitate to contact us. </p>
                                         </div>
                                         </div>
@@ -200,7 +215,9 @@ function Form({ route, method }) {
                                 </>
                             )}
                         </div>
-    
+                        {/* Display error message after signip forms*/}
+                        {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
+
                         {/* Submit button */}
                         <button type="submit" className={styles.login_btn} disabled={loading}>
                             {loading ? "Processing..." : name}
@@ -210,6 +227,6 @@ function Form({ route, method }) {
             </div>
         </div>
     )
-                            }
+}
     
-    export default Form;
+export default Form;

@@ -38,52 +38,40 @@
     justify-content: center;
     align-items: center;
     flex-direction: row;
-    height: 90px; 
 
 }
 
 .heading{
-    margin-top: 50px;
     font-family: 'Hammersmith One';
-    font-size: 60px;
     color: #fff;
     
 }
 
 .logo{
     position: absolute;
-    left: 25px;
-    top: 30px;
     font-family: 'Chango';
     color: #4e5e6a;
-    margin-left: 50px;
     text-decoration: none;
-    font-size: 2.5rem;
+    margin-left: 50px;
 }
 
 /* Header buttons */
 .header_btn_login{
     text-decoration: none;
     font-family: 'Londrina Solid';
-    font-size: 30px;
     color: #fff;
     position: absolute;
-    right: 13%;
-    margin-right: 10px;
-    margin-top: 20px;
+
 
 }
 .header_btn_sign{
     text-decoration: none;
     font-family: 'Londrina Solid';
-    font-size: 25px;
     color: #fff;
     background-color: #37394a;
-    padding: 10px 20px;
     border-radius: 25px;
     position: absolute;
-    right: 5%;
-    margin-top: 20px;
+
     
 }
 
@@ -101,15 +89,14 @@
     text-align: center !important;
     padding: 5%;
     background-color: #37394a80;
-    width: 28vw;
-    height: 60vh;
+    height: 65vh;
     border-radius: 10px;
     
 }
 
 .login_container h2 {
-    font-size: 65px;
     font-family: 'Londrina Solid';
+    margin-top: 1.5vw;
 }
 
 .login_container form {
@@ -119,15 +106,11 @@
     align-items: center;
 }
 
-.login_container button {
-    margin: 5%;
-}
 
 /* Form fields */
 .field {
     margin-top: 5%;
     margin-bottom: 5%;
-    width: 20vw;
     height: 7vh;
 }
 
@@ -137,11 +120,190 @@
     border-width: 0;
     background-color: #37394A;
     padding: 3%;
-    width: 10vw;
+    width: 14vw;
     color: white;
     font-family: 'Inter';
 }
 
 .login_btn:hover {
     background-color: #688089;
+}
+
+/* Tablet Styling */
+
+@media (min-width: 481px) and (max-width: 899px){
+    .login_container{
+        width: 50vw;
+    }
+
+    .header{
+        height: 16vw; 
+    }
+    
+    .heading{
+        margin-top: 2vw;
+        font-size: 6vw;
+        
+    }
+    
+    .logo{
+        left: 1vw;
+        font-size: 4vw;
+    }
+
+    /* Header buttons */
+    .header_btn_login{
+        font-size: 3vw;
+        right: 18vw;
+        margin-right: 10px;
+       
+    }
+    .header_btn_sign{
+        font-size: 3vw;
+        padding: 1vw 2vw;
+        right: 5%;
+  
+        
+    }
+
+    .login_container h2 {
+        font-size: 8vw;
+       
+    }
+
+    .login_container form {
+        width: 40vw;
+    }
+
+    .login_container button {
+        margin: 2.5vw;
+    }
+
+
+
+    /* Form fields */
+    .field {
+        width: 35vw;
+    }
+
+}
+
+
+/* Small Deskptop Styling */
+
+@media (min-width: 900px) and (max-width: 1199px){
+    
+    .login_container{
+        width: 40vw;
+    }
+
+    .header{
+        height: 12vw; 
+    }
+    
+    .heading{
+        margin-top: 2vw;
+        font-size: 4.5vw;
+        
+    }
+    
+    .logo{
+        left: 1vw;
+        font-size: 4vw;
+    }
+
+    /* Header buttons */
+    .header_btn_login{
+        font-size: 2.5vw;
+        right: 18vw;
+        margin-right: 10px;
+       
+    }
+    .header_btn_sign{
+        font-size: 2.5vw;
+        padding: 1vw 2vw;
+        right: 5%;
+  
+        
+    }
+
+    .login_container h2 {
+        font-size: 6vw;
+       
+    }
+
+
+    .login_container button {
+        margin: 1.5vw;
+    }
+
+
+
+    /* Form fields */
+    .field {
+        width: 30vw;
+    }
+
+
+}
+
+/* Desktop Styling */
+
+@media (min-width: 1200px) {
+
+    .login_container{
+        width: 28vw;
+    }
+
+    
+    .header{
+        height: 8vw; 
+    }
+    
+    .heading{
+        margin-top: 2vw;
+        font-size: 4vw;
+        
+    }
+    
+    .logo{
+        left: 1vw;
+        font-size: 3vw;
+    }
+
+    /* Header buttons */
+    .header_btn_login{
+        font-size: 2vw;
+        right: 16vw;
+        margin-right: 10px;
+       
+    }
+    .header_btn_sign{
+        font-size: 2vw;
+        padding: 1vw 2vw;
+        right: 5%;
+  
+        
+    }
+
+    .login{
+        margin-top: 4vw;
+    }
+
+    .login_container h2 {
+        font-size: 5vw;
+    }
+
+
+    .login_container button {
+        margin: 1.5vw;
+    }
+
+
+
+    /* Form fields */
+    .field {
+        width: 20vw;
+    }
+
 }

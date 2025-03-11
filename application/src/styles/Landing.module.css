@@ -30,10 +30,8 @@
 .login_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
-    font-size: 30px;
     color: #fff;
     position: absolute;
-    right: 13%;
     margin-right: 10px;
     margin-top: 20px;
 
@@ -41,7 +39,6 @@
 .signup_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
-    font-size: 25px;
     color: #fff;
     background-color: #37394a;
     padding: 10px 20px;
@@ -71,7 +68,6 @@
 
 .title{
     font-family: 'Hammersmith One';
-    font-size: 90px;
     padding: 0;
     margin-bottom: 0;
 
@@ -79,7 +75,6 @@
 
 .slogan{
     font-family: 'Londrina Solid';
-    font-size: 35px;
     margin-top: 0;
     padding: 0;
     line-height: 0;
@@ -92,16 +87,153 @@
     text-decoration: none;
     color: #fff;
     border: 2px solid #fff;
-    padding: 10px;
+    padding: 0.2vw;
     font-family: 'Londrina Solid';
-    font-size: 30px;
     border-radius: 25px;
-    width: 45%;
-    height: 24%;
-    text-align: center;
+    text-align: center; 
+    font-size: 4.5vw;
+}
+
+.landing_main{
+    margin: auto;
+    height: 40%;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    
 }
 
 .start_btn:hover{
     background-color: #37394a;
     
 }
+
+
+/* Tablet Styling */
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+   
+    .login_btn{
+        font-size: 4.5vw;
+        right: 25vw;  
+    }
+  
+    .signup_btn{
+        font-size: 4.5vw;
+    }
+
+    .landing_main{
+        margin-top: 18vw;
+    }
+    
+
+    .title{
+        font-size: 10vw;
+        
+    }
+    
+    .slogan{
+        font-size: 4.5vw;
+    }
+
+    .start_btn{
+        font-size: 5vw;
+        height: 9vw;
+        width: 31vw;
+        
+    }
+
+}
+
+
+/* Desktop Styling */
+
+@media (min-width: 769px) and (max-width: 1199px) {
+
+    .login_btn{
+        font-size: 3vw;
+        right: 18vw;
+    }
+
+    .signup_btn{
+        font-size: 3vw;
+        
+    }
+
+    .landing_main{
+        margin-top: 14vw;   
+        
+    }
+
+    .title{
+        font-size: 7vw;
+        
+    }
+    
+    .slogan{
+        font-size: 3vw;
+    }
+
+    .start_btn{
+        font-size: 3vw;
+        height: 5.5vw;
+        width: 24vw;
+        
+   
+    }
+
+
+    
+
+}
+
+
+/* Large Desktop Styling */
+
+@media (min-width: 1200px) {
+
+    .login_btn{
+        font-size: 2vw;
+        right: 14vw;
+    }
+
+    .signup_btn{
+        font-size: 2vw;
+        
+    }
+
+    .landing_main{
+        margin-top: 10vw;    
+        
+    }
+
+    
+    .title{
+        font-size: 6vw;
+        
+    }
+
+    .slogan{
+        font-size: 2.5vw;
+    }
+
+    .start_btn{
+        font-size: 2.5vw;
+        height: 4.5vw;
+        width: 23vw;
+       
+    }
+
+}
+
+
+
+
+
+
+
+

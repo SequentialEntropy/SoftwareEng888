@@ -25,8 +25,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 6rem;
-    padding: 20px 0;
+    width: 7vw;
+    padding: 1.5vw 0;
     height: 90vh;
     position: fixed;
     border-radius: 30px;
@@ -37,18 +37,19 @@
 
 .sidebar i {
     color: #85AEB3;
-    margin-top: 200px;
+  
 }
 
 .sidebar a {
-    margin-top: 20%;
+    margin-top: 1.5vw;
 }
 
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
-    font-size: 1.5rem;
+    font-size: 1.5vw;
 }
+
 
 /* Spinner component */
 :where(.spinner) {
@@ -136,8 +137,8 @@
     width: 80vw;
     height: 85vh;
     margin: auto;
-    margin-left: 200px;
-    margin-top: 75px;
+    margin-left: 13vw;
+    margin-top: 7vw;    /* make media specifc*/
     padding: 1vh 1vw;
     position: relative;
     background-color: #e9fffd;
@@ -149,7 +150,7 @@
 }
 
 .main_board i{
-    font-size: 80px;
+    font-size: 10vw;
 }
 
 .item {
@@ -166,9 +167,9 @@
 }
 
 .item h3{
-    font-size: 1.2vw;
+    font-size: 1.5vw;
     font-family: 'Londrina Solid';
-    margin-top: 30%;
+    margin-top: 4.5vw;
 }
 
 .tile_bar{
@@ -182,14 +183,11 @@
 
 
 .task_deck{
-    background-color: #3c3e4c;
     position: absolute;
     top: 33%;
     left: 55%;
-    width: 20%;
+    width: 15vw;
     height: 15%;
-    border-radius: 25px;
-    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -198,23 +196,24 @@
 }
 
 .task_btn{
-    background: none;
+    background-color: #3c3e4c;
     border: none;
+    border-radius: 25px;
     font-family: 'Londrina Solid';
     margin: auto;
     color: #d9d9d9;
-    font-size: 2.5rem;
+    font-size: 3vw;
+    width: 100%;
+    height: 100%;
 }
 
 .chance_deck{
-    background-color: #3c3e4c;
     position: absolute;
     top: 52%;
     left: 55%;
-    width: 20%;
+    width: 15vw;
     height: 15%;
     border-radius: 25px;
-    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -308,7 +307,6 @@
     left: 50%;
     transform: translate(-50%, -50%);
     background: #d9d9d9;
-    padding: 20px;
     border-radius: 25px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
     z-index: 1000;
@@ -317,6 +315,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    width: 35vw;
+    height: 25%;
 }
 
 .popup_header{
@@ -336,7 +336,7 @@
 
 .popup_header h1{
     font-family: 'Londrina Solid';
-    font-size: 1.5rem;
+    font-size: 2.5vw;
     margin: auto;
 }
 
@@ -344,18 +344,26 @@
     color:black;
     font-size: 25px;
     position: absolute;
-    right: 20px;
+    right: 1vw;
     padding: 0;
     border: none;
     background: none;
     
 }
 
+.popup_content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1vw;
+    
+}
 
 .popup_content h2 {
-    margin-top: 25px;
-    margin-bottom: 10px;
+    margin-top: 3vw;
+    margin-bottom: 0;
     font-family: 'Londrina Solid';
+    font-size: 1.8vw;
     
 }
 
@@ -363,9 +371,9 @@
     background: #4CAF50;
     color: white;
     border: none;
-    padding: 10px 20px;
     cursor: pointer;
     border-radius: 5px;
+    padding: 5px 10px;
 }
 
 .popup_content  button:hover {
@@ -376,15 +384,19 @@
 
 .points_container{
     position: absolute;
-    top: 20px;
-    left: 42%;
+    top: 1.5vw;
+    left: 40vw;
     background-color: #3C3E4C;
     border-radius: 25px;
-    width: 20%;
+    width: 20vw;
+    height: 7%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .points_container h1{
-    font-size: 2rem;
+    font-size: 3vw;
     text-align: center;
     color: #D9D9D9;
     font-family: 'Londrina Solid';
@@ -394,8 +406,8 @@
 /* How To Play Button */
 .how_to_play_btn {
     position: fixed;
-    top: 20px; 
-    right: 25px; 
+    top: 0.3vw; 
+    right: 7vw; 
     width: 60px; 
     height: 60px; 
     background: #D9D9D9;
@@ -472,15 +484,14 @@
 .how_to_play_title {
     color: white;
     font-family: "Londrina Solid";
-    margin-top: 8px;
     width: 100%;
 }
 
 .how_to_play_instructions {
     color: black;
     font-family: "Londrina Solid";
-    margin-top: 20px;
-    font-size: 25px;
+    margin-top: 0px;
+    font-size: 2vw;
 }
 
 .overlay {
@@ -492,3 +503,28 @@
     align-items: start; 
     z-index: 50; 
 }
+
+
+
+
+@media (min-width: 481px) and (max-width: 768px){
+   
+
+}
+
+
+@media (min-width: 769px) and (max-width: 1199px ){
+
+    
+
+
+}
+
+
+@media (min-width: 1200px){
+    
+    
+
+
+}
+

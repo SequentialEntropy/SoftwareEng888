@@ -1,11 +1,14 @@
 from django.urls import path
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from . import views
+from .views import SignUpView, RetrieveUserView, RankedUsersView, RetrieveTasksView
 
 urlpatterns = [
-    # path("signup/", SignUpView.as_view(), name="signup"),
-    path("profiles/", views.UserProfileListCreate.as_view(), name="user-profile-list"),
-    path("profiles/delete/<int:pk>/", views.UserProfileDelete.as_view(), name="delete-user-profile"),
-    path('me/', views.UserDetailView.as_view(), name="user-detail"),
-    path("ranked-users/", views.RankedUsersView.as_view(), name="ranked-users")
+    path("user/register/", SignUpView.as_view(), name="register"),
+    path("me/", RetrieveUserView.as_view(), name="user-detail"),
+    path("ranked-users/", RankedUsersView.as_view(), name="ranked-users"),
+    path("tasks/", RetrieveTasksView.as_view(), name="tasks"),
+
+    path("token/", TokenObtainPairView.as_view(), name="get_token"),
+    path("token/refresh/", TokenRefreshView.as_view(), name="refresh"),
 ]
