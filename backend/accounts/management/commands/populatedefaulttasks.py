@@ -20,3 +20,6 @@ class Command(BaseCommand):
         Task.objects.create(description="Walk to campus"                     , applicable_squares=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
         Task.objects.create(description="Try a vegan food"                   , applicable_squares=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
         Task.objects.create(description="Read an article on sustainability"  , applicable_squares=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
+
+        count = Task.objects.count()
+        self.stdout.write(self.style.SUCCESS(f'Successfully added {count} entries to Task'))
