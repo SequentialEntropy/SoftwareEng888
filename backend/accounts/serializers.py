@@ -9,20 +9,13 @@ class UserGameStatsSerializer(serializers.ModelSerializer):
 
 class UserSerializer(serializers.ModelSerializer):
     usergamestats = UserGameStatsSerializer(required=False)
-    password2 = serializers.CharField(write_only=True)
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "password2", "usergamestats"]
+        fields = ["id", "username", "password", "usergamestats"]
         extra_kwargs = {"password": {"write_only": True}} # Nobody can read the password
 
-    def validate(self, data):
-        if data["password"] != data["password2"]:
-            raise serializers.ValidationError({"password2": "Passwords do not match."})
-        return data
-
     def create(self, validated_data):
-        validated_data.pop("password2")
         user = User.objects.create_user(
             username=validated_data["username"],
             password=validated_data["password"],
