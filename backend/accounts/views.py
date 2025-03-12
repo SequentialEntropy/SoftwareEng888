@@ -1,8 +1,8 @@
 from django.contrib.auth.models import User
 from django.shortcuts import render
 
-from rest_framework import generics, status
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework import generics, status, viewsets
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -25,19 +25,29 @@ class RankedUsersView(generics.ListAPIView):
     queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
     serializer_class = UserSerializer
 
-class RetrieveTasksView(generics.ListAPIView):
+class TaskViewSet(viewsets.ModelViewSet):
+    queryset = Task.objects.all()
     serializer_class = TaskSerializer
-    permission_classes = [AllowAny]
 
-    def get_queryset(self):
-        return Task.objects.all()
+    def get_permissions(self):
+        """
+        Set different permissions for viewing and editing.
+        """
+        if self.action in ["list", "retrieve"]:  # Viewing - GET requests
+            return [AllowAny()]
+        return [IsAdminUser()]  # Editing - POST, PUT, PATCH, DELETE
 
-class RetrieveChancesView(generics.ListAPIView):
+class ChanceViewSet(viewsets.ModelViewSet):
+    queryset = Chance.objects.all()
     serializer_class = ChanceSerializer
-    permission_classes = [AllowAny]
 
-    def get_queryset(self):
-        return Chance.objects.all()
+    def get_permissions(self):
+        """
+        Set different permissions for viewing and editing.
+        """
+        if self.action in ["list", "retrieve"]:  # Viewing - GET requests
+            return [AllowAny()]
+        return [IsAdminUser()]  # Editing - POST, PUT, PATCH, DELETE
 
 class SignUpView(APIView):
     permission_classes = [AllowAny]
