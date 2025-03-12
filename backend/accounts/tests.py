@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.urls import reverse
 from django.contrib.auth.models import User
 from django.core import mail
+from .models import UserGameStats
 import json
 # Create your tests here.
 """
@@ -128,4 +129,59 @@ class SignupTests(TestCase):
             data=json.dumps(data),
             content_type='application/json'
         )
+        self.assertEqual(response.status_code, 400)  # 400 Bad Request
+
+class UserGameStatsTests(TestCase):
+    def setUp(self):
+        """
+        Set up test data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(username="player1", password="complexpassword123")
+        self.user_stats = UserGameStats.objects.create(user=self.user, score=0)
+
+    def test_user_score_stored(self):
+        """
+        Test for UserGameStats object starts with a default score of 0 after a user is created.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(user_stats.score, 0)
+
+    def test_update_user_score(self):
+        """
+        Test updating the user's score and the change is stored in the database.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        user_stats.score = 50
+        user_stats.save()
+
+        updated_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(updated_stats.score, 50)
         self.assertEqual(response.status_code, 400)  # 400 Bad Request for invalid data
+
+class UserGameStatsTests(TestCase):
+    def setUp(self):
+        """
+        Set up test data
+        """
+        self.client = Client()
+        self.user = User.objects.create_user(username="player1", password="complexpassword123")
+        self.user_stats = UserGameStats.objects.create(user=self.user, score=0)
+
+    def test_user_score_stored(self):
+        """
+        Test for UserGameStats object starts with a default score of 0 after a user is created.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(user_stats.score, 0)
+
+    def test_update_user_score(self):
+        """
+        Test updating the user's score and the change is stored in the database.
+        """
+        user_stats = UserGameStats.objects.get(user=self.user)
+        user_stats.score = 50
+        user_stats.save()
+
+        updated_stats = UserGameStats.objects.get(user=self.user)
+        self.assertEqual(updated_stats.score, 50)

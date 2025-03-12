@@ -26,7 +26,12 @@ This section guides you through setting up and running the Django backend server
    python3 manage.py makemigrations
    python3 manage.py migrate
    ```
-6. Start the backend server:
+6. Populate the database with default entries:
+   ```
+   python3 manage.py populatedefaulttasks
+   python3 manage.py populatedefaultchances
+   ```
+7. Start the backend server:
    ```
    python3 manage.py runserver
    ```
@@ -63,9 +68,8 @@ This section guides you through setting up and running the React frontend server
 Users can register to the game using their email address and creating a username and password. After this they will then navigate to their dashboard.
 1. Spin wheel
 2. Complete task at specified location
-3. Scan QR code to verify completion
-4. Collect points
-5. See your progress on the leaderboard
+3. Collect points
+4. See your progress on the leaderboard
 
 ## Structure
 The project is structured as follows:
@@ -75,8 +79,6 @@ Frontend: Built using Vite and React, responsible for the user interface and int
 Backend: Developed with Python (Django) to handle authentication, task verification, and leaderboard updates.
 
 Database: Stores user data, completed tasks, and leaderboard rankings.
-
-QR Code System: Used to verify task completion by scanning codes at designated locations.
 
 This modular approach ensures scalability and ease of maintenance.
 

@@ -56,24 +56,34 @@ function Board() {
                 <i className="bi bi-person-circle" style={{fontSize: "90px", top:"0"}} ></i>
                 <h1 className={styles.profile_name}>{user.username}</h1>
             </div>
-    
-            <div className={styles.profile_info}>
-                <div className={styles.info_row}>
-                    <span className={styles.label}>Email Address</span>
-                    <span className={styles.edit}>EDIT</span>
-                </div>
-                <hr className={styles.line} />
 
-                <div className={styles.info_row}>
-                    <span className={styles.label}>Username</span>
-                    <span className={styles.edit}>EDIT</span>
-                </div>
-                <hr className={styles.line} />
-            </div>
             
-            <a href="{% url 'password_change' %}" class="reset_password">Reset Password</a>
+             <div className={styles.profile_info}>
 
-            <button className={styles.logout_btn}>Log Out</button>
+                <form>
+
+                    <div className={styles.info_row}>
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" placeholder={user.username}></input>
+                        <button className={styles.edit}>EDIT</button>
+                    </div>
+                    <hr className={styles.line} />
+
+                    <div className={styles.info_row}>
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder={user.username}></input>
+                        <button className={styles.edit}>EDIT</button>
+                    </div>
+                    <hr className={styles.line} />
+                </form>
+
+                
+            </div>
+
+            
+            <a href="reset-password">Reset Password</a>
+
+            <a href="logout" className={styles.logout_btn}>Log Out</a>
         </div>
      
         </div>

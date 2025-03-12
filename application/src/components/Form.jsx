@@ -193,7 +193,6 @@ function Form({ route, method }) {
                                             </span>
                                             <h1 style={{ color: "black" }}>Welcome to cliMate! </h1> <p style={{ color: "black" }}>By accessing or playing the game, you agree to comply with and be bound by these Terms and Conditions. <br></br></p>
                                             <h3 style={{ color: "black" }}>1.Use of the Website</h3>
-
                                             <p style={{ color: "black" }}>a) You must be at least 16 years old to use this site.<br></br>
                                             b) You agree to use the website for lawful purposes only and not to engage in any activities that may harm the website or its users.</p>
                                             <h3 style={{ color: "black" }}>2. User Accounts</h3>
@@ -230,4 +229,4 @@ function Form({ route, method }) {
     )
 }
     
-    export default Form;
+export default Form;
