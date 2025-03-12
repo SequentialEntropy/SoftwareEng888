@@ -52,7 +52,6 @@
     font-family: 'Chango';
     color: #4e5e6a;
     text-decoration: none;
-    margin-left: 50px;
 }
 
 /* Header buttons */
@@ -129,6 +128,67 @@
     background-color: #688089;
 }
 
+
+/* Mobile Styling */
+
+@media (max-width: 480px){
+    .login_container{
+        width: 60vw;
+    }
+
+    .header{
+        height: 18vw; 
+    }
+    
+    .heading{
+        margin-top: 2vw;
+        font-size: 7vw;
+        
+    }
+    
+    .logo{
+        left: 5vw;
+        font-size: 5vw;
+    }
+
+    /* Header buttons */
+    .header_btn_login{
+        font-size: 4vw;
+        right: 18vw;
+        margin-right: 15px;
+       
+    }
+    .header_btn_sign{
+        font-size: 4vw;
+        padding: 1vw 2vw;
+        right: 5%;
+  
+        
+    }
+
+    .login_container h2 {
+        font-size: 12vw;
+       
+    }
+
+    .login_container form {
+        width: 50vw;
+    }
+
+    .login_container button {
+        margin: 2.5vw;
+    }
+
+
+
+    /* Form fields */
+    .field {
+        width: 50vw;
+    }
+
+
+}
+
 /* Tablet Styling */
 
 @media (min-width: 481px) and (max-width: 899px){
@@ -147,7 +207,7 @@
     }
     
     .logo{
-        left: 1vw;
+        left: 6vw;
         font-size: 4vw;
     }
 
@@ -208,7 +268,7 @@
     }
     
     .logo{
-        left: 1vw;
+        left: 5vw;
         font-size: 4vw;
     }
 
@@ -267,7 +327,7 @@
     }
     
     .logo{
-        left: 1vw;
+        left: 5vw;
         font-size: 3vw;
     }
 
