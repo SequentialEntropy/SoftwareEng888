@@ -26,7 +26,12 @@ This section guides you through setting up and running the Django backend server
    python3 manage.py makemigrations
    python3 manage.py migrate
    ```
-6. Start the backend server:
+6. Populate the database with default entries:
+   ```
+   python3 manage.py populatedefaulttasks
+   python3 manage.py populatedefaultchances
+   ```
+7. Start the backend server:
    ```
    python3 manage.py runserver
    ```
