@@ -201,8 +201,7 @@ html, body{
     left: 60%;
     width: 15vw;
     height: 15%;
-  /*border-radius: 25px;*/
-    border: 2px solid black;
+    border-radius: 25px;
     display: flex;
     justify-content: center;
     align-items: center;
