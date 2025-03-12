@@ -181,6 +181,16 @@ function Board() {
                 </div>
 
             </nav>
+            <div>
+                {/* Points Container */}
+
+                <div className={styles.points_container}>
+                    <h1>{score} points</h1>
+                </div>
+
+                {/* How to play popup */}
+                <HowToPlay />
+            </div>
             <div className={styles.main_board}>
                 {/* Avatar */}
                 <Avatar avatarSquare={avatarSquare} squareRefs={squareRefs} />
@@ -230,16 +240,7 @@ function Board() {
                 <Square {...squares[ 1]} squareRefs={squareRefs}/>
                 <Square {...squares[ 0]} squareRefs={squareRefs}/>
             </div>
-            <div>
-                {/* Points Container */}
-
-                <div className={styles.points_container}>
-                    <h1>{score} points</h1>
-                </div>
-
-                {/* How to play popup */}
-                <HowToPlay />
-            </div>
+            
         </div>
     )
 }
