@@ -3,17 +3,11 @@ import api from "../api"
 import styles from "../styles/Profile.module.css";
 
 function Board() {
-
-    const [userProfiles, setUserProfiles] = useState([])
     const [user, setUser] = useState({
         username: null
     })
-    const [content, setContent] = useState("")
-    const [title, setTitle] = useState("")
-
     useEffect(() => {
         document.title = "Dashboard"
-        getUserProfiles()
         getUserDetails()
     }, [])
 
@@ -22,14 +16,6 @@ function Board() {
             .get("/accounts/me/")
             .then(res => res.data)
             .then(data => {setUser(data); console.log(data)})
-            .catch(err => alert(err))
-    }
-
-    const getUserProfiles = () => {
-        api
-            .get("/accounts/profiles/")
-            .then(res => res.data)
-            .then(data => {setUserProfiles(data)})
             .catch(err => alert(err))
     }
 
