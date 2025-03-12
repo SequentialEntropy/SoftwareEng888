@@ -5,9 +5,12 @@ from rest_framework import generics, status
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework import status, permissions
+from django.contrib.auth.hashers import check_password
+
 
 from .models import Task, Chance
-from .serializers import UserSerializer, TaskSerializer, ChanceSerializer
+from .serializers import UserSerializer, TaskSerializer, ChanceSerializer, ChangePasswordSerializer
 
 class CreateUserView(generics.CreateAPIView):
     queryset = User.objects.all()
@@ -60,3 +63,23 @@ class SignUpView(APIView):
         else:
             print(serializer.errors)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+
+
+class ChangePasswordView(APIView):
+    permission_classes = [permissions.IsAuthenticated]  # Require authentication
+
+    def post(self, request):
+        user = request.user  # Get the logged-in user
+        old_password = request.data.get("old_password")
+        new_password = request.data.get("new_password")
+
+        # Verify if the provided old password is correct
+        if not check_password(old_password, user.password):
+            return Response({"error": "Incorrect old password"}, status=status.HTTP_400_BAD_REQUEST)
+
+        # If correct, update the password
+        user.set_password(new_password)
+        user.save()
+
+        return Response({"message": "Password changed successfully"}, status=status.HTTP_200_OK)

@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from .models import UserGameStats, Task, Chance
+from rest_framework.serializers import Serializer, CharField
 
 class UserGameStatsSerializer(serializers.ModelSerializer):
     class Meta:
@@ -49,3 +50,8 @@ class ChanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Chance
         fields = "__all__"
+
+class ChangePasswordSerializer(Serializer):
+    old_password = CharField(required=True)
+    new_password = CharField(required=True)
+
