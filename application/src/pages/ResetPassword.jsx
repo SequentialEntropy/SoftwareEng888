@@ -5,12 +5,18 @@ import api from "../api"; // Import API helper
 function ResetPassword() {
     const [oldPassword, setOldPassword] = useState("");
     const [newPassword, setNewPassword] = useState("");
+    const [confirmPassword, setConfirmPassword] = useState("");
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
+        if (newPassword !== confirmPassword) {
+            setError("New passwords do not match");
+            return;
+        }
     
         try {
             const response = await api.post("/accounts/change-password/", {
@@ -63,10 +69,23 @@ function ResetPassword() {
                     />
                 </div>
 
+                <div className="form-group"> 
+                    <label htmlFor="confirm-password">Confirm Password</label>
+                    <input 
+                        type="password" 
+                        id="confirm-password" 
+                        className="form-control"
+                        placeholder="Confirm new password"
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                        required
+                    />
+                </div>
+
                 {error && <p style={{ color: "red" }}>{error}</p>}
                 {success && <p style={{ color: "green" }}>{success}</p>}
 
-                <button type="submit" disabled={!oldPassword || !newPassword}>
+                <button type="submit" disabled={!oldPassword || !newPassword || !confirmPassword}>
                     Save Changes
                 </button>
             </form>
