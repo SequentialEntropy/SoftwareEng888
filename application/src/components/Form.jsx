@@ -32,6 +32,8 @@ function Form({ route, method }) {
     // State for storing the input username
     const [username, setUsername] = useState("");
 
+    const [email, setEmail] = useState("");
+
     // State for storing the password input
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
@@ -130,7 +132,7 @@ function Form({ route, method }) {
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
                             {/* Username input field */}
-                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" required />
+                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
     
                             {/* Password input field */}
                             <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
@@ -138,6 +140,7 @@ function Form({ route, method }) {
                             {/* Confirm Password input field */}
                             {method === "register" && (
                                 <>
+                                    <input type="text" className={`form-control ${styles.field}`} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
