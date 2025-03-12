@@ -129,7 +129,7 @@ function Home() {
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{textAlign:"center"}} ></i>
                         </div>
-                        <div style={{fontSize: "5vw", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
+                        <h2>{currentUser.usergamestats.score}</h2>
                     </div>
                 </div>
             
