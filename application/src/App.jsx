@@ -71,6 +71,7 @@ function App() {
                 <Route path="/register" element={<RegisterAndLogout />}/>
                 <Route path="/profile" element={<Profile />}/>
                 <Route path="/map" element={<Map />}/>
+                <Route path="/admin" element={<ProtectedRoute isAdminRoute>Admin</ProtectedRoute>}/>
 
                 {/* Catch-all route for 404 pages */}
                 <Route path="*" element={<NotFound />}/>

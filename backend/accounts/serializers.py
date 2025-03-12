@@ -12,7 +12,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "password", "usergamestats"]
+        fields = ["id", "username", "password", "usergamestats", "is_staff"]
         extra_kwargs = {"password": {"write_only": True}} # Nobody can read the password
 
     def create(self, validated_data):

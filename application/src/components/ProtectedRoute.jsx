@@ -14,6 +14,7 @@ import { jwtDecode } from "jwt-decode"
 import api from "../api"
 import { REFRESH_TOKEN, ACCESS_TOKEN } from "../constants"
 import { useState, useEffect } from "react"
+import NotAuthorised from "../pages/NotAuthorised"
 
 /**
  * 
@@ -25,8 +26,9 @@ import { useState, useEffect } from "react"
  * @returns {JSX.Element} - The protected route component.
  */
 
-function ProtectedRoute({children}) {
+function ProtectedRoute({isAdminRoute, children}) {
     const [isAuthorized, setIsAuthorized] = useState(null)
+    const [isAdmin, setIsAdmin] = useState(null)
 
     useEffect(() => {
         auth().catch(() => {setIsAuthorized(false)})
@@ -57,6 +59,13 @@ function ProtectedRoute({children}) {
         }
     }
 
+    const adminCheck = async () => {
+        const accountDetails = await api.get("/accounts/me/")
+        if (accountDetails.data.is_staff) {
+            setIsAdmin(true)
+        }
+    }
+
     /**
      * Checks if the user is authenticated by decoding the stored access token. 
      * If the token is expired, it will attempt to refresh it
@@ -79,10 +88,18 @@ function ProtectedRoute({children}) {
         } else {
             setIsAuthorized(true)
         }
+
+        if (isAdminRoute) {
+            await adminCheck()
+        }
     }
 
     if (isAuthorized === null) {
         return <div>Loading...</div> // Show a loading state while authentication is being verified
+    }
+
+    if (isAdminRoute) {
+        return isAdmin ? children : <NotAuthorised />
     }
 
     return isAuthorized ? children : <Navigate to="/login" />
