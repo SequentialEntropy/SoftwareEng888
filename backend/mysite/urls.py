@@ -21,17 +21,17 @@ from rest_framework.routers import DefaultRouter
 from accounts.views import TaskViewSet, ChanceViewSet
 
 task_router = DefaultRouter()
-task_router.register("tasks", TaskViewSet)
+task_router.register("", TaskViewSet)
 
 chance_router = DefaultRouter()
-chance_router.register("chances", ChanceViewSet)
+chance_router.register("", ChanceViewSet)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
 
-    path("", include(task_router.urls)),
-    path("", include(chance_router.urls)),
+    path("tasks/", include(task_router.urls)),
+    path("chances/", include(chance_router.urls)),
 
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
