@@ -1,0 +1,604 @@
+/**
+* Admin.module.css - Stylesheet for Admin page
+*/
+
+
+.admin_page{
+    background-color: #c5e4e1;
+    min-height: 100vh;
+}
+
+.heading{
+    font-family: 'Hammersmith One';
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    padding: 10px;
+    width: 80vw;
+    margin: auto;
+}
+
+/* Sidebar navigation */
+.sidebar {
+    background-color:#3C3E4C;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 9vw;
+    padding: 1.5vw 0;
+    height: 90vh;
+    position: absolute;
+    border-radius: 30px;
+    gap: 4vw;
+
+}
+
+.sidebar i {
+    color: #85AEB3;
+    font-size: 4vw;
+  
+}
+
+
+
+.sidebar h2{
+    color: #85AEB3;
+    font-family: 'Hammersmith One';
+    font-size: 2vw;
+}
+
+
+/* Logo container */
+.logoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.logoText {
+    color: #85AEB3;
+    font-size:25px;
+    top: 0;
+    justify-content: flex-start;
+}
+
+
+/* Manage User Section */
+
+.user_panel{
+    background-color: #d9d9d9;
+    width: 80%;
+    height: 30vh;
+    margin-left: 10%;
+    border-radius: 25px;
+}
+
+/* Manage Game Section */
+.game_manager{
+    width: 80%;
+    height: 35vh;
+    margin-left: 10%;
+    display: flex;
+    flex-direction: row;
+    gap: 5%;
+    border-radius: 25px;
+}
+
+.user_heading,
+.game_heading{
+    font-family: 'Hammersmith One';
+    color: #fff;
+    background-color: green;
+    width: 20%;
+    padding: 10px;
+    border-radius: 25px;
+    background-color: #3C3E4C;
+    margin-left: 10%;
+    text-align: center;
+    font-size: 1.8vw;
+    margin-top: 1vw;
+}
+
+
+/* Task and Chance Panels under Manage Game */
+
+.task_panel,
+.chance_panel{
+    border-radius: 25px;
+    background-color: #d9d9d9;
+    width: 30%;
+
+}
+
+.task_heading,
+.chance_heading{
+    font-family: 'Hammersmith One';
+    color: #3C3E4C;
+    font-size: 1.5vw;
+    text-align: center;
+    margin-top: 5%;
+}
+
+.task_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+}
+
+.task_form input{
+    border-radius: 25px;
+    margin-top: 0.5vw;
+    height: 2.5vw;
+    padding: 10px;
+    font-size: 1vw;
+}
+
+.task_form select{
+    width: 70%;
+    margin-top: 0.6vw;
+    font-family: 'Hammersmith One';
+    font-weight: 400;
+    padding: 5px;
+    border-radius: 25px;
+    border: none;
+    text-align: center;
+}
+
+.task_form button {
+    margin-top: 1vw;
+    border-radius: 25px;
+    background-color: #3C3E4C;
+    border: none;
+    padding: 5px;
+    width: 50%;
+    color: #fff;
+    font-family: 'Hammersmith One';
+}
+
+.chance_form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 70%;
+    margin: auto;
+    
+}
+
+.chance_form input{
+    border-radius: 25px;
+    margin-top: 0.5vw;
+    height: 2.5vw;
+    padding: 10px;
+    font-size: 1vw;
+}
+
+.chance_form button {
+    margin-top: 1vw;
+    border-radius: 25px;
+    background-color: #3C3E4C;
+    border: none;
+    padding: 5px;
+    width: 50%;
+    color: #fff;
+    font-family: 'Hammersmith One';
+}
+
+
+
+
+/* Mobile Styling */
+@media (max-width: 480px){
+
+
+    .sidebar{
+        width: 85vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 4.5%;
+        left: 2vw;
+        
+    }
+
+    .sidebar h2{
+        font-size: 5vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    .sidebar i{
+        font-size: 5vw;
+        
+    }
+
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+    .user_panel{
+        width: 80%;
+        height: 28vh;
+        margin: auto;
+        margin-top: 2vw;
+    }
+    
+    .game_manager{
+        width: 80%;
+        height: 30vh;
+        margin: auto;
+        margin-top: 2vw;
+        gap: 5%; 
+    }
+    
+    .user_heading,
+    .game_heading{
+        width: 30%;
+        padding: 10px;
+        margin: auto;
+        font-size: 3vw;
+        margin-top: 4vw;
+    }
+    
+    
+    
+    .task_heading,
+    .chance_heading{
+        font-size: 3vw;
+        margin-top: 3vw;
+
+    }
+    
+
+    
+    .task_form input{
+        margin-top: 1vw;
+        height: 5vw;
+        font-size: 1.5vw;
+    }
+    
+    .task_form select{
+        width: 90%;
+        font-size: 3vw;
+        margin-top: 2vw;
+    }
+    
+    .task_form button {
+        margin-top: 3vw;
+        width: 90%;
+        font-size: 3vw;
+    }
+
+    
+    .chance_form input{
+        margin-top: 1vw;
+        height: 5vw;
+        font-size: 1.5vw;
+    }
+    
+    .chance_form button {
+        margin-top: 3vw;
+        width: 90%;
+        font-size: 3vw;
+    }
+
+
+
+
+}
+
+
+
+/* Tablet Styling */
+@media (min-width: 481px) and (max-width: 768px){
+
+
+    .sidebar{
+        width: 90vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 4.5%;
+        left: 2vw;
+        
+    }
+
+    .sidebar h2{
+        font-size: 4vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    .sidebar i{
+        font-size: 4vw;
+        
+    }
+
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+
+    .user_panel{
+        width: 80%;
+        height: 25vh;
+        margin: auto;
+        margin-top: 2vw;
+    }
+    
+    .game_manager{
+        width: 80%;
+        height: 30vh;
+        margin: auto;
+        margin-top: 2vw;
+        gap: 5%; 
+    }
+    
+    .user_heading,
+    .game_heading{
+        width: 20%;
+        padding: 10px;
+        margin: auto;
+        font-size: 2vw;
+        margin-top: 2vw;
+    }
+    
+    
+    
+    .task_heading,
+    .chance_heading{
+        font-size: 2.5vw;
+
+    }
+    
+
+    
+    .task_form input{
+        margin-top: 0.5vw;
+        height: 4vw;
+        font-size: 1.5vw;
+    }
+    
+    .task_form select{
+        width: 90%;
+        margin-top: 1vw;
+    }
+    
+    .task_form button {
+        margin-top: 1.5vw;
+        width: 70%;
+    }
+
+    
+    .chance_form input{
+        margin-top: 1vw;
+        height: 5vw;
+        font-size: 1.5vw;
+    }
+    
+    .chance_form button {
+        margin-top: 2vw;
+        width: 90%;
+    }
+
+}
+
+/* Desktop Styling */
+
+@media (min-width: 769px) and (max-width: 1012px){
+
+    .sidebar {
+        width: 8vw;
+        padding: 1.5vw 0;
+        height: 88vh;
+        position: absolute;
+        border-radius: 30px;
+        gap: 3vw;
+        top: 5.5%;
+    
+    }
+    
+    .sidebar i {
+        color: #85AEB3;
+        font-size: 4vw;
+      
+    }
+    
+    
+    
+    .sidebar h2{
+        color: #85AEB3;
+        font-family: 'Hammersmith One';
+        font-size: 2vw;
+    }
+
+
+
+    .user_panel{
+        width: 80%;
+        height: 30vh;
+        margin-left: 13vw;
+    }
+    
+    .game_manager{
+        width: 80%;
+        height: 35vh;
+        margin-left: 13vw;
+        gap: 5%; 
+    }
+    
+    .user_heading,
+    .game_heading{
+        width: 20%;
+        padding: 10px;
+        margin-left: 13vw;
+        font-size: 1.8vw;
+        margin-top: 1vw;
+    }
+    
+    
+    .task_panel,
+    .chance_panel{
+        border-radius: 25px;
+        width: 30%;
+    
+    }
+    
+    .task_heading,
+    .chance_heading{
+        font-size: 2vw;
+
+    }
+    
+
+    
+    .task_form input{
+        margin-top: 1vw;
+        height: 4vw;
+        font-size: 1.5vw;
+    }
+    
+    .task_form select{
+        width: 90%;
+        margin-top: 1vw;
+    }
+    
+    .task_form button {
+        margin-top: 1vw;
+        width: 70%;
+    }
+
+    
+    .chance_form input{
+        margin-top: 1vw;
+        height: 4vw;
+        font-size: 1.5vw;
+    }
+    
+    .chance_form button {
+        margin-top: 2vw;
+        width: 80%;
+    }
+
+
+
+}
+
+
+/* Large Desktop Styling */
+
+@media (min-width: 1013px){
+    
+    .sidebar {
+        width: 7vw;
+        height: 90vh;
+        gap: 2vw;
+        top: 5.5%;
+    
+    }
+    
+    .sidebar i {
+        font-size: 3vw;
+      
+    }
+    
+    
+    
+    .sidebar h2{
+        font-size: 1.8vw;
+    }
+
+    .user_panel{
+        width: 85%;
+        height: 30vh;
+        margin-left: 11vw;
+    }
+    
+    .game_manager{
+        width: 85%;
+        height: 35vh;
+        margin-left: 11vw;
+        gap: 5%; 
+    }
+    
+    .user_heading,
+    .game_heading{
+        width: 20%;
+        padding: 10px;
+        margin-left: 11vw;
+        font-size: 1.7vw;
+        margin-top: 1vw;
+    }
+    
+    
+    .task_panel,
+    .chance_panel{
+        border-radius: 25px;
+        width: 30%;
+    
+    }
+    
+    .task_heading,
+    .chance_heading{
+        font-size: 1.5vw;
+
+    }
+    
+
+    
+    .task_form input{
+        margin-top: 0.3vw;
+        height: 2.5vw;
+        font-size: 1.4vw;
+    }
+    
+    .task_form select{
+        width: 90%;
+        margin-top: 0.8vw;
+    }
+    
+    .task_form button {
+        margin-top: 0.8vw;
+        width: 70%;
+    }
+
+    
+    .chance_form input{
+        margin-top: 0.5vw;
+        height: 3.2vw;
+        font-size: 1.4vw;
+    }
+    
+    .chance_form button {
+        margin-top: 1vw;
+        width: 70%;
+    }
+
+}

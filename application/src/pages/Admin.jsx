@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import api from "../api"
 import AdminTaskForm from "../components/AdminTaskForm"
 import AdminChanceForm from "../components/AdminChanceForm"
+import styles from "../styles/Admin.module.css"
 
 export default function Admin() {
     const [tasks, setTasks] = useState([])
@@ -49,11 +50,40 @@ export default function Admin() {
     }
 
     return (
-        <div>
-            <h1>Admin Dashboard</h1>
+        <div className={styles.admin_page} >
+            <h1 className={styles.heading}>Admin Dashboard</h1>
 
-            <div>
-                <h2>Tasks</h2>
+            {/* Sidebar navigation */}
+            <nav>
+                <div className={styles.sidebar} style={{marginLeft: "20px"}}>
+                    <div className={styles.logoContainer}>
+                        <h2 className={styles.logoText}>cliMate</h2>
+                    </div>
+                    <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
+                    <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
+                    <a href="map"><i className="bi bi-map-fill"  ></i></a>
+                    <a href="profile"><i className="bi bi-person-circle"  ></i></a>
+                    <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
+                    {/* <a href="{% url 'password_change' %}">Password Change</a> */}
+                </div>
+                
+            </nav>
+
+            <h2 className={styles.user_heading}>Manage Users</h2>
+            <div className={styles.user_panel}>
+                
+                {/* Form for editing selected Task */}
+                
+
+            </div>
+            
+            
+            
+            <h2 className={styles.game_heading}>Manage Game</h2>
+            <div className={styles.game_manager}>
+
+            <div className={styles.task_panel}>
+                <h2 className={styles.task_heading}>ADD TASK</h2>
                 {/* Form for editing selected Task */}
                 <AdminTaskForm
                     selectedTask={selectedTask}
@@ -75,8 +105,8 @@ export default function Admin() {
                 </ul>
             </div>
 
-            <div>
-                <h2>Chances</h2>
+            <div className={styles.chance_panel}>
+                <h2 className={styles.chance_heading}>ADD CHANCE</h2>
                 {/* Form for editing selected Chance */}
                 <AdminChanceForm
                     selectedChance={selectedChance}
@@ -96,6 +126,29 @@ export default function Admin() {
                         </li>
                     ))}
                 </ul>
+            </div>
+            <div className={styles.chance_panel}>
+                <h2 className={styles.chance_heading}>ADD LOCATION</h2>
+                {/* Form for editing selected Chance */}
+                <AdminChanceForm
+                    selectedChance={selectedChance}
+                    onSuccess={() => {
+                        setSelectedChance(null)
+                        fetchChances()
+                    }}
+                />
+
+                {/* List of Chances */}
+                <ul>
+                    {chances.map(chance => (
+                        <li key={chance.id}>
+                            <button onClick={() => setSelectedChance(chance)}>Edit</button>
+                            <button onClick={() => onDeleteChance(chance.id)}>Delete</button>
+                            {chance.description}
+                        </li>
+                    ))}
+                </ul>
+            </div>
             </div>
         </div>
     )

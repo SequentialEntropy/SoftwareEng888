@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import api from "../api"
 import { squares } from "../constants"
+import styles from "../styles/Admin.module.css"
 
 const placeholder = {
     description: "",
@@ -20,6 +21,16 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
     const onChange = e => {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
+
+    const onSelectChange = (e) => {
+        const selectedValues = Array.from(e.target.selectedOptions, option => parseInt(option.value));
+    
+        setFormData(prev => ({
+            ...prev,
+            applicable_squares: selectedValues
+        }));
+    };
+    
 
     const onCheckboxChange = e => {
         let newApplicableSquares = formData.applicable_squares.filter(
@@ -54,7 +65,7 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className={styles.task_form} onSubmit={onSubmit}>
             <input
                 type="text"
                 name="description"
@@ -71,6 +82,15 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
                 placeholder="Enter score to award"
                 required
             />
+            <select onChange={onSelectChange} value={formData.applicable_squares}>
+                {squares.map(square => (
+                    <option key={square.id} value={square.id}>
+                        {square.name}
+                    </option>
+                ))}
+            </select>
+
+            {/*
             <ul>
                 {squares.map(square => (
                     <div key={square.id}>
@@ -86,6 +106,8 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
                     </div>
                 ))}
             </ul>
+
+            */}
             <button type="submit">{selectedTask ? "Save Task" : "Add Task"}</button>
         </form>
     )
