@@ -169,6 +169,19 @@
     z-index: 50; 
 }
 
+.edit {
+    background-color: #37394A; /* Change to your preferred color */
+    color: #94BEBA; /* Ensures text is readable */
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit:hover {
+    color: white; /* Optional: Hover effect */
+}
+
 @media (max-width: 480px){
     .profile_container {
         width: 60vw;
