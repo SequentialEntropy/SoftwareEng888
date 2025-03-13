@@ -60,7 +60,7 @@ function Board() {
                 // toggle spinner
                 setCanSpin(usergamestats.task_completed)
                 // display current task
-                api.get("/accounts/tasks/").then(res => res.data).then(
+                api.get("/tasks/").then(res => res.data).then(
                     tasks => tasks.find(task => task.id === usergamestats.current_task)
                 ).then(
                     task => setChosenTask(task ? task : taskNotFound)
@@ -97,7 +97,7 @@ function Board() {
     }
 
     const generateRandomTask = async square => {
-        const tasks = await api.get("/accounts/tasks/").then(
+        const tasks = await api.get("/tasks/").then(
             res => res.data.filter(task => task.applicable_squares.includes(square))
         )
 
@@ -155,7 +155,7 @@ function Board() {
 
     const onClickChance = () => {
         setGetChance(false)
-        api.get("/accounts/chances/")
+        api.get("/chances/")
         .then(res => res.data)
         .then(chances => {
             const chance = (chances.length === 0) ? chanceNotFound : chances[Math.floor(Math.random() * chances.length)]
