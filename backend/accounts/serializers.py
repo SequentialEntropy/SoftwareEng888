@@ -21,7 +21,6 @@ class UserSerializer(serializers.ModelSerializer):
             username=validated_data["username"],
             password=validated_data["password"],
         )
-        UserGameStats.objects.get_or_create(user=user)
         return user
 
     def update(self, instance, validated_data):
