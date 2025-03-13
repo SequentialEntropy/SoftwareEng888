@@ -138,7 +138,6 @@ class UserGameStatsTests(TestCase):
         """
         self.client = Client()
         self.user = User.objects.create_user(username="player1", password="complexpassword123")
-        self.user_stats = UserGameStats.objects.create(user=self.user, score=0)
 
     def test_user_score_stored(self):
         """
@@ -166,7 +165,6 @@ class UserGameStatsTests(TestCase):
         """
         self.client = Client()
         self.user = User.objects.create_user(username="player1", password="complexpassword123")
-        self.user_stats = UserGameStats.objects.create(user=self.user, score=0)
 
     def test_user_score_stored(self):
         """
