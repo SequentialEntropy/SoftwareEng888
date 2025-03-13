@@ -49,14 +49,14 @@ function Board() {
                 <form>
 
                     <div className={styles.info_row}>
-                        <label for="email">Email</label>
+{/*                         <label for="email">Email</label> */}
                         <input type="text" class="form-control" id="email" placeholder={user.username}></input>
                         <button className={styles.edit}>EDIT</button>
                     </div>
                     <hr className={styles.line} />
 
                     <div className={styles.info_row}>
-                        <label for="username">Username</label>
+{/*                         <label for="username">Username</label> */}
                         <input type="text" class="form-control" id="username" placeholder={user.username}></input>
                         <button className={styles.edit}>EDIT</button>
                     </div>
