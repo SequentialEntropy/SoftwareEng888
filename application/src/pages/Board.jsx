@@ -172,15 +172,25 @@ function Board() {
                     <div className={styles.logoContainer}>
                         <h2 className={styles.logoText}>cliMate</h2>
                     </div>
-                    <a href="home"><i className="bi bi-house-door-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="board"><i className="bi bi-dice-3-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="map"><i className="bi bi-map-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="logout"><i className="bi bi-box-arrow-right" style={{fontSize: "3.5vw"}} ></i></a>
+                    <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
+                    <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
+                    <a href="map"><i className="bi bi-map-fill"  ></i></a>
+                    <a href="profile"><i className="bi bi-person-circle"  ></i></a>
+                    <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
                     
                 </div>
 
             </nav>
+            <div>
+                {/* Points Container */}
+
+                <div className={styles.points_container}>
+                    <h1>{score} points</h1>
+                </div>
+
+                {/* How to play popup */}
+                <HowToPlay />
+            </div>
             <div className={styles.main_board}>
                 {/* Avatar */}
                 <Avatar avatarSquare={avatarSquare} squareRefs={squareRefs} />
@@ -230,16 +240,7 @@ function Board() {
                 <Square {...squares[ 1]} squareRefs={squareRefs}/>
                 <Square {...squares[ 0]} squareRefs={squareRefs}/>
             </div>
-            <div>
-                {/* Points Container */}
-
-                <div className={styles.points_container}>
-                    <h1>{score} points</h1>
-                </div>
-
-                {/* How to play popup */}
-                <HowToPlay />
-            </div>
+            
         </div>
     )
 }

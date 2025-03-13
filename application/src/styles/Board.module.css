@@ -9,6 +9,11 @@
 * @since 19-02-2025
 */
 
+html, body{
+    height: 100%;
+    overflow: hidden;
+}
+
 /* Sidebar Navigation */
 .game{
     background-color: #e9fffd;
@@ -23,15 +28,14 @@
     background-color:#3C3E4C;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    width: 7vw;
+    width: 9vw;
     padding: 1.5vw 0;
     height: 90vh;
-    position: fixed;
+    position: absolute;
     border-radius: 30px;
-    top: 5.5%;
-    justify-content: flex-start;
+    gap: 4vw;
 
 }
 
@@ -40,16 +44,27 @@
   
 }
 
-.sidebar a {
-    margin-top: 1.5vw;
-}
-
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
-    font-size: 1.5vw;
+    font-size: 2vw;
 }
 
+
+/* Logo container */
+.logoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.logoText {
+    color: #85AEB3;
+    font-size:25px;
+    top: 0;
+    justify-content: flex-start;
+}
 
 /* Spinner component */
 :where(.spinner) {
@@ -134,14 +149,12 @@
     grid-template-columns: repeat(6, 1fr);
     grid-template-rows: repeat(4, 1fr);
     gap: 0.8vw;
-    width: 80vw;
-    height: 85vh;
     margin: auto;
-    margin-left: 13vw;
     margin-top: 7vw;    /* make media specifc*/
     padding: 1vh 1vw;
     position: relative;
     background-color: #e9fffd;
+    box-sizing: border-box;
 }
 
 .avatar{
@@ -185,12 +198,15 @@
 .task_deck{
     position: absolute;
     top: 33%;
-    left: 55%;
+    left: 60%;
     width: 15vw;
     height: 15%;
+  /*border-radius: 25px;*/
+    border: 2px solid black;
     display: flex;
     justify-content: center;
     align-items: center;
+
    
     
 }
@@ -203,14 +219,16 @@
     margin: auto;
     color: #d9d9d9;
     font-size: 3vw;
+    border-radius: 25px;
     width: 100%;
     height: 100%;
+
 }
 
 .chance_deck{
     position: absolute;
     top: 52%;
-    left: 55%;
+    left: 60%;
     width: 15vw;
     height: 15%;
     border-radius: 25px;
@@ -293,7 +311,7 @@
 .spinner {
     position: absolute;
     top: 50%;
-    left: 35%;
+    left: 38%;
     transform: translate(-50%, -50%);
     width: min(28vw, 280px);
     height: min(28vw, 280px);
@@ -383,33 +401,33 @@
 /* Points Container */
 
 .points_container{
-    position: absolute;
-    top: 1.5vw;
-    left: 40vw;
+    position: relative;
+    margin: auto;
+    margin-top: 3.5vw;
     background-color: #3C3E4C;
     border-radius: 25px;
-    width: 20vw;
-    height: 7%;
+    width: 25vw;
+    height: 6%;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 .points_container h1{
-    font-size: 3vw;
+    font-size: 4vw;
     text-align: center;
     color: #D9D9D9;
     font-family: 'Londrina Solid';
-    padding: 2px;
+    padding: 1px;
 }
 
 /* How To Play Button */
 .how_to_play_btn {
-    position: fixed;
-    top: 0.3vw; 
-    right: 7vw; 
-    width: 60px; 
-    height: 60px; 
+    position: absolute;
+    top: 1vw;
+    right: 2vw;
+    width: 55px; 
+    height: 55px; 
     background: #D9D9D9;
     opacity:100%;
     font-family: "Inter", serif;
@@ -423,6 +441,7 @@
     text-align: center;
     align-items: center;
     font-weight: bold;
+    z-index: 1000;
 }
 
 .how_to_play_btn:hover {
@@ -438,12 +457,9 @@
     background-color: #D9D9D9;
     display: flex !important;
     flex-direction: column;
-    justify-content: center !important;
+    justify-content: flex-start !important;
     align-items: center !important;
     text-align: center !important;
-    padding: 5%;
-    width: 23vw;
-    height: 40vh;
     border-radius: 25px;
     position: absolute;
     top: 50%;
@@ -454,30 +470,16 @@
 
 .exit_btn {
     color:black;
-    position: fixed;
-    top: -5px; 
-    right: 10px; 
-    width: 30px; 
-    height: 30px; 
-    background: #3C3E4C;
-    opacity:100%;
-    font-family: "Inter", serif;
-    color: black;
+    position: absolute;
+    padding: 0;
     border: none;
-    border-radius: 50px;
-    font-size: 20px;
-    margin-top: 10px;
-    cursor: pointer;
-    text-align: center;
-    align-items: center;
-    font-weight: bold;
+    background: none;
+    font-weight: 600;
 }
 
 .how_to_play_container3 {
     background-color: #3C3E4C;
-    width:178%;
-    height:70%;
-    border-radius: 10px;
+    border-radius: 25px;
     top:0;
 }
 
@@ -490,9 +492,8 @@
 .how_to_play_instructions {
     color: black;
     font-family: "Londrina Solid";
-    margin-top: 0px;
-    font-size: 2vw;
 }
+
 
 .overlay {
     position: fixed;
@@ -506,8 +507,189 @@
 
 
 
+/* Mobile Styling */
+
+@media(max-width: 480px){
+
+    .sidebar{
+        width: 85vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 4.5%;
+        left: 2vw;
+        
+    }
+
+    .sidebar h2{
+        font-size: 5vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    .sidebar i{
+        font-size: 5vw;
+        
+    }
+
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+
+    .main_board{
+        width: 90vw;
+        height: 75%;
+        margin-top: 3vw;
+    
+    }
+
+    .task_btn{
+        font-size: 4vw;
+    }
+
+    .item h3{
+        font-size: 3vw;
+        flex-wrap: wrap;
+        padding: 5px;
+        margin-top: 10vw;
+    }
+
+    .points_container{
+        margin-top: 3vw;
+        width: 20vw;
+        height: 5vh;
+    }
+
+    .points_container h1{
+        font-size: 4.5vw;
+        margin-top: 5px;
+    }
+
+    .how_to_play_btn{
+        top: 0.1vw;
+        right: 1vw;
+        width: 50px;
+        height: 50px;
+    }
+
+    .how_to_play_container2 {
+        width: 50vw;
+        height: 40%;
+    
+    }
+    .exit_btn {
+        font-size: 25px;
+        right: 20px;
+        padding: 0;
+
+    }
+    
+    .how_to_play_container3 {
+        width: 100%;
+        height: 15%;
+    }
+    
+    
+    .how_to_play_instructions {
+        padding: 2%;
+        margin-top: 6%;
+        font-size: 5vw;
+    }
+
+
+
+}
+
+
+/* Tablet Styling */
 
 @media (min-width: 481px) and (max-width: 768px){
+    .sidebar{
+        width: 90vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 4.5%;
+        left: 2vw;
+        
+    }
+
+    .sidebar h2{
+        font-size: 4vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    .sidebar i{
+        font-size: 4vw;
+        
+    }
+
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+
+    .main_board{
+        width: 80vw;
+        height: 75%;
+        margin-top: 1vw;
+    
+    }
+
+    .item h3{
+        font-size: 2.5vw;
+        flex-wrap: wrap;
+        padding: 5px;
+        margin-top: 8vw;
+    }
+
+    .how_to_play_container2 {
+        width: 50vw;
+        height: 40%;
+    
+    }
+    .exit_btn {
+        font-size: 25px;
+        right: 20px;
+        padding: 0;
+
+    }
+    
+    .how_to_play_container3 {
+        width: 100%;
+        height: 15%;
+    }
+    
+    
+    .how_to_play_instructions {
+        padding: 2%;
+        margin-top: 6%;
+        font-size: 4vw;
+    }
    
 
 }
@@ -515,6 +697,104 @@
 
 @media (min-width: 769px) and (max-width: 1199px ){
 
+    .sidebar {
+        width: 8.5vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 3vw;
+        top: 3vw;
+    
+    }
+
+    
+    .sidebar h2{
+        font-size: 2vw;
+        margin-top: 2vw;
+    }
+
+    .sidebar i{
+        font-size: 4vw;
+    }
+
+    .logoContainer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1vw;
+        margin-right: 1vw;
+       
+    }
+
+
+    .main_board{
+        width: 84vw;
+        height: 82vh;
+        margin-top: 1vw;
+        margin-left: 13vw;
+    
+    }
+
+    .item{
+        max-width: 15vw;
+        max-height: 18vh;
+    }
+
+    
+
+    .item h3{
+        font-size: 2vw;
+        flex-wrap: wrap;
+        padding: 5px ;
+        margin-top: 6vw;
+    }
+
+    .points_container{
+        margin-top: 2vw;
+        width: 20vw;
+        height: 5%;
+    }
+
+    .points_container h1{
+        font-size: 3vw;
+    }
+
+    .how_to_play_btn{
+        top: 0.1vw;
+        right: 1vw;
+    }
+
+    .how_to_play_container2 {
+        width: 40vw;
+        height: 50%;
+    
+    }
+
+    .how_to_play_title{
+        font-size: 4vw;
+    }
+
+    .exit_btn {
+        font-size: 25px;
+        right: 20px;
+        padding: 0;
+
+    }
+    
+    .how_to_play_container3 {
+        width: 100%;
+        height: 20%;
+    }
+    
+    
+    .how_to_play_instructions {
+        padding: 4%;
+        margin-top: 5%;
+        font-size: 3vw;
+    }
     
 
 
@@ -522,6 +802,104 @@
 
 
 @media (min-width: 1200px){
+    .sidebar {
+        width: 7vw;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 2vw;
+        top: 2.5vw;
+    
+    }
+
+    
+    .sidebar h2{
+        font-size: 1.7vw;
+        margin-top: 2vw;
+    }
+
+    .sidebar i{
+        font-size: 3vw;
+    }
+
+    .logoContainer {
+        width: 100%;
+        height: 10%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 1vw;
+        margin-right: 1vw;
+       
+    }
+
+    .main_board{
+        width: 83vw;
+        height: 82vh;
+        margin-top: 1vw;
+        margin-left: 11vw;
+    
+    }
+
+    .item{
+        max-width: 15vw;
+        max-height: 18vh;
+    }
+
+    
+
+    .item h3{
+        font-size: 1.5vw;
+        flex-wrap: wrap;
+        padding: 5px ;
+        margin-top: 4vw;
+    }
+
+    .points_container{
+        margin-top: 1vw;
+        width: 20vw;
+        height: 5%;
+    }
+
+    .points_container h1{
+        font-size: 2vw;
+    }
+
+    .how_to_play_btn{
+        right: 3vw;
+    }
+   
+    .how_to_play_container2 {
+        width: 30vw;
+        height: 50%;
+    
+    }
+
+    .how_to_play_title{
+        font-size: 3vw;
+    }
+
+    .exit_btn {
+        font-size: 30px;
+        right: 20px;
+        padding: 0;
+
+    }
+    
+    .how_to_play_container3 {
+        width: 100%;
+        height: 15%;
+    }
+    
+    
+    .how_to_play_instructions {
+        padding: 5%;
+        margin-top: 5%;
+        font-size: 2vw;
+    }
+
+
     
     
 

@@ -69,6 +69,11 @@ function Home() {
             .catch(err => alert(err))
     }
 
+    const leaderScore = rankedUsers.length > 0 ? rankedUsers[0].usergamestats?.score || 0 : 0;
+    const userScore = currentUser.usergamestats?.score || 0;
+
+    const progress = leaderScore > 0 ? (userScore / leaderScore) * 100 : 0;
+
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
         <h1 className={styles.heading}>Welcome back {currentUser.username}</h1>
@@ -115,7 +120,7 @@ function Home() {
 
             {/* Progress bar */}
             <div className={styles.item}>
-                <progress value="50" max="100" className={styles.progressBar}></progress>
+                <progress value={Math.min(progress,100)} max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
                 <a href="map">Map</a>
@@ -129,7 +134,7 @@ function Home() {
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{textAlign:"center"}} ></i>
                         </div>
-                        <div style={{fontSize: "5vw", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
+                        <h2>{currentUser.usergamestats.score}</h2>
                     </div>
                 </div>
             

@@ -18,11 +18,10 @@
 
 .logo{
     position: absolute;
-    left: 25px;
     top: 30px;
+    left: 50px;
     font-family: 'Chango';
     color: #4e5e6a;
-    margin-left: 50px;
     text-decoration: none;
     font-size: 2.5rem;
 }
@@ -109,6 +108,48 @@
 .start_btn:hover{
     background-color: #37394a;
     
+}
+
+/* Mobile Styling */
+@media(max-width: 480px){
+
+    .logo{
+        left: 25px;
+        font-size: 2rem;
+    }
+    
+
+    .login_btn{
+        font-size: 5vw;
+        right: 30vw;  
+    }
+  
+    .signup_btn{
+        font-size: 5vw;
+    }
+
+    .landing_main{
+        margin-top: 25vw;
+    }
+    
+
+    .title{
+        font-size: 13vw;
+        
+    }
+    
+    .slogan{
+        font-size: 6vw;
+    }
+
+    .start_btn{
+        font-size: 6vw;
+        height: 11vw;
+        width: 33vw;
+        
+    }
+
+
 }
 
 
