@@ -50,34 +50,34 @@ describe('Home Component', () => {
       
       const mockRankedUsers = [
         {
-          id: 2,
-          username: 'topuser',
-          usergamestats: {
-            score: 500
-          }
+            id: 2,
+            username: 'topuser',
+            usergamestats: {
+                score: 500
+            }
         },
         {
-          id: 3,
-          username: 'seconduser',
-          usergamestats: {
-            score: 400
-          }
+            id: 3,
+            username: 'seconduser',
+            usergamestats: {
+                score: 400
+            }
         },
         {
-          id: 4,
-          username: 'thirduser',
-          usergamestats: {
-            score: 300
-          }
+            id: 4,
+            username: 'thirduser',
+            usergamestats: {
+                score: 300
+            }
         },
         {
-          id: 1, // current user
-          username: 'testuser',
-          usergamestats: {
-            score: 100
-          }
+            id: 1, // current user
+            username: 'testuser',
+            usergamestats: {
+                score: 100
+            }
         }
-      ];
+    ];
 
     beforeEach(() => {
         jest.clearAllMocks();
@@ -100,7 +100,7 @@ describe('Home Component', () => {
      * 3. Test error handling when API calls fail
      */
     describe('API tests', () => {
-        test('fetches and displays user details correctly', async () => {
+        test('fetch and display user details correctly', async () => {
             render(<Home />);
             await waitFor(() => {
             expect(api.get).toHaveBeenCalledWith('/accounts/me/');
@@ -111,7 +111,7 @@ describe('Home Component', () => {
             expect(scoreElement).toBeInTheDocument();
         });
         
-        test('fetches and displays leaderboard data correctly', async () => {
+        test('fetch and display leaderboard data correctly', async () => {
             render(<Home />);
             await waitFor(() => {
             expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
@@ -124,7 +124,7 @@ describe('Home Component', () => {
             expect(thirdUser).toBeInTheDocument();
         });
         
-        test('handles API error for user details', async () => {
+        test('handle API error for user details', async () => {
         // Mock API failure
         api.get.mockImplementation((url) => {
             if (url === '/accounts/me/') {
@@ -143,7 +143,7 @@ describe('Home Component', () => {
         alertSpy.mockRestore();
         });
         
-        test('handles API error for ranked users', async () => {
+        test('handle API error for ranked users', async () => {
         // Mock API failure for ranked users
         api.get.mockImplementation((url) => {
             if (url === '/accounts/me/') {
@@ -174,6 +174,32 @@ describe('Home Component', () => {
      * 1. Test for top 3 users displayed with correct colors
      * 2. Verify the user's ranking position is calculated correctly
      */
+    describe('Leaderboard tests', () => {
+        test('display top 3 users with correct colors', async () => {
+            render(<Home />);
+            await waitFor(() => {
+              expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
+            });
+            await screen.findByText(/topuser - 500/i);
+            const profileTexts = screen.getAllByText(/\w+ - \d+/i);
+            expect(profileTexts).toHaveLength(3);
+            expect(profileTexts[0].textContent).toBe('topuser - 500');
+            expect(profileTexts[1].textContent).toBe('seconduser - 400');
+            expect(profileTexts[2].textContent).toBe('thirduser - 300');
+            const leaderboardItems = profileTexts.map(item => item.closest('.profileItem'));
+            expect(leaderboardItems[0]).toHaveStyle({backgroundColor: '#EA526F'});
+            expect(leaderboardItems[1]).toHaveStyle({backgroundColor: '#7F95D1'});
+            expect(leaderboardItems[2]).toHaveStyle({backgroundColor: '#558564'});
+        });
+        
+        test('calculate and display user ranking correctly', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(screen.getByText('You are at: Position #4')).toBeInTheDocument();
+            });
+        });
+    });
+    
 
     /**
      * Navigation:
