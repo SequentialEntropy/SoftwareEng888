@@ -20,6 +20,7 @@ import Landing from "./pages/Landing"
 import Map from "./pages/Map"
 import ResetPassword from "./pages/ResetPassword"
 import Admin from "./pages/Admin"
+import ForgotPassword from "./pages/ForgotPassword"
 
 /**
  * Logout Component 
@@ -75,6 +76,7 @@ function App() {
                 <Route path="/map" element={<Map />}/>
                 <Route path="/admin" element={<ProtectedRoute isAdminRoute><Admin /></ProtectedRoute>}/>
                 <Route path="/reset-password" element={<ResetPassword />}/>
+                <Route path="/forgot-password" element={<ForgotPassword />}/>
 
                 {/* Catch-all route for 404 pages */}
                 <Route path="*" element={<NotFound />}/>

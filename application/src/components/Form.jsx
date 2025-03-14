@@ -131,16 +131,24 @@ function Form({ route, method }) {
                     <h2>{name}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            {/* Username input field */}
-                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-    
-                            {/* Password input field */}
-                            <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-    
-                            {/* Confirm Password input field */}
+
+                            {/* Login input fields */}
+                            
+                            {method == "login" && (
+                                <>
+                                <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+                                <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+                                <button className={styles.forgot_password_btn}>Forgot Password</button>
+                                </>
+                            )}
+
+                        
+                            {/* Sign Up input fields*/}
                             {method === "register" && (
                                 <>
                                     <input type="text" className={`form-control ${styles.field}`} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
+                                    <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+                                    <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
@@ -218,7 +226,7 @@ function Form({ route, method }) {
                                 </>
                             )}
                         </div>
-                        {/* Display error message after signip forms*/}
+                        {/* Display error message after signup forms*/}
                         {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
 
                         {/* Submit button */}
