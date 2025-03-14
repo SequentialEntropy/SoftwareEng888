@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import api from "../api"
 import AdminTaskForm from "../components/AdminTaskForm"
 import AdminChanceForm from "../components/AdminChanceForm"
+import NavBar from "../components/Navbar";
 import styles from "../styles/Admin.module.css"
 
 export default function Admin() {
@@ -54,20 +55,7 @@ export default function Admin() {
             <h1 className={styles.heading}>Admin Dashboard</h1>
 
             {/* Sidebar navigation */}
-            <nav>
-                <div className={styles.sidebar} style={{marginLeft: "20px"}}>
-                    <div className={styles.logoContainer}>
-                        <h2 className={styles.logoText}>cliMate</h2>
-                    </div>
-                    <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
-                    <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
-                    <a href="map"><i className="bi bi-map-fill"  ></i></a>
-                    <a href="profile"><i className="bi bi-person-circle"  ></i></a>
-                    <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
-                    {/* <a href="{% url 'password_change' %}">Password Change</a> */}
-                </div>
-                
-            </nav>
+            <NavBar />
 
             <h2 className={styles.user_heading}>Manage Users</h2>
             <div className={styles.user_panel}>
