@@ -6,7 +6,7 @@
  * @author Amreet Dhillon 
  * @author Yap Wen Xing
  * @version 1.1.2
- * @since 11-03-2025
+ * @since 14-03-2025
  * 
  */
 
@@ -17,6 +17,7 @@ import "leaflet/dist/leaflet.css";
 import { squares } from "../constants";
 import L from "leaflet";
 import NavBar from "../components/Navbar";
+import api from "../api";
 
 // Blue marker for task locations
 const taskMarkerIcon = new L.Icon({
@@ -35,25 +36,49 @@ const userLocationIcon = new L.Icon({
 });
 
 function Map() {
-    const [showPopup, setShowPopup] = useState(false);
+    const taskNotFound = {id: -1, name: "No Task", description: "No tasks found for this square - Skip task!", location: null, score_to_award: 0}
+
+    const [task, setTask] = useState(null);
+    const [squareName, setSquareName] = useState(null)
     const [userLocation, setUserLocation] = useState(null);
 
     useEffect(() => {
-        if (navigator.geolocation) {
-            navigator.geolocation.watchPosition(
-                (position) => {
-                    setUserLocation({
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    });
-                },
-                (error) => {
-                    console.error("Error getting user location: ", error);
-                },
-                { enableHighAccuracy: true }
-            );
+        // Fetch task data and user location in a single effect to avoid conflicts
+        const fetchTask = async () => {
+            const usergamestats = (await api.get("/accounts/me/")).data.usergamestats
+
+            const tasks = (await api.get("/tasks/")).data
+
+            const currentTask = tasks.find(task => task.id === usergamestats.current_task)
+            const currentSquare = squares[usergamestats.current_square]
+
+            // set current task
+            setTask(currentTask || taskNotFound)
+            setSquareName(currentSquare.name)
         }
+
+        const fetchUserLocation = async () => {
+            // Get user location
+            if (navigator.geolocation) {
+                navigator.geolocation.watchPosition(
+                    (position) => {
+                        setUserLocation({
+                            lat: position.coords.latitude,
+                            lng: position.coords.longitude
+                        });
+                    },
+                    (error) => {
+                        console.error("Error getting user location: ", error);
+                    },
+                    { enableHighAccuracy: true }
+                );
+            }
+        };
+
+        fetchTask();
+        fetchUserLocation();
     }, []);
+    
     
     return (
         <div className={styles.game}>
@@ -65,8 +90,8 @@ function Map() {
                     <i className="bi bi-exclamation-circle-fill"></i>
                 </div>
                 <div className={styles.task_text}>
-                    <h3>Innovation Centre</h3>
-                    <h6>Recycle an item</h6>
+                    <h3>{task ? squareName : "Loading task..."}</h3>
+                    <h6>{task ? task.description : ""}</h6>
                 </div>
             </div>
 
@@ -92,6 +117,17 @@ function Map() {
                             </Popup>
                         </Marker>
                     ))}
+
+                    {/* Show task location */}
+                    {task && task.location && (
+                        <Marker position={task.location} icon={taskMarkerIcon}>
+                        <Popup>
+                            <strong>{task.name}</strong>
+                            <br />
+                            {task.description}
+                        </Popup>
+                    </Marker>
+                    )}
 
                     {/* Render user red location marker */}
                     {userLocation && (
