@@ -219,4 +219,78 @@ describe('Home Component', () => {
      * 2. Verify handling of undefined or null values in user data
      * 3. Check what happens when the user isn't found in the rankings
      */
+    describe('Edge case tests', () => {
+        test('handles empty rankedUsers array', async () => {
+            api.get.mockImplementation((url) => {
+                if (url === '/accounts/me/') {
+                return Promise.resolve({ data: mockCurrentUser });
+                }
+                if (url === '/accounts/ranked-users/') {
+                return Promise.resolve({ data: [] });
+                }
+                return Promise.reject(new Error('Invalid URL'));
+            });
+            render(<Home />);
+            await waitFor(() => {
+                expect(screen.getByText('You are at: Position #0')).toBeInTheDocument();
+            });
+        });
+        
+        test('handles undefined or null values in user data', async () => {
+            const userWithNullValues = {
+                id: 6,
+                username: null,
+                usergamestats: {
+                    current_square: 0,
+                    score: 0 
+                }
+            };
+            
+            api.get.mockImplementation((url) => {
+                if (url === '/accounts/me/') {
+                    return Promise.resolve({ data: userWithNullValues });
+                }
+                if (url === '/accounts/ranked-users/') {
+                    return Promise.resolve({ data: mockRankedUsers });
+                }
+                return Promise.reject(new Error('Invalid URL'));
+            });
+            render(<Home />);
+            await waitFor(() => {
+              expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+            });
+            const welcomeMessage = await screen.findByText(/Welcome back/i);
+            expect(welcomeMessage).toBeInTheDocument();
+            const scoreElement = await screen.findByText('0');
+            expect(scoreElement).toBeInTheDocument();
+        });
+        
+        test('handles user not found in rankings', async () => {
+            const unrankedUser = {
+              id: 99, // ID not in ranked users list
+              username: 'unrankeduser',
+              usergamestats: {
+                current_square: 1,
+                score: 10
+              }
+            };
+            
+            api.get.mockImplementation((url) => {
+              if (url === '/accounts/me/') {
+                return Promise.resolve({ data: unrankedUser });
+              }
+              if (url === '/accounts/ranked-users/') {
+                return Promise.resolve({ data: mockRankedUsers }); // Doesn't include unrankedUser
+              }
+              return Promise.reject(new Error('Invalid URL'));
+            });
+            
+            render(<Home />);
+            
+            await waitFor(() => {
+              // Since user not found in rankings, position should be 0
+              expect(screen.getByText('You are at: Position #0')).toBeInTheDocument();
+            });
+        });
+    });
 });
