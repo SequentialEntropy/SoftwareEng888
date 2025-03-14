@@ -16,6 +16,14 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ["id", "username", "password", "is_staff", "email", "usergamestats"]
         extra_kwargs = {"password": {"write_only": True}} # Nobody can read the password
 
+    def create(self, validated_data):
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            password=validated_data["password"],
+            email=validated_data["email"],
+        )
+        return user
+
     def update(self, instance, validated_data):
         usergamestats_data = validated_data.pop('usergamestats', None)
 

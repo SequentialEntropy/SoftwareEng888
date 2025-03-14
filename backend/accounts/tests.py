@@ -18,7 +18,7 @@ class LoginTest(TestCase):
         Set up test data
         """
         self.client = Client()
-        self.user = User.objects.create_user(username='testuser', password='testpass%123')
+        self.user = User.objects.create_user(username='testuser', password='testpass%123', email='test@example.com',)
 
     def test_login_view_get(self):
         """
@@ -107,6 +107,7 @@ class SignupTests(TestCase):
         data = {
             'username': 'newuser',
             'password': 'complexpassword123',
+            'email': 'test@example.com',
         }
         response = self.client.post(
             reverse('register'),
