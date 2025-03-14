@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react"
 import api from "../api"
+import styles from "../styles/Admin.module.css"
 
 const placeholder = {
     description: "",
@@ -37,7 +38,7 @@ export default function AdminChanceForm({ selectedChance, onSuccess }) {
     }
 
     return (
-        <form onSubmit={onSubmit}>
+        <form className={styles.chance_form} onSubmit={onSubmit}>
             <input
                 type="text"
                 name="description"
