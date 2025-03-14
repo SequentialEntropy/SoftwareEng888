@@ -16,6 +16,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import { squares } from "../constants";
 import L from "leaflet";
+import NavBar from "../components/Navbar";
 
 // Blue marker for task locations
 const taskMarkerIcon = new L.Icon({
@@ -56,18 +57,7 @@ function Map() {
     
     return (
         <div className={styles.game}>
-            <nav>
-                <div className={styles.sidebar} style={{ marginLeft: "20px" }}>
-                    <div className={styles.logoContainer}>
-                        <h2 className={styles.logoText}>cliMate</h2>
-                    </div>
-                    <a href="home"><i className="bi bi-house-door-fill"></i></a>
-                    <a href="board"><i className="bi bi-dice-3-fill"></i></a>
-                    <a href="map"><i className="bi bi-map-fill"></i></a>
-                    <a href="profile"><i className="bi bi-person-circle"></i></a>
-                    <a href="logout"><i className="bi bi-box-arrow-right"></i></a>
-                </div>
-            </nav>
+            <NavBar />
 
             {/* Task information bar */}
             <div className={styles.map_taskbar}>
