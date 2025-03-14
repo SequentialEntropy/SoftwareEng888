@@ -85,7 +85,15 @@ function Form({ route, method }) {
         }
     
         try {
-            const res = await api.post(route, { username, password });
+            let data
+            if (method === "login") {
+                data = { username, password }
+            } else {
+                data = { username, password, email }
+            }
+            console.log(data)
+
+            const res = await api.post(route, data);
     
             if (method === "login") {
                 // Store the authentication tokens
