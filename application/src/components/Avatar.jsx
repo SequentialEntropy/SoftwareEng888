@@ -24,7 +24,7 @@ export default function Avatar({avatarSquare, squareRefs}) {
             top: avatarPos.x,
             left: avatarPos.y,
         }}>
-            <i className="bi bi-bicycle"></i>
+            <i className="bi bi-bicycle"style={{ fontSize: "80px" }}></i>
         </div>
     )
 }
