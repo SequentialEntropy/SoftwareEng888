@@ -161,7 +161,7 @@ function Form({ route, method }) {
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
                                         <label>
-                                            <input type="checkbox" />
+                                            <input type="checkbox" required/>
                                             By signing up you agree to our{" "}
                                             <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.
                                         </label>
