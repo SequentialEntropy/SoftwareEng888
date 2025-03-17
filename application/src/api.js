@@ -3,7 +3,8 @@
  * 
  * @file Sets ups and Axios instance with a base URL and request intercepter for authentication 
  * @author Carina Jose 
- * @author Amreet Dhillon 
+ * @author Amreet Dhillon
+ * @author Dany Kelzi  
  * @version 1.0.0 
  * @since 15-02-2025
  */
