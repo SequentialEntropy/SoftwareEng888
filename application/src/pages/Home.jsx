@@ -85,7 +85,7 @@ function Home() {
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <a href="board">Level 1</a>
+                <a href="board">You are at</a>
                 <h2>Innovation Centre</h2>
             </div>
 

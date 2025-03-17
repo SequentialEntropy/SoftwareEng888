@@ -33,51 +33,7 @@
     font-family: "Hammersmith One";
 }
 
-/* Sidebar navigation */
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
 
-}
-
-.sidebar i {
-    color: #85AEB3;
-    font-size: 4vw;
-  
-}
-
-
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
 
 /* Dashboard grid layout */
 .grid {
@@ -374,42 +330,7 @@
         margin-top: 1vw;
     }
 
-    .sidebar{
-        width: 85vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 5vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 5vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
     
-        
-    }
 
 
 
@@ -534,42 +455,7 @@
         margin-top: 3vw;
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
     
-        
-    }
 
 }
 
@@ -686,30 +572,6 @@
         margin-top: 1.5vw;
     }
 
-    .sidebar {
-        width: 8vw;
-        padding: 1.5vw 0;
-        height: 88vh;
-        position: absolute;
-        border-radius: 30px;
-        gap: 3vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        color: #85AEB3;
-        font-size: 4vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        color: #85AEB3;
-        font-family: 'Hammersmith One';
-        font-size: 2vw;
-    }
 
 
 
@@ -819,23 +681,5 @@
         margin-top: 0.7vw;
     }
 
-    .sidebar {
-        width: 7vw;
-        height: 90vh;
-        gap: 2vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        font-size: 3vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        font-size: 1.8vw;
-    }
 
 }

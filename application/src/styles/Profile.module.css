@@ -3,52 +3,6 @@
     background-color: #C5E4E1;
 }
 
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
-
-}
-
-.sidebar i {
-    color: #85AEB3;
-  
-}
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
-
-
-
-
-
 
 
 .profile_container {
@@ -91,6 +45,16 @@
     text-align: left;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+  height: 100%;
+
+}
+
 .profile_header {
     display: flex;
     flex-direction: column;
@@ -98,11 +62,15 @@
     margin-bottom: 20px;
 }
 
+
 .info_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+ 
 }
 
 .label {
@@ -124,7 +92,7 @@
     height: 1px;
     background-color: white;
     margin: 0;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 
 .logout_btn {
@@ -137,6 +105,7 @@
     padding: 10px 20px;
     font-size: 16px;
     margin-top: 10px;
+    text-decoration: none;
     cursor: pointer;
 }
 
@@ -190,42 +159,6 @@
         
     }
 
-    .sidebar{
-        width: 85vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-        
-    }
 
 
 }
@@ -239,42 +172,7 @@
         
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-        
-    }
+   
     
    
 }
@@ -286,38 +184,6 @@
         height: 80vh;
     }
 
-    .sidebar {
-        width: 10vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3vw;
-        top: 3vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2.5vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
-    
     
 
 }
@@ -328,38 +194,6 @@
     .profile_container {
         width: 40vw;
         height: 80vh;
-    }
-
-    .sidebar {
-        width: 8vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 2vw;
-        top: 2.5vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 3vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
     }
 
 
