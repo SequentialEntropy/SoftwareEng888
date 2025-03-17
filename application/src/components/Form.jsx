@@ -144,8 +144,8 @@ function Form({ route, method }) {
                             
                             {method == "login" && (
                                 <>
-                                <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-                                <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+                                <input type="text" className={`form-control ${styles.login_field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+                                <input type="password" className={`form-control ${styles.login_field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
                                 <button className={styles.forgot_password_btn}>Forgot Password</button>
                                 </>
                             )}
@@ -160,7 +160,7 @@ function Form({ route, method }) {
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
-                                        <label>
+                                        <label style = {{width:  "100%"}}>
                                             <input type="checkbox" required/>
                                             By signing up you agree to our{" "}
                                             <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.

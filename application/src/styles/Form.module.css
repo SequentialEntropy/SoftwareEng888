@@ -107,10 +107,11 @@
 
 
 /* Form fields */
-.field {
-    margin-top: 5%;
+.field,
+.login_field {
+    margin-top: 4%;
     margin-bottom: 5%;
-    height: 7vh;
+    height: 15%;
 }
 
 /* Login button */
@@ -120,6 +121,7 @@
     background-color: #37394A;
     padding: 3%;
     width: 14vw;
+    height: 15%;
     color: white;
     font-family: 'Inter';
 }
@@ -235,17 +237,29 @@
         
     }
 
+
+    .login_container form {
+        width: 30vw;
+    
+    }
+
     .login_container h2 {
-        font-size: 8vw;
+        font-size: 6vw;
+        margin: 0;
        
     }
 
-    .login_container form {
-        width: 40vw;
+    .login_container label{
+        font-size: 2vw;
+        line-height: 1;
     }
 
+   
+
     .login_container button {
-        margin: 2.5vw;
+        margin: 1.5vw;
+        margin-top: 2.8vw;
+        margin-bottom: 0.5vw;
     }
 
 
@@ -253,6 +267,11 @@
     /* Form fields */
     .field {
         width: 35vw;
+    }
+
+    .login_field{
+        width: 35vw;
+        height: 25%;
     }
 
 }
@@ -264,6 +283,7 @@
     
     .login_container{
         width: 40vw;
+       
     }
 
     .header{
@@ -297,13 +317,22 @@
     }
 
     .login_container h2 {
-        font-size: 6vw;
+        font-size: 5vw;
+        margin: 0;
        
     }
 
+    .login_container label{
+        font-size: 1.5vw;
+        line-height: 1;
+    }
+
+   
 
     .login_container button {
         margin: 1.5vw;
+        margin-top: 2vw;
+        margin-bottom: 0.5vw;
     }
 
 
@@ -311,6 +340,11 @@
     /* Form fields */
     .field {
         width: 30vw;
+    }
+
+    .login_field{
+        width: 30vw;
+        height: 25%;
     }
 
 
@@ -363,6 +397,10 @@
         font-size: 5vw;
     }
 
+    .login_container label{
+        font-size: 1.2vw;
+        line-height: 1;
+    }
 
     .login_container button {
         margin: 1.5vw;
@@ -373,6 +411,11 @@
     /* Form fields */
     .field {
         width: 20vw;
+    }
+
+    .login_field{
+        width: 20vw;
+        height: 25%;
     }
 
 }

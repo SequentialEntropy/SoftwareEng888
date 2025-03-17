@@ -102,7 +102,7 @@ function Map() {
                     zoom={20} 
                     scrollWheelZoom={true} // Enable zooming with mouse wheel
                     doubleClickZoom={true} // Enable zooming with double click
-                    style={{ width: "100%", height: "500px" }}
+                    style={{ width: "100%", height: "70vh", borderRadius:"10px" }}
                 >
                     {/* Tile layer using OpenStreetMap */}
                     <TileLayer 
