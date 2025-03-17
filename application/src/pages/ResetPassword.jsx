@@ -45,7 +45,7 @@ function ResetPassword() {
         <div className={styles.main_resetPassword}>
             <NavBar />
             <div className={styles.password_container}>
-                <h1>Reset Password</h1>
+                <h1>Change Password</h1>
                 <br></br>
                 <form onSubmit={handleSubmit}>
                     <div className="form-group"> 
