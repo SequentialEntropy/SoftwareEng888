@@ -2,7 +2,6 @@ import { useState, useEffect } from "react"
 import api from "../api"
 import styles from "../styles/ForgotPassword.module.css"
 
-
 function ForgotPassword(){
     return <div className={styles.forgot_password_container}>
         <h1 className={styles.heading}>Forgot Password </h1>
@@ -16,6 +15,5 @@ function ForgotPassword(){
 
 
 }
-
 
 export default ForgotPassword;
