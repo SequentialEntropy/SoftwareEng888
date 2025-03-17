@@ -7,6 +7,7 @@ function Board() {
     const [user, setUser] = useState({ username: "", email: "" });
     const [editMode, setEditMode] = useState({ username: false, email: false });
     const [tempUser, setTempUser] = useState({ username: "", email: "" });
+    const [errorMessages, setErrorMessages] = useState({});
 
     useEffect(() => {
         document.title = "Dashboard";
@@ -31,13 +32,16 @@ function Board() {
         setTempUser(prev => ({ ...prev, [id]: value }));
     };
 
-    const handleSave = (field) => {
-        api.put("/accounts/me/", { [field]: tempUser[field] })
-            .then(() => {
-                setUser(prev => ({ ...prev, [field]: tempUser[field] }));
-                setEditMode(prev => ({ ...prev, [field]: false }));
-            })
-            .catch(err => alert("Error updating " + field + ": " + err));
+    const handleSave = async field => {
+        const data = { [field]: tempUser[field] }
+        try {
+            await api.put("/accounts/me/", data)
+            setUser(prev => ({ ...prev, [field]: tempUser[field] }));
+            setEditMode(prev => ({ ...prev, [field]: false }));
+            setErrorMessages([])
+        } catch (err) {
+            setErrorMessages(err.response.data)
+        }
     };
 
     return (
@@ -92,6 +96,9 @@ function Board() {
                         <hr className={styles.line} />
                     </form>
                 </div>
+                {Object.entries(errorMessages).map(([field, message]) => (
+                    <p key={field}>{message}</p>
+                ))}
                 <a href="reset-password">Reset Password</a>
                 <a href="logout" className={styles.logout_btn}>Log Out</a>
             </div>
