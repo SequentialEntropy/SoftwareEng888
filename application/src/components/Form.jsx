@@ -7,8 +7,8 @@
  * @author Genki Asahi 
  * @author Yap Wen Xing
  * @author Dany Kelzi
- * @version 1.1.0
- * @since 23-02-2025
+ * @version 1.1.2
+ * @since 17-03-2025
  */
 
 import { useState } from "react";
@@ -83,6 +83,16 @@ function Form({ route, method }) {
         } else {
             setPasswordError("");
         }
+
+        // Password validation
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+        if (!passwordRegex.test(password)) {
+            setPasswordError("Password must be at least 8 characters, with a number and special character.");
+            setLoading(false);
+            return;
+        } else {
+            setPasswordError("");
+        }
     
         try {
             let data
@@ -109,7 +119,7 @@ function Form({ route, method }) {
                 if (error.response.data.username) {
                     setErrorMessage(error.response.data.username);
                 } else {
-                    setErrorMessage(error.response.data.error || "An error occurred. Please try again.");
+                    setErrorMessage(error.response.data.error || "Incorrect password. Please try again.");
                 }
             } else {
                 setErrorMessage("An error occurred. Please try again later.");
