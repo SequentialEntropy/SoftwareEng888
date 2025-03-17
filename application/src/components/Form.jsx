@@ -69,7 +69,7 @@ function Form({ route, method }) {
      * @param {Event} e - Form submission event.
      */
 
-    const [errorMessage, setErrorMessage] = useState(""); // New state for errors
+    const [errorMessages, setErrorMessages] = useState([]); // New state for errors
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -86,7 +86,7 @@ function Form({ route, method }) {
 
         // Password validation
         const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
-        if (!passwordRegex.test(password)) {
+        if (method === "register" && !passwordRegex.test(password)) {
             setPasswordError("Password must be at least 8 characters, with a number and special character.");
             setLoading(false);
             return;
@@ -114,16 +114,7 @@ function Form({ route, method }) {
                 navigate("/login");
             }
         } catch (error) {
-            if (error.response && error.response.data) {
-                // Check if the error is about the username being taken
-                if (error.response.data.username) {
-                    setErrorMessage(error.response.data.username);
-                } else {
-                    setErrorMessage(error.response.data.error || "Incorrect password. Please try again.");
-                }
-            } else {
-                setErrorMessage("An error occurred. Please try again later.");
-            }
+            setErrorMessages(error.response.data)
         } finally {
             setLoading(false)
         }
@@ -245,7 +236,9 @@ function Form({ route, method }) {
                             )}
                         </div>
                         {/* Display error message after signup forms*/}
-                        {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
+                        {Object.entries(errorMessages).map(([field, message]) => (
+                            <p key={field} style={{ color: "red", textAlign: "center" }}>{message}</p>
+                        ))}
 
                         {/* Submit button */}
                         <button type="submit" className={styles.login_btn} disabled={loading}>
