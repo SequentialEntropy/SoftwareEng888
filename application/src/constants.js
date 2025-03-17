@@ -25,7 +25,7 @@ export const squares = [
     {id:  7, name: "Harrison"         , backgroundColor: "#e98a15", location: [50.73773693957766, -3.5324168459325818], leniency: 0.000269},
     {id:  8, name: "Innovation Centre", backgroundColor: "#7f2982", location: [50.73840552463827, -3.5310835404302385], leniency: 0.000269},
     {id:  9, name: "INTO Building"    , backgroundColor: "#ea526f", location: [50.73608348132103, -3.53389156394202  ], leniency: 0.000269},
-    {id: 10, name: "Streatham Court"  , backgroundColor: "#558564", location: [50.73659522401942, -3.535152102267711 ], leniency: 0.000269},
+    {id: 10, name: "Streatham Court"  , backgroundColor: "#558564", location: [50.73588520026848, -3.531369722870077 ], leniency: 0.000269},
     {id: 11, name: "Hatherly"         , backgroundColor: "#7f95d1", location: [50.73400605799908, -3.5331780674581252], leniency: 0.000269},
     {id: 12, name: "Old Library"      , backgroundColor: "#e98a15", location: [50.73335507931347, -3.534012873488209 ], leniency: 0.000269},
     {id: 13, name: "Queens"           , backgroundColor: "#7f2982", location: [50.73399656520741, -3.535028372328278 ], leniency: 0.000269},
