@@ -13,18 +13,18 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ["id", "username", "email", "usergamestats"]  # Removed password & is_staff
+        fields = ["id", "username", "password", "is_staff", "email", "usergamestats"]
         extra_kwargs = {
-            "username": {"required": False}, 
-            "email": {"required": False}
+            "username": {"required": False},
+            "password": {"write_only": True, "required": False},
         }
 
     def create(self, validated_data):
-        password = validated_data.pop("password", None)  # Ensure password is handled separately
-        user = User.objects.create_user(**validated_data)
-        if password:
-            user.set_password(password)
-            user.save()
+        user = User.objects.create_user(
+            username=validated_data["username"],
+            password=validated_data["password"],
+            email=validated_data["email"],
+        )
         return user
 
     def update(self, instance, validated_data):
