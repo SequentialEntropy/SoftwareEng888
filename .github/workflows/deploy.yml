@@ -16,4 +16,5 @@ jobs:
 
       - name: Deploy to climate.genkiasahi.com
         run: |
+          echo "Testing on deployment branch...\n"
           ssh -o StrictHostKeyChecking=no root@climate.genkiasahi.com "/root/SoftwareEng888/scripts/deploy.sh"
