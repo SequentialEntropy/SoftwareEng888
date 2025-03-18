@@ -16,9 +16,7 @@ import { ACCESS_TOKEN } from "./constants"
  * Creates an Axios instance with a predefined base URL 
  */
 const api = axios.create({
-    // baseURL: import.meta.env.VITE_API_URL
-    // base URL for API requests 
-    baseURL: "http://127.0.0.1:8000"
+    baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
 })
 
 /**
