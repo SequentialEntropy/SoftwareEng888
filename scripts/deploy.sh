@@ -7,8 +7,8 @@ sudo systemctl stop SoftwareEng888-backend.service
 # Pull and apply latest changes
 cd /root/SoftwareEng888
 git stash
-git checkout deployment
-git pull --no-edit origin deployment
+git checkout main
+git pull --no-edit origin main
 sudo chmod 755 /root/SoftwareEng888/scripts/deploy.sh
 
 # Install any new python packages
