@@ -101,6 +101,7 @@ function Board() {
                 ))}
                 <a href="reset-password">Reset Password</a>
                 <a href="logout" className={styles.logout_btn}>Log Out</a>
+                <a href="" className={styles.deleteAccount_btn}>Delete Account</a>
             </div>
         </div>
     );
