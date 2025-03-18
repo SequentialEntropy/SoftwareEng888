@@ -18,5 +18,8 @@ import react from '@vitejs/plugin-react'
  * @returns {Object} the Vite configuration object
  */
 export default defineConfig({
-  plugins: [react()], // Enables React support in Vite
+    plugins: [react()], // Enables React support in Vite
+    server: {
+        allowedHosts: ["climate.genkiasahi.com"]
+    }
 })
