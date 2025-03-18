@@ -3,7 +3,7 @@ name: Deploy to climate.genkiasahi.com
 on:
   push:
     branches:
-      - main
+      - deployment
 
 jobs:
   test:
