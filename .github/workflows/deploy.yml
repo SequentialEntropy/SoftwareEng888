@@ -1,0 +1,19 @@
+name: Deploy to climate.genkiasahi.com
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: webfactory/ssh-agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DO_SSH_PRIVATE_KEY }}
+
+      - name: Deploy to climate.genkiasahi.com
+        run: |
+          ssh -o StrictHostKeyChecking=no root@climate.genkiasahi.com "/root/SoftwareEng888/scripts/deploy.sh"
