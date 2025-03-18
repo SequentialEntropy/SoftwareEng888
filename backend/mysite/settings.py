@@ -30,7 +30,9 @@ SECRET_KEY = 'django-insecure-q8dcsu32n+cbpl&cn&y-(n@t)^utg&1cg^et96&&la%-z#@t+5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "climate.genkiasahi.com"
+]
 # ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
