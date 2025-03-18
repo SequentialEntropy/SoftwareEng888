@@ -9,7 +9,7 @@
 */
 
 // Home.test.jsx
-import React from 'react';
+import React, { act } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from './Home';
@@ -79,6 +79,14 @@ describe('Home Component', () => {
         }
     ];
 
+    const mockNewUser = {
+        id: 5,
+        username: 'newuser',
+        usergamestats: {
+            current_square: 0,
+        }
+    }
+
     beforeEach(() => {
         jest.clearAllMocks();
         document.title = '';
@@ -93,6 +101,7 @@ describe('Home Component', () => {
           return Promise.reject(new Error('Invalid URL'));
         });
     });
+
     /**
      * API tests:
      * 1. Verify that user details are correctly fetched and displayed
@@ -168,6 +177,28 @@ describe('Home Component', () => {
      * 1. Check if the welcome message correctly shows the username
      * 2. Verify the user's score is accurately displayed
      */
+    describe('User display tests', () => {
+        test('Welcome message displays correct username', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith("/accounts/me/");
+            });
+            await waitFor(() => {
+                expect(screen.getByText(/Welcome back testuser/i)).toBeInTheDocument();
+            });
+              expect(api.get).toHaveBeenCalledWith("/accounts/me/");
+              expect(api.get).toHaveBeenCalledWith("/accounts/ranked-users/");
+        });
+
+        test('User score displayed accurately', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(screen.getByText("100")).toBeInTheDocument();
+            });
+            expect(api.get).toHaveBeenCalledWith("/accounts/me/");
+            expect(api.get).toHaveBeenCalledWith("/accounts/ranked-users/");
+        });
+    });
 
     /**
      * Leaderboard:
@@ -205,6 +236,36 @@ describe('Home Component', () => {
      * Navigation:
      * 1. Verify all navigation links direct to their own routes: Home, Board, Map, Profile, and Logout
      */
+    describe('Navigation test', () => {
+        test('verify navigation links', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+                expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
+            });
+            const navLinks = screen.getAllByRole('link');
+  
+            const homeLink = navLinks.find(link => link.getAttribute('href') === 'home');
+            expect(homeLink).toBeInTheDocument();
+            expect(homeLink.querySelector('.bi-house-door-fill')).toBeInTheDocument();
+            
+            const boardLink = navLinks.find(link => link.getAttribute('href') === 'board');
+            expect(boardLink).toBeInTheDocument();
+            expect(boardLink.querySelector('.bi-dice-3-fill')).toBeInTheDocument();
+
+            const mapLink = navLinks.find(link => link.getAttribute('href') === 'map');
+            expect(mapLink).toBeInTheDocument();
+            expect(mapLink.querySelector('.bi-map-fill')).toBeInTheDocument();
+            
+            const profileLink = navLinks.find(link => link.getAttribute('href') === 'profile');
+            expect(profileLink).toBeInTheDocument();
+            expect(profileLink.querySelector('.bi-person-circle')).toBeInTheDocument();
+            
+            const logoutLink = navLinks.find(link => link.getAttribute('href') === 'logout');
+            expect(logoutLink).toBeInTheDocument();
+            expect(logoutLink.querySelector('.bi-box-arrow-right')).toBeInTheDocument();
+        });
+    });
 
     /**
      * Conditional Renders:
@@ -212,6 +273,63 @@ describe('Home Component', () => {
      * 2. User not in top rankings
      * 3. User who is in the top 3
      */
+    describe('Conditional renders test', () => {
+        test('new user with no score displays', async () => {
+            const mockNewUser = {
+                id: 5, // Mock new users
+                username: 'newuser',
+                usergamestats: {
+                  current_square: 0,
+                  score: 0
+                }
+            };
+            api.get.mockImplementation((url) => {
+                if (url === '/accounts/me/') {
+                  return Promise.resolve({ data: mockNewUser });
+                }
+                if (url === '/accounts/ranked-users/') {
+                  return Promise.resolve({ data: [] });  // Empty rankings for simplicity
+                }
+                return Promise.reject(new Error('Invalid URL'));
+            });
+            render(<Home />);
+            await waitFor(() => {
+                expect(screen.getByText(/Welcome back newuser/i)).toBeInTheDocument();
+            });
+            const scoreElement = await screen.findByText('0');
+            expect(scoreElement).toBeInTheDocument();
+            expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+            expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
+
+            const positionElement = await screen.findByText('You are at: Position #0');
+            expect(positionElement).toBeInTheDocument();
+        });
+        
+        test('user not in top rankings not displayed in top 3', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+                expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
+            });
+            const welcomeElement = await screen.findByText('Welcome back testuser');
+            expect(welcomeElement).toBeInTheDocument();
+            
+            const scoreElement = await screen.findByText('100');
+            expect(scoreElement).toBeInTheDocument();
+
+            expect(screen.getByText('topuser - 500')).toBeInTheDocument();
+            expect(screen.getByText('seconduser - 400')).toBeInTheDocument();
+            expect(screen.getByText('thirduser - 300')).toBeInTheDocument();
+            expect(screen.queryByText('testuser - 100')).not.toBeInTheDocument();
+
+            const positionElement = await screen.findByText('You are at: Position #4');
+            expect(positionElement).toBeInTheDocument();
+        });
+
+
+        // test('user who is in the top 3', async () => {
+        // });
+    });
 
     /**
      * Edge Cases
