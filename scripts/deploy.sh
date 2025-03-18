@@ -8,8 +8,8 @@ sudo systemctl stop SoftwareEng888-backend.service
 cd /root/SoftwareEng888
 git stash
 git checkout deployment
-git pull origin deployment
-sudo chmod 755 ./scripts/deploy.sh
+git pull --no-edit origin deployment
+sudo chmod 755 /root/SoftwareEng888/scripts/deploy.sh
 
 # Install any new python packages
 source ./venv/bin/activate
