@@ -10,7 +10,7 @@ function Landing() {
         </div>
         <div className={styles.landing_main}>
             <h1 className={styles.title}>cliMate</h1>
-            <h2 className={styles.slogan}>deployment test 2</h2>
+            <h2 className={styles.slogan}>deployment test 3</h2>
             <a className={styles.start_btn} href="login">Get Started</a>
 
         </div>
