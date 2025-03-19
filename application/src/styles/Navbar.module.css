@@ -1,4 +1,15 @@
-/* Sidebar navigation */
+/*
+* Navbar.module.css - Stylesheet for the Navigation Bar component 
+* 
+* @file Defines the styles for the sidebar
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-02-2025
+*/
+
+
+/* Styles the Sidebar */
 .sidebar {
     background-color:#3C3E4C;
     display: flex;
@@ -14,6 +25,7 @@
 
 }
 
+/* Styles i element of the sidebar */
 .sidebar i {
     color: #85AEB3;
     font-size: 4vw;
@@ -21,7 +33,7 @@
 }
 
 
-
+/* Styles h2 element of the sidebar */
 .sidebar h2{
     color: #85AEB3;
     font-family: 'Hammersmith One';
@@ -37,6 +49,7 @@
     padding-top: 10px;
 }
 
+/* Styles logo text 'cliMate' */
 .logoText {
     color: #85AEB3;
     font-size:25px;
@@ -47,6 +60,7 @@
 
 @media (max-width: 480px){
 
+    /* Styles the Sidebar */
     .sidebar{
         width: 85vw;
         display: flex;
@@ -61,17 +75,20 @@
         
     }
 
+    /* Styles the h2 element of sidebar */
     .sidebar h2{
         font-size: 5vw;
         margin-left: 5vw;
         margin-top: 1vw;
     }
 
+    /* Styles the i element of sidebar */
     .sidebar i{
         font-size: 5vw;
         
     }
 
+    /* Styles the logo container */
     .logoContainer {
         width: 20%;
         height: 100%;
@@ -89,6 +106,7 @@
 /* Tablet Styling */
 @media (min-width: 481px) and (max-width: 768px){
 
+    /* Styles the Sidebar */
     .sidebar{
         width: 90vw;
         display: flex;
@@ -103,17 +121,20 @@
         
     }
 
+    /* Styles the h2 element of sidebar */
     .sidebar h2{
         font-size: 4vw;
         margin-left: 5vw;
         margin-top: 1vw;
     }
 
+    /* Styles the i element of sidebar */
     .sidebar i{
         font-size: 4vw;
         
     }
 
+    /* Styles the logo container */
     .logoContainer {
         width: 20%;
         height: 100%;
@@ -132,6 +153,7 @@
 
 @media (min-width: 769px) and (max-width: 1012px){
 
+    /* Styles the Sidebar */
     .sidebar {
         width: 8vw;
         padding: 1.5vw 0;
@@ -142,7 +164,8 @@
         top: 5.5%;
     
     }
-    
+
+    /* Styles the i element of sidebar */
     .sidebar i {
         color: #85AEB3;
         font-size: 4vw;
@@ -150,7 +173,7 @@
     }
     
     
-    
+    /* Styles the h2 element of sidebar */
     .sidebar h2{
         color: #85AEB3;
         font-family: 'Hammersmith One';
@@ -165,7 +188,8 @@
 /* Large Desktop Styling */
 
 @media (min-width: 1013px){
- 
+
+    /* Styles the Sidebar */
     .sidebar {
         width: 7vw;
         height: 90vh;
@@ -173,14 +197,15 @@
         top: 5.5%;
     
     }
-    
+
+    /* Styles the i element of the sidebar */
     .sidebar i {
         font-size: 3vw;
       
     }
     
     
-    
+    /* Styles the h2 element of the sidebar */
     .sidebar h2{
         font-size: 1.8vw;
     }
