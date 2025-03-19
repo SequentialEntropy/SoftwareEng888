@@ -31,7 +31,10 @@ SECRET_KEY = 'django-insecure-q8dcsu32n+cbpl&cn&y-(n@t)^utg&1cg^et96&&la%-z#@t+5
 DEBUG = True
 
 ALLOWED_HOSTS = [
-    "climate.genkiasahi.com"
+    "climate.genkiasahi.com",
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
 ]
 # ALLOWED_HOSTS = ["*"]
 
