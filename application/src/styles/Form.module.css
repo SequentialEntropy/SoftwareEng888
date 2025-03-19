@@ -41,12 +41,14 @@
 
 }
 
+/* Styles for heading 'cliMate' */
 .heading{
     font-family: 'Hammersmith One';
     color: #fff;
     
 }
 
+/* Styles for logo '888' */
 .logo{
     position: absolute;
     font-family: 'Chango';
@@ -63,6 +65,8 @@
 
 
 }
+
+/* Styles for 'Sign up' button */
 .header_btn_sign{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -74,6 +78,7 @@
     
 }
 
+/* Hover effect for 'Sign Up' button */
 .header_btn_sign:hover{
     background-color: #688089;
 }
@@ -93,11 +98,13 @@
     
 }
 
+/* Style for h2 element of login container */
 .login_container h2 {
     font-family: 'Londrina Solid';
     margin-top: 1.5vw;
 }
 
+/* Style for form of login container */
 .login_container form {
     display: flex;
     flex-direction: column;
@@ -126,10 +133,12 @@
     font-family: 'Inter';
 }
 
+/* Hover effect of login button */
 .login_btn:hover {
     background-color: #688089;
 }
 
+/* Style for forgot password button */
 .forgot_password_btn{
     border-radius: 10px;
     padding: 5px;
@@ -143,20 +152,25 @@
 /* Mobile Styling */
 
 @media (max-width: 480px){
+
+    /* Sets width of login container */
     .login_container{
         width: 60vw;
     }
 
+    /* Sets height of header */
     .header{
         height: 18vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 7vw;
         
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 5vw;
@@ -177,15 +191,18 @@
         
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 12vw;
        
     }
 
+    /* Styles form of login container */
     .login_container form {
         width: 50vw;
     }
 
+    /* Styles button of login container */
     .login_container button {
         margin: 2.5vw;
     }
@@ -203,20 +220,25 @@
 /* Tablet Styling */
 
 @media (min-width: 481px) and (max-width: 899px){
+    
+    /* Sets width of login container */
     .login_container{
         width: 50vw;
     }
 
+    /* Sets height of header */
     .header{
         height: 16vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 6vw;
         
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 6vw;
         font-size: 4vw;
@@ -233,29 +255,29 @@
         font-size: 3vw;
         padding: 1vw 2vw;
         right: 5%;
-  
-        
     }
 
 
+    /* Styles form of login container */
     .login_container form {
         width: 30vw;
     
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 6vw;
         margin: 0;
        
     }
 
+    /* Styles label element of login container */
     .login_container label{
         font-size: 2vw;
         line-height: 1;
     }
 
-   
-
+    /* Styles button of login container */
     .login_container button {
         margin: 1.5vw;
         margin-top: 2.8vw;
@@ -280,22 +302,24 @@
 /* Small Deskptop Styling */
 
 @media (min-width: 900px) and (max-width: 1199px){
-    
+
+    /* Sets width of login container */
     .login_container{
         width: 40vw;
-       
     }
 
+    /* Sets height of header */
     .header{
         height: 12vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 4.5vw;
-        
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 4vw;
@@ -316,19 +340,20 @@
         
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 5vw;
         margin: 0;
        
     }
 
+    /* Styles label of login container */
     .login_container label{
         font-size: 1.5vw;
         line-height: 1;
     }
 
-   
-
+    /* Styles button of login container */
     .login_container button {
         margin: 1.5vw;
         margin-top: 2vw;
@@ -354,21 +379,23 @@
 
 @media (min-width: 1200px) {
 
+    /* Sets width of login container */
     .login_container{
         width: 28vw;
     }
 
-    
+    /* Sets height of header */
     .header{
         height: 8vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 4vw;
-        
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 3vw;
@@ -385,23 +412,25 @@
         font-size: 2vw;
         padding: 1vw 2vw;
         right: 5%;
-  
-        
     }
 
+    /* Add top margin to .login */
     .login{
         margin-top: 4vw;
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 5vw;
     }
 
+    /* Styles label of login container */
     .login_container label{
         font-size: 1.2vw;
         line-height: 1;
     }
 
+    /* Styles button of login container */
     .login_container button {
         margin: 1.5vw;
     }
