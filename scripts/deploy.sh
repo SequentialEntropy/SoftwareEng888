@@ -1,7 +1,6 @@
 #!/bin/bash
 
 # Stop server
-sudo systemctl stop SoftwareEng888-frontend.service
 sudo systemctl stop SoftwareEng888-backend.service
 
 # Pull and apply latest changes
@@ -24,6 +23,8 @@ python3 manage.py migrate
 cd ../application
 npm install
 
+# Compile react project to a single file
+npm run build
+
 # Start server
-sudo systemctl start SoftwareEng888-frontend.service
 sudo systemctl start SoftwareEng888-backend.service
