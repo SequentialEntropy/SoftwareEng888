@@ -1,19 +1,45 @@
 # cliMate
 Our web application aims to promote sustainability through performing tasks around campus.
 
+Our latest up-to-date version of the main branch is deployed here.
+
+Visit http://climate.genkiasahi.com to play!
+
 # Prerequisites
-This section includes the software you will need to run our application. 
+This section includes the software you will need to run our application locally.
+
+## Compiling React Build
+
+This section guides you through compiling the React code into a singular file, making the build accessible from Django.
+
+1. Open a new terminal window.
+2. Navigate to the project directory:
+   ```sh
+   cd /path/to/project/SoftwareEng888
+   ```
+3. Navigate to the application directory:
+   ```sh
+   cd application
+   ```
+4. Install the required frontend dependencies:
+   ```sh
+   npm install
+   ```
+5. Build the frontend project:
+   ```sh
+   npm run build
+   ```
 
 ## Starting Django Server
 
 This section guides you through setting up and running the Django backend server.
 
-1. Open a terminal on your system.
-2. Navigate to the project directory:
+1. Open the terminal window again.
+2. Navigate back to the project directory:
    ```
    cd /path/to/project/SoftwareEng888
    ```
-3. Install the required dependencies:
+3. Install the required python dependencies:
    ```
    pip install -r requirements.txt
    ```
@@ -35,34 +61,10 @@ This section guides you through setting up and running the Django backend server
    ```
    python3 manage.py runserver
    ```
-   **Note:** Do not navigate to `http://127.0.0.0:8000/`.
-
-## Starting React Server
-
-This section guides you through setting up and running the React frontend server.
-
-1. Open a new terminal window without closing the existing one.
-2. Navigate back to the project directory:
-   ```sh
-   cd /path/to/project/SoftwareEng888
+8. Open a browser and go to:
    ```
-3. Navigate to the application directory:
-   ```sh
-   cd application
+   http://127.0.0.1:8000
    ```
-4. Install the required frontend dependencies:
-   ```sh
-   npm install
-   ```
-5. Start the frontend development server:
-   ```sh
-   npm run dev
-   ```
-6. Open a browser and go to:
-   ```
-   http://localhost:5173
-   ```
-   **Note:** Do not navigate to `http://127.0.0.0:8000/`.
 
 ## How to play 
 Users can register to the game using their email address and creating a username and password. After this they will then navigate to their dashboard.

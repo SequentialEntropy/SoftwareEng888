@@ -36,7 +36,7 @@ class LoginTest(TestCase):
             'username': 'testuser',
             'password': 'testpass%123',
         })
-        self.assertRedirects(response, reverse('home'))
+        self.assertRedirects(response, "/home")
 
     def test_login_failure(self):
         """

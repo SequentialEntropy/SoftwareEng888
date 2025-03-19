@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import api from "../api";
 import NavBar from "../components/Navbar";
 import styles from "../styles/Profile.module.css";
+import { Link } from "react-router-dom";
 
 function Board() {
     const [user, setUser] = useState({ username: "", email: "" });
@@ -99,9 +100,9 @@ function Board() {
                 {Object.entries(errorMessages).map(([field, message]) => (
                     <p key={field}>{message}</p>
                 ))}
-                <a href="reset-password">Reset Password</a>
-                <a href="logout" className={styles.logout_btn}>Log Out</a>
-                <a href="" className={styles.deleteAccount_btn}>Delete Account</a>
+                <Link to="/reset-password">Reset Password</Link>
+                <Link to="/logout" className={styles.logout_btn}>Log Out</Link>
+                <Link to="" className={styles.deleteAccount_btn}>Delete Account</Link>
             </div>
         </div>
     );
