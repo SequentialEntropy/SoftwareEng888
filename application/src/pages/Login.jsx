@@ -8,6 +8,7 @@
  * @since 14-02-2025
  */
 
+import { useEffect } from "react"
 import Form from "../components/Form"
 
 /**
@@ -20,6 +21,10 @@ import Form from "../components/Form"
  */
 
 function Login() {
+    useEffect(() => {
+        document.title = "Login"
+    }, [])
+
     return <Form route="/accounts/token/" method="login" />
 }
 

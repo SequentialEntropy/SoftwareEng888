@@ -51,6 +51,7 @@ function Board() {
 
     // Initialise Avatar location & score
     useEffect(() => {
+        document.title = "Board"
         // fetch current score and update rendered value
         api.get("/accounts/me/").then(res => res.data.usergamestats).then(
             usergamestats => {

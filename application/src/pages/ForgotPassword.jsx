@@ -3,6 +3,10 @@ import api from "../api"
 import styles from "../styles/ForgotPassword.module.css"
 
 function ForgotPassword(){
+    useEffect(() => {
+        document.title = "Forgot Password"
+    }, [])
+
     return <div className={styles.forgot_password_container}>
         <h1 className={styles.heading}>Forgot Password </h1>
         <form className={styles.password_form}>

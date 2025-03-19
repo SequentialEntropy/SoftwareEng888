@@ -11,7 +11,7 @@ function Board() {
     const [errorMessages, setErrorMessages] = useState({});
 
     useEffect(() => {
-        document.title = "Dashboard";
+        document.title = "Profile";
         getUserDetails();
     }, []);
 

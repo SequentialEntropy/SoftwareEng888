@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api"; // Import API helper
 import NavBar from "../components/Navbar";
@@ -11,6 +11,10 @@ function ResetPassword() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Reset Password"
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
