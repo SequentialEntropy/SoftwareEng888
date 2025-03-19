@@ -1,4 +1,14 @@
-/* Sidebar Navigation */
+/*
+* Map.module.css - Stylesheet for the Map page
+* 
+* @file Defines the styles for the map and current task/location container 
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-03-2025
+*/
+
+/* Styles main layout */
 .game{
     background-color: #e9fffd;
     background-size: cover;
@@ -9,7 +19,7 @@
 }
 
 
-
+/* Styles current task bar */
 .map_taskbar {
     position: relative;
     margin: auto;
@@ -23,12 +33,14 @@
     
 }
 
+/* Styles icon on task bar */
 .task_icon {
     float:left;
     margin-right: 10px;
     font-size: 48px;
 }
 
+/* Styles text on task bar */
 .task_text {
     margin-top: 8px;
     float: left;
@@ -36,6 +48,7 @@
     color: white;
 }
 
+/* Styles map container */
 .map_container {
     position: relative;
     margin: auto;
@@ -45,6 +58,7 @@
     margin-top: 2vw;
 }
 
+/* Styles map */
 .map {
     width: 100%;
     height: 110%; 
@@ -54,12 +68,15 @@
 /* Mobile Styling */
 
 @media (max-width: 480px){
+
+    /* Styles task bar */
     .map_taskbar{
         width: 90vw;
         height: 10%;
         margin-top: 4vw;
     }
 
+    /* Styles map container */
     .map_container{
         width: 88vw;
         height: 60%;
@@ -71,12 +88,14 @@
 
 @media (min-width: 481px) and (max-width: 768px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 90vw;
         height: 10%;
         margin-top: 3vw;
     }
 
+    /* Styles map container */
     .map_container{
         width: 88vw;
         height: 60%;
@@ -89,12 +108,15 @@
 
 @media (min-width: 769px) and (max-width: 1199px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 82vw;
         height: 10%;
         margin-top: 3vw;
         margin-left: 15vw;
     }
+
+    /* Styles map container */
     .map_container{
         width: 82vw;
         height: 68%;
@@ -109,12 +131,15 @@
 
 @media (min-width: 1200px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 86vw;
         height: 10%;
         margin-top: 3vw;
         margin-left: 10vw;
     }
+
+    /* Styles map container */
     .map_container{
         width: 86vw;
         height: 60%;
