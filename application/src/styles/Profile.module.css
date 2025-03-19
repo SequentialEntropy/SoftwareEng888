@@ -1,10 +1,21 @@
+/*
+* Profile.module.css - Stylesheet for the Profile page 
+* 
+* @file Defines the styles for the profile container
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-03-2025
+*/
+
+/* Styles main layout  */
 .main_profile {
     min-height: 100vh;
     background-color: #C5E4E1;
 }
 
 
-
+/* Styles main profile container */
 .profile_container {
     color: #FAFEFF !important;
     display: flex !important;
@@ -24,11 +35,12 @@
 }
 
 
-
+/* Styles button in .profile_container */
 .profile_container button {
     margin: 5%;
 }
 
+/* Styles profile icon */
 .profile_icon {
     position: absolute;
     top:0;
@@ -36,25 +48,30 @@
     margin-bottom: 20px;
 }
 
+/* Styles user's name */
 .profile_name{
     color: white;
 }
 
+/* Styles main layout of form */
 .profile_info {
     width: 100%;
     text-align: left;
 }
 
+/* Styles form */
 form{
     display: flex;
     flex-direction: column;
 }
 
+/* Styles input fields */
 input{
   height: 100%;
 
 }
 
+/* Styles profile header */
 .profile_header {
     display: flex;
     flex-direction: column;
@@ -62,7 +79,7 @@ input{
     margin-bottom: 20px;
 }
 
-
+/* Styles fields, email and username */
 .info_row {
     padding: 10px 0;
     display: flex;
@@ -73,12 +90,7 @@ input{
  
 }
 
-.label {
-    font-size: 20px;
-    font-family: "Inter", serif;
-    color: #94BEBA;
-}
-
+/* Styles edit button */
 .edit {
     font-size: 12px;
     text-transform: uppercase;
@@ -87,6 +99,7 @@ input{
     color: #94BEBA;
 }
 
+/* Styles separation line */
 .line {
     border: none;
     height: 1px;
@@ -95,6 +108,7 @@ input{
     margin-bottom: 5%;
 }
 
+/* Styles logout button */
 .logout_btn {
     background: #1e1f28;
     opacity:100%;
@@ -110,11 +124,12 @@ input{
 }
 
 
-
+/* Styles hover effect of logout button */
 .logout_btn:hover {
     background: #47484f;
 }
 
+/* Styles delete account button */
 .deleteAccount_btn {
     background: #1e1f28;
     opacity:100%;
@@ -129,10 +144,12 @@ input{
     cursor: pointer;
 }
 
+/* Styles hover effect of delete account button */
 .deleteAccount_btn:hover {
     background: #47484f;
 }
 
+/* Styles Reset Password link */
 .reset_password {
     font-size: 18px !important;
     text-align: center !important;
@@ -143,35 +160,29 @@ input{
     margin-top: 10px;
 }
 
+/* Styles hover effect of link */
 .a:hover {
     color: #3C3E4C; 
     text-decoration: none;
 }
 
-.overlay {
-    position: fixed;
-    inset: 0; 
-    background: rgba(0, 0, 0, 0.717); 
-    display: flex;
-    justify-content: center;
-    align-items: start; 
-    z-index: 50; 
-}
-
+/* Styles edit button */
 .edit {
-    background-color: #37394A; /* Change to your preferred color */
-    color: #94BEBA; /* Ensures text is readable */
+    background-color: #37394A; 
+    color: #94BEBA; 
     border: none;
     padding: 10px 10px;
     cursor: pointer;
     border-radius: 5px;
 }
 
+/* Styles hover effect of edit button */
 .edit:hover {
-    color: white; /* Optional: Hover effect */
+    color: white; 
 }
 
 @media (max-width: 480px){
+    /* Styles profile container */
     .profile_container {
         width: 60vw;
         height: 65vh;
@@ -185,6 +196,7 @@ input{
 
 @media (min-width: 481px) and (max-width: 768px){
 
+    /* Styles profile container */
     .profile_container {
         width: 60vw;
         height: 70vh;
@@ -211,6 +223,7 @@ input{
 
 @media (min-width: 1200px){
 
+    /* Styles profile container */
     .profile_container {
         width: 40vw;
         height: 80vh;
