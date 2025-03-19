@@ -9,12 +9,13 @@
 * @since 19-02-2025
 */
 
+/* Ensure full-height layout and hide overflow */  
 html, body{
     height: 100%;
     overflow: hidden;
 }
 
-
+/* Entire page styling */
 .game{
     background-color: #e9fffd;
     background-size: cover;
@@ -50,7 +51,8 @@ html, body{
     }
   
     & > * { position: absolute; }
-  
+
+/*     Styles SPIN button */
     button {
         aspect-ratio: 1 / 1;
         background: #3c3e4c;
@@ -116,17 +118,19 @@ html, body{
     box-sizing: border-box;
 }
 
+/* Styling of avatar position */
 .avatar{
     position: absolute;
     z-index: 1;
 }
 
+/* Styles font size of entire game board */
 .main_board i{
     font-size: 10vw;
 }
 
+/* Styles individual squares on game board */
 .item {
-    
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -138,12 +142,14 @@ html, body{
     flex-direction: column;
 }
 
+/* Styles heading on game board square */
 .item h3{
     font-size: 1.5vw;
     font-family: 'Londrina Solid';
     margin-top: 4.5vw;
 }
 
+/* Styles tile bar */
 .tile_bar{
     background-color: pink;
     width: 100%;
@@ -153,7 +159,7 @@ html, body{
 }
 
 
-
+/* Styles task deck */
 .task_deck{
     position: absolute;
     top: 33%;
@@ -166,9 +172,9 @@ html, body{
     align-items: center;
 
    
-    
 }
 
+/* Styles task button */
 .task_btn{
     background-color: #3c3e4c;
     border: none;
@@ -183,6 +189,7 @@ html, body{
 
 }
 
+/* Styles Chance card deck */
 .chance_deck{
     position: absolute;
     top: 52%;
@@ -196,6 +203,7 @@ html, body{
  
 }
 
+/* Styles headings of task_deck and chance_deck */
 .task_deck h1,
 .chance_deck h1{
     font-family: 'Londrina Solid';
@@ -203,10 +211,10 @@ html, body{
     color: #d9d9d9;
 }
 
-/* Chance Popup */
+/* Chance Popup  */
 
+/* Styles main chance pop up */
 .chance_popup{
-
     position: fixed;
     top: 50%;
     left: 50%;
@@ -225,6 +233,7 @@ html, body{
 
 }
 
+/* Styles chance card header */
 .chance_header{
     background-color: green;
     width: 100%;
@@ -240,6 +249,7 @@ html, body{
 
 }
 
+/* Styles heading on chance card pop up */
 .chance_header h1{
     font-family: 'Londrina Solid';
     font-size: 1.5rem;
@@ -248,6 +258,7 @@ html, body{
 
 }
 
+/* Styles button on chance card */
 .chance_header button{
     color:black;
     font-size: 25px;
@@ -259,12 +270,14 @@ html, body{
 
 }
 
+/* Styles content within chance card pop up */
 .chance_content h2{
     margin-top: 25px;
     margin-bottom: 10px;
     font-family: 'Londrina Solid';
     padding: 20px;
 }
+
 /* Spinner */
 .spinner {
     position: absolute;
@@ -295,6 +308,7 @@ html, body{
     height: 25%;
 }
 
+/* Styles pop up header section */
 .popup_header{
     background-color: green;
     width: 100%;
@@ -310,12 +324,14 @@ html, body{
 
 }
 
+/* Styles pop up heading on header section */
 .popup_header h1{
     font-family: 'Londrina Solid';
     font-size: 2.5vw;
     margin: auto;
 }
 
+/* Styles exit button on pop up header */
 .popup_header .exit_btn{
     color:black;
     font-size: 25px;
@@ -327,6 +343,7 @@ html, body{
     
 }
 
+/* Styles content of pop up  */
 .popup_content{
     display: flex;
     flex-direction: column;
@@ -335,6 +352,7 @@ html, body{
     
 }
 
+/* Styles heading of pop up content */
 .popup_content h2 {
     margin-top: 3vw;
     margin-bottom: 0;
@@ -343,6 +361,7 @@ html, body{
     
 }
 
+/* Styles button on pop up content */
 .popup_content button {
     background: #4CAF50;
     color: white;
@@ -352,6 +371,7 @@ html, body{
     padding: 5px 10px;
 }
 
+/* Hover effect of button on pop up */
 .popup_content  button:hover {
     background: #45a049;
 }
@@ -371,6 +391,7 @@ html, body{
     align-items: center;
 }
 
+/* Styles heading of points container */
 .points_container h1{
     font-size: 4vw;
     text-align: center;
@@ -402,6 +423,7 @@ html, body{
     z-index: 1000;
 }
 
+/* Hover effect on how to play button */
 .how_to_play_btn:hover {
     background-color: #9f9d9d; 
     transform: scale(1.1); 
@@ -411,6 +433,7 @@ html, body{
     transform: scale(0.95); /* Click effect */
 }
 
+/* Styles how to play main container */
 .how_to_play_container2 {
     background-color: #D9D9D9;
     display: flex !important;
@@ -426,6 +449,7 @@ html, body{
 
 }
 
+/* Styles exit button on how to play */
 .exit_btn {
     color:black;
     position: absolute;
@@ -435,24 +459,27 @@ html, body{
     font-weight: 600;
 }
 
+/* Styles how to play header container */
 .how_to_play_container3 {
     background-color: #3C3E4C;
     border-radius: 25px;
     top:0;
 }
 
+/* Styles title 'How to play'  */
 .how_to_play_title {
     color: white;
     font-family: "Londrina Solid";
     width: 100%;
 }
 
+/* Styles how to play instructions */
 .how_to_play_instructions {
     color: black;
     font-family: "Londrina Solid";
 }
 
-
+/* Styles overlay when how to play pop up is activated */
 .overlay {
     position: fixed;
     inset: 0; 
