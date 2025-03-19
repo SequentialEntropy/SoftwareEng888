@@ -37,7 +37,7 @@ ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
 ]
-# ALLOWED_HOSTS = ["*"]
+CSRF_TRUSTED_ORIGINS = ["https://climate.genkiasahi.com"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
