@@ -56,4 +56,13 @@ describe('ResetPassword Component', () => {
         expect(handleSubmit).toHaveBeenCalledTimes(1);
     });
 
+    
+    test('input fields have the current type attribute', () => {
+        render(<ResetPassword />);
+        const newPasswordInput = screen.getByPlaceholderText(/enter new password/i);
+        const confirmPasswordInput = screen.getByPlaceholderText(/confirm new password/i);
+        expect(newPasswordInput).toHaveAttribute('type', 'form-control');
+        expect(confirmPasswordInput).toHaveAttribute('type', 'form-control');
+    });
+    
 });
