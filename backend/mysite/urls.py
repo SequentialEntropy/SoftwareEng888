@@ -28,7 +28,10 @@ chance_router = DefaultRouter()
 chance_router.register("", ChanceViewSet)
 
 def react_app(request):
-    return render(request, "index.html")  # Always return React's index.html
+    try:
+        return render(request, "index.html")  # Always return React's index.html
+    except:
+        return render(request, "not_found.html")
 
 urlpatterns = [
     path('djangoadmin/', admin.site.urls),
@@ -41,7 +44,4 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
 
     re_path(r"^(?!api/).*", react_app),
-
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
-    path("accounts/board", TemplateView.as_view(template_name="board.html"), name="board"),
 ]
