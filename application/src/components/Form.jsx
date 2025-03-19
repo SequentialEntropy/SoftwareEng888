@@ -13,7 +13,7 @@
 
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import styles from "../styles/Form.module.css";
 
@@ -126,10 +126,10 @@ function Form({ route, method }) {
     
             {/* Header section */}
             <div className={styles.header}>
-                <a className={styles.logo} href="/">888</a>
+                <Link className={styles.logo} to="/">888</Link>
                 <h1 className={styles.heading}>cliMate</h1>
-                <a className={styles.header_btn_login} href="login">Login</a>
-                <a className={styles.header_btn_sign} href="Register">Sign Up</a>
+                <Link className={styles.header_btn_login} to="/login">Login</Link>
+                <Link className={styles.header_btn_sign} to="/register">Sign Up</Link>
                 
             </div>
     

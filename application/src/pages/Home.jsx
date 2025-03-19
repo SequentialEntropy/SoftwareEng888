@@ -13,6 +13,7 @@ import { useState, useEffect } from "react"
 import api from "../api"
 import NavBar from "../components/Navbar";
 import styles from "../styles/Dashboard.module.css"
+import { Link } from "react-router-dom";
 
 /**
  * Home Component 
@@ -85,7 +86,7 @@ function Home() {
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <a href="board">You are at</a>
+                <Link to="/board">You are at</Link>
                 <h2>Innovation Centre</h2>
             </div>
 
@@ -111,7 +112,7 @@ function Home() {
                 <progress value={Math.min(progress,100)} max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
-                <a href="map">Map</a>
+                <Link to="/map">Map</Link>
             </div>
 
             {/* Points section */}
