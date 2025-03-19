@@ -8,9 +8,10 @@
  * @since 25-02-2025
 */
 
-//ResetPassword.test.jsx
+// ResetPassword.test.jsx
 import React from 'react';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ResetPassword from './ResetPassword';
 
@@ -32,4 +33,16 @@ describe('ResetPassword Component', () => {
         expect(screen.getByLabelText(/^new password$/i)).toBeInTheDocument();
         expect(screen.getByLabelText(/^confirm new password$/i)).toBeInTheDocument();
     });
+
+    test('allows input in password fields', async () => {
+        render(<ResetPassword />);
+        const newPasswordInput = screen.getByPlaceholderText(/enter new password/i);
+        const confirmPasswordInput = screen.getByPlaceholderText(/confirm new password/i);
+        await userEvent.type(newPasswordInput, 'NewSecurePassword123!');
+        await userEvent.type(confirmPasswordInput, 'NewSecurePassword123!');
+        expect(newPasswordInput.value).toBe('NewSecurePassword123!');
+        expect(confirmPasswordInput.value).toBe('NewSecurePassword123!');
+    });
+
+    
 });
