@@ -21,7 +21,7 @@ describe('ResetPassword Component', () => {
      * Test 2: Test form input functionality
      * Test 3: Test form submission
      * Test 4: Document the current input type
-     * Test 5: Test button click
+     * Test 5: Test submit button
      * Test 6: Verify form structure
     */
     test('renders the reset password form', () => {
@@ -65,4 +65,10 @@ describe('ResetPassword Component', () => {
         expect(confirmPasswordInput).toHaveAttribute('type', 'form-control');
     });
     
+    
+    test('Submit button', () => {
+        render(<ResetPassword />);
+        const button = screen.getByRole('button', { name: /save changes/i });
+        expect(button).toHaveAttribute('type', 'submit');
+    });
 });
