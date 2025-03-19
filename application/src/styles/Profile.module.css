@@ -109,7 +109,27 @@ input{
     cursor: pointer;
 }
 
+
+
 .logout_btn:hover {
+    background: #47484f;
+}
+
+.deleteAccount_btn {
+    background: #1e1f28;
+    opacity:100%;
+    font-family: "Inter", serif;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.deleteAccount_btn:hover {
     background: #47484f;
 }
 
