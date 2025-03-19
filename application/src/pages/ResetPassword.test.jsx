@@ -10,7 +10,7 @@
 
 // ResetPassword.test.jsx
 import React from 'react';
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
 import ResetPassword from './ResetPassword';
@@ -45,4 +45,15 @@ describe('ResetPassword Component', () => {
     });
 
     
+    test('submits the form when submitted', async () => {
+        const handleSubmit = jest.fn(e => e.preventDefault());
+        const { container } = render(<ResetPassword />);
+        const form = container.querySelector('form');
+        form.onsubmit = handleSubmit;
+        await userEvent.type(screen.getByPlaceholderText(/enter new password/i), 'NewSecurePassword123!');
+        await userEvent.type(screen.getByPlaceholderText(/confirm new password/i), 'NewSecurePassword123!');
+        fireEvent.submit(form);
+        expect(handleSubmit).toHaveBeenCalledTimes(1);
+    });
+
 });
