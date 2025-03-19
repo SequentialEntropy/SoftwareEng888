@@ -31,7 +31,7 @@ def react_app(request):
     return render(request, "index.html")  # Always return React's index.html
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('djangoadmin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
 
     path("tasks/", include(task_router.urls)),
