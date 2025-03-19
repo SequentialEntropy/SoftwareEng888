@@ -48,7 +48,7 @@ describe('Home Component', () => {
         }
       };
       
-      const mockRankedUsers = [
+    const mockRankedUsers = [
         {
             id: 2,
             username: 'topuser',
@@ -78,14 +78,6 @@ describe('Home Component', () => {
             }
         }
     ];
-
-    const mockNewUser = {
-        id: 5,
-        username: 'newuser',
-        usergamestats: {
-            current_square: 0,
-        }
-    }
 
     beforeEach(() => {
         jest.clearAllMocks();
