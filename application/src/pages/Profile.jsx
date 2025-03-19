@@ -102,6 +102,7 @@ function Board() {
                 ))}
                 <Link to="/reset-password">Reset Password</Link>
                 <Link to="/logout" className={styles.logout_btn}>Log Out</Link>
+                <Link to="" className={styles.deleteAccount_btn}>Delete Account</Link>
             </div>
         </div>
     );
