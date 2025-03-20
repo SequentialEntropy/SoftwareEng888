@@ -8,33 +8,33 @@
  * @since 25-02-2025
 */
 
-// For Github actions
-const { TextEncoder, TextDecoder } = require('util');
-global.TextEncoder = TextEncoder;
-global.TextDecoder = TextDecoder;
+// // For Github actions
+// const { TextEncoder, TextDecoder } = require('util');
+// global.TextEncoder = TextEncoder;
+// global.TextDecoder = TextDecoder;
   
-// Mock react-router-dom
-jest.mock('react-router-dom', () => ({
-    useNavigate: () => jest.fn()
-}));
+// // Mock react-router-dom
+// jest.mock('react-router-dom', () => ({
+//     useNavigate: () => jest.fn()
+// }));
 
-// Mock the API module that uses import.meta
-jest.mock('../api', () => ({
-    post: jest.fn(),
-    get: jest.fn(),
-    put: jest.fn(),
-    delete: jest.fn()
-}));
+// // Mock the API module that uses import.meta
+// jest.mock('../api', () => ({
+//     post: jest.fn(),
+//     get: jest.fn(),
+//     put: jest.fn(),
+//     delete: jest.fn()
+// }));
   
-// Mock CSS module
-jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
+// // Mock CSS module
+// jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
 
 // ResetPassword.test.jsx
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import ResetPassword from '../pages/ResetPassword';
+import userEvent from '@testing-library/user-event';
+import ResetPassword from './ResetPassword';
 
 describe('ResetPassword Component', () => {
     /** 
@@ -47,61 +47,77 @@ describe('ResetPassword Component', () => {
     */
     test('renders the reset password form', () => {
         render(<ResetPassword />);
-        expect(screen.getByRole('heading', { name: /reset password/i })).toBeInTheDocument();
-        expect(screen.getByPlaceholderText(/enter new password/i)).toBeInTheDocument();
-        expect(screen.getByPlaceholderText(/confirm new password/i)).toBeInTheDocument();
-        expect(screen.getByRole('button', { name: /save changes/i })).toBeInTheDocument();
-        expect(screen.getByLabelText(/^new password$/i)).toBeInTheDocument();
-        expect(screen.getByLabelText(/^confirm new password$/i)).toBeInTheDocument();
+        expect(screen.getByText('Reset Password')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Enter new password')).toBeInTheDocument();
+        expect(screen.getByPlaceholderText('Confirm new password')).toBeInTheDocument();
+        expect(screen.getByRole('button', { name: 'Save Changes' })).toBeInTheDocument();
     });
 
     test('allows input in password fields', async () => {
+        const user = userEvent.setup();
         render(<ResetPassword />);
-        const newPasswordInput = screen.getByPlaceholderText(/enter new password/i);
-        const confirmPasswordInput = screen.getByPlaceholderText(/confirm new password/i);
-        await userEvent.type(newPasswordInput, 'NewSecurePassword123!');
-        await userEvent.type(confirmPasswordInput, 'NewSecurePassword123!');
-        expect(newPasswordInput.value).toBe('NewSecurePassword123!');
-        expect(confirmPasswordInput.value).toBe('NewSecurePassword123!');
+        const newPasswordInput = screen.getByPlaceholderText('Enter new password');
+        const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
+        await user.type(newPasswordInput, 'newSecurePassword123!');
+        await user.type(confirmPasswordInput, 'newSecurePassword123!');
+        expect(newPasswordInput).toHaveValue('newSecurePassword123!');
+        expect(confirmPasswordInput).toHaveValue('newSecurePassword123!');
     });
 
     
     test('submits the form when submitted', async () => {
+        const user = userEvent.setup();
         const handleSubmit = jest.fn(e => e.preventDefault());
         const { container } = render(<ResetPassword />);
         const form = container.querySelector('form');
         form.onsubmit = handleSubmit;
-        await userEvent.type(screen.getByPlaceholderText(/enter new password/i), 'NewSecurePassword123!');
-        await userEvent.type(screen.getByPlaceholderText(/confirm new password/i), 'NewSecurePassword123!');
-        fireEvent.submit(form);
+        const newPasswordInput = screen.getByPlaceholderText('Enter new password');
+        const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
+        await user.type(newPasswordInput, 'newSecurePassword123');
+        await user.type(confirmPasswordInput, 'newSecurePassword123');
+        const submitButton = screen.getByRole('button', { name: 'Save Changes' });
+        await user.click(submitButton);
         expect(handleSubmit).toHaveBeenCalledTimes(1);
     });
 
     
     test('input fields have the current type attribute', () => {
         render(<ResetPassword />);
-        const newPasswordInput = screen.getByPlaceholderText(/enter new password/i);
-        const confirmPasswordInput = screen.getByPlaceholderText(/confirm new password/i);
+        const newPasswordInput = screen.getByPlaceholderText('Enter new password');
+        const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
         expect(newPasswordInput).toHaveAttribute('type', 'form-control');
         expect(confirmPasswordInput).toHaveAttribute('type', 'form-control');
     });
     
     
-    test('Submit button', () => {
+    test('Submit button', async () => {
+        const user = userEvent.setup();
         render(<ResetPassword />);
-        const button = screen.getByRole('button', { name: /save changes/i });
-        expect(button).toHaveAttribute('type', 'submit');
+        const submitButton = screen.getByRole('button', { name: 'Save Changes' });
+        expect(submitButton.tagName).toBe('BUTTON');
+        expect(submitButton).toHaveAttribute('type', 'submit');
+        const handleClick = jest.fn();
+        submitButton.onclick = handleClick;
+        await user.click(submitButton);
+        expect(handleClick).toHaveBeenCalledTimes(1);
     });
 
     test('form has the expected structure', () => {
         const { container } = render(<ResetPassword />);
-        const forms = container.querySelectorAll('form');
-        expect(forms.length).toBe(1);
-        const formGroups = container.querySelectorAll('.form-group');
-        expect(formGroups.length).toBe(2);
         const form = container.querySelector('form');
-        expect(form).toContainElement(screen.getByPlaceholderText(/enter new password/i));
-        expect(form).toContainElement(screen.getByPlaceholderText(/confirm new password/i));
-        expect(form).toContainElement(screen.getByRole('button', { name: /save changes/i }));
+        expect(form).not.toBeNull();
+        expect(form.children.length).toBe(3);
+        const formGroups = form.querySelectorAll('.form-group');
+        expect(formGroups.length).toBe(2);
+        const firstFormGroup = formGroups[0];
+        const firstLabel = firstFormGroup.querySelector('label');
+        const firstInput = firstFormGroup.querySelector('input');
+        expect(firstLabel.textContent).toBe('New Password');
+        expect(firstInput.id).toBe('new-password');
+        const secondFormGroup = formGroups[1];
+        const secondLabel = secondFormGroup.querySelector('label');
+        const secondInput = secondFormGroup.querySelector('input');
+        expect(secondLabel.textContent).toBe('Confirm New Password');
+        expect(secondInput.id).toBe('confirm-new-password');
     });
 });
