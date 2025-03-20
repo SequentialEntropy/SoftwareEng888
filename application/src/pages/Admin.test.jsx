@@ -8,17 +8,6 @@
  * @since 20-03-2025
 */
 
-/**
- * 
- * 
- * Edge Case Tests
- * 
- * Test behavior when API returns empty data
- * Verify handling of unexpected API response formats
- * Test concurrent operations (e.g., editing an item while another is being deleted)
- * Check behavior when very large lists of tasks or chances are returned
- */
-
 // Admin.test.jsx
 import { act } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
@@ -522,4 +511,103 @@ describe('Admin Component', () => {
         });
     });
 
+    /**
+     * Edge Case Tests
+     * 
+     * Test behavior when API returns empty data
+     * Verify handling of unexpected API response formats
+     * Test concurrent operations (e.g., editing an item while another is being deleted)
+     * Check behavior when very large lists of tasks or chances are returned
+     */
+    describe('Edge Cases', () => {
+        test('Test behavior when API returns empty data', async () => {
+            api.get.mockImplementation((url) => {
+                return Promise.resolve({ data: [] });
+            });
+            
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+            
+            const lists = screen.getAllByRole('list');
+            lists.forEach(list => {
+                expect(list.children).toHaveLength(0);
+            });
+        });
+        
+        test('Test handling unexpected API response format', async () => {
+            api.get.mockImplementation((url) => {
+                if (url === '/tasks/') {
+                    return Promise.resolve({ data: [] });
+                }
+                if (url === '/chances/') {
+                    return Promise.resolve({ data: [] });
+                }
+                return Promise.reject(new Error('Not found'));
+            });
+            
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+        });
+            
+        test('Test handling concurrent operations', async () => {
+            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
+            
+            api.delete.mockImplementation(async () => {
+                await delay(100);
+                return {};
+            });
+            
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            // Start two delete operations concurrently
+            const deleteButtons = screen.getAllByText('Delete');
+            
+            await act(async () => {
+                fireEvent.click(deleteButtons[0]);
+                fireEvent.click(deleteButtons[1]);
+            });
+            
+            // Verify both delete operations were initiated
+            expect(api.delete).toHaveBeenCalledWith('/tasks/1/');
+            expect(api.delete).toHaveBeenCalledWith('/tasks/2/');
+            
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledTimes(4);
+            });
+        });
+        
+        test('Test behaviour with large datasets', async () => {
+            const largeMockTasks = Array.from({ length: 100 }, (_, i) => ({
+                id: i + 1,
+                description: `Task ${i + 1}`,
+                applicable_squares: [1],
+                score_to_award: 10
+            }));
+            
+            api.get.mockImplementation((url) => {
+                if (url === '/tasks/') {
+                return Promise.resolve({ data: largeMockTasks });
+                }
+                return Promise.resolve({ data: mockChances });
+            });
+            
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+            
+            await waitFor(() => {
+                expect(screen.getByText('Task 100')).toBeInTheDocument();
+            });
+        });
+    });
 });
