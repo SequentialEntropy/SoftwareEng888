@@ -9,18 +9,7 @@
 */
 
 /**
- * 
- * 
- * CRUD Operation Tests
- * 
- * Test task deletion flow (onDeleteTask):
- *  Verify API call is made with correct task ID
- *  Ensure tasks list is refreshed after successful deletion
- *  Check that selectedTask is cleared if the deleted task was selected
- *  Verify error handling works when deletion fails
- * 
- * Test the same flow for chance deletion (onDeleteChance)
- * Verify integration with AdminTaskForm and AdminChanceForm for creation/editing
+ *
  * 
  * User Interaction Tests
  * 
@@ -320,4 +309,67 @@ describe('Admin Component', () => {
         });
     });
 
+    /**
+    * CRUD Operation Tests
+    * 
+    * Test task deletion flow (onDeleteTask)
+    * Test the same flow for chance deletion (onDeleteChance)
+    * Verify integration with AdminTaskForm and AdminChanceForm for creation/editing
+    */
+    describe('CRUD Operations', () => {
+        test('deletes a task when delete button is clicked', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const deleteButtons = screen.getAllByText('Delete');
+            await act(async () => {
+                fireEvent.click(deleteButtons[0]);
+            });
+            
+            expect(api.delete).toHaveBeenCalledWith('/tasks/1/');
+            expect(api.get).toHaveBeenCalledWith('/tasks/');
+        });
+        
+        test('Test deleting a chance when delete button is clicked', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const deleteButtons = screen.getAllByText('Delete');
+            await act(async () => {
+                fireEvent.click(deleteButtons[2]);
+            });
+            
+            expect(api.delete).toHaveBeenCalledWith('/chances/1/');
+            expect(api.get).toHaveBeenCalledWith('/chances/');
+        });
+        
+        test('Verify success callback when task form is submitted', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            api.get.mockClear();
+
+            await act(async () => {
+                fireEvent.click(screen.getByTestId('task-form-success'));
+            });
+            expect(api.get).toHaveBeenCalledWith('/tasks/');
+        });
+        
+        test('Verify success callback when chance form is submitted', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            api.get.mockClear();
+            
+            await act(async () => {
+                fireEvent.click(screen.getAllByTestId('chance-form-success')[0]);
+            });
+            
+            expect(api.get).toHaveBeenCalledWith('/chances/');
+        });
+    });
 });
