@@ -10,8 +10,9 @@
 
 // ResetPassword.test.jsx
 import React from 'react';
-import { render, screen, act } from '@testing-library/react';
+import { render, screen, act, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
 import ResetPassword from './ResetPassword';
 
 // Mock react-router-dom
@@ -58,8 +59,14 @@ describe('ResetPassword Component', () => {
         jest.clearAllMocks();
     });
     
-    afterEach(() => {
-        jest.runOnlyPendingTimers();
+    afterEach(async () => {
+        act(() => {
+            jest.runAllTimers();
+        });
+        
+        await waitFor(() => {
+        }, { timeout: 1000 });
+        
         jest.clearAllTimers();
     });
     
@@ -71,7 +78,7 @@ describe('ResetPassword Component', () => {
         expect(screen.getByRole('button', { name: /Save Changes/i })).toBeInTheDocument();
     });
 
-    test('allows input in password fields', () => {
+    test('allows input in password fields', async () => {
         render(<ResetPassword />);
         const passwordInputs = Array.from(document.querySelectorAll('input')).filter(
             input => input.placeholder && 
@@ -81,18 +88,20 @@ describe('ResetPassword Component', () => {
         expect(passwordInputs.length).toBeGreaterThan(0);
         
         // Test each password input
-        passwordInputs.forEach(input => {
-            act(() => {
+        for (const input of passwordInputs) {
+            // Set value with act to properly handle React state updates
+            await act(async () => {
                 input.value = 'TestPassword123!';
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 input.dispatchEvent(new Event('change', { bubbles: true }));
+                await waitFor(() => {});
             });
             
             expect(input.value).toBe('TestPassword123!');
-        });
+        }
     });
 
-    test('form has submit functionality', () => {
+    test('form has submit functionality', async () => {
         const { container } = render(<ResetPassword />);
         const form = container.querySelector('form');
         expect(form).not.toBeNull();
@@ -101,8 +110,22 @@ describe('ResetPassword Component', () => {
             const handleSubmit = jest.fn(e => e.preventDefault());
             form.addEventListener('submit', handleSubmit);
             
-            act(() => {
+            const passwordInputs = Array.from(form.querySelectorAll('input')).filter(
+                input => input.placeholder && 
+                (input.placeholder.includes('password') || input.placeholder.includes('Password'))
+            );
+            
+            await act(async () => {
+                for (const input of passwordInputs) {
+                    input.value = 'TestPassword123!';
+                    input.dispatchEvent(new Event('input', { bubbles: true }));
+                    input.dispatchEvent(new Event('change', { bubbles: true }));
+                }
+                
+                await waitFor(() => {});
                 form.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+                jest.runOnlyPendingTimers();
+                await waitFor(() => {});
             });
             
             expect(handleSubmit).toHaveBeenCalledTimes(1);
