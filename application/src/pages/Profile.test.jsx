@@ -9,19 +9,7 @@
 */
 
 /**
-
  * 
- * Integration Tests
- * API Integration
- * 
- * Test the complete flow of fetching user data on component mount
- * Verify the update flow from editing a field to saving and displaying updated data
- * Test error scenarios and recovery paths
- * 
- * Form Submission
- * 
- * Verify form doesn't submit on button clicks (should be handled by specific functions)
- * Test that pressing Enter in input fields doesn't cause unwanted form submission
  * 
  * Edge Cases
  * Error Handling
@@ -415,7 +403,7 @@ describe('Profile Component', () => {
             expect(api.put).toHaveBeenCalledWith('/accounts/me/', { email: 'newemail@example.com' });
         });
 
-        test('should handle error and recovery flow', async () => {
+        test('Test handle error and recovery flow', async () => {
             api.get.mockResolvedValueOnce({
                 data: { username: 'testuser', email: 'test@example.com' }
             });
@@ -457,6 +445,46 @@ describe('Profile Component', () => {
             
             // Verify second API call was made with correct data
             expect(api.put).toHaveBeenCalledWith('/accounts/me/', { email: 'valid@example.com' });
+        });
+    });
+
+    /**
+     * Form Submission
+     * 
+     * 1. Verify form doesn't submit on button clicks
+     * 2. Test that pressing Enter in input fields doesn't cause unwanted form submission
+     */
+    describe('Form Submission', () => {
+        test('Test submit form fail on button clicks when editing', async () => {
+            const preventDefaultMock = jest.fn();
+
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const form = screen.getAllByRole('textbox')[0].closest('form');
+            form.onsubmit = preventDefaultMock;
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            fireEvent.submit(form);
+            expect(preventDefaultMock).toHaveBeenCalled();
+        });
+
+        test('Test submit form fail when pressing Enter in input fields', async () => {
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            const emailInput = screen.getAllByRole('textbox')[0];
+            fireEvent.keyDown(emailInput, { key: 'Enter', code: 'Enter' });
+            expect(emailInput).not.toBeDisabled();
+            expect(api.put).not.toHaveBeenCalled();
         });
     });
 });
