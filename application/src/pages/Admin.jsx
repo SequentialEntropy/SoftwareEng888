@@ -22,6 +22,7 @@ export default function Admin() {
     }
 
     useEffect(() => {
+        document.title = "Admin"
         fetchTasks()
         fetchChances()
     }, [])

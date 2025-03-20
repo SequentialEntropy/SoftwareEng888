@@ -9,6 +9,7 @@
  * 
  */
 
+import { useEffect } from "react"
 import Form from "../components/Form"
 
 /**
@@ -21,8 +22,11 @@ import Form from "../components/Form"
  */
 
 function Register() {
-    return <Form route="/accounts/user/register/" method="register"/>
+    useEffect(() => {
+        document.title = "Register"
+    }, [])
 
+    return <Form route="/accounts/user/register/" method="register"/>
 }
 
 export default Register

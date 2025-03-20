@@ -43,6 +43,7 @@ function Map() {
     const [userLocation, setUserLocation] = useState(null);
 
     useEffect(() => {
+        document.title = "Map"
         // Fetch task data and user location in a single effect to avoid conflicts
         const fetchTask = async () => {
             const usergamestats = (await api.get("/accounts/me/")).data.usergamestats

@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom";
 import styles from "../styles/Landing.module.css";
 import MediaQuery from 'react-responsive';
+import { useEffect } from "react";
 
 function Landing() {
+    useEffect(() => {
+        document.title = "cliMate"
+    }, [])
+
     return <div className={styles.landing_page}>
         <div className={styles.landing_header}>
             <Link className={styles.logo} to="/">888</Link>
