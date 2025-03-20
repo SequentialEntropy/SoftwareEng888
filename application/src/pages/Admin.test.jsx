@@ -10,12 +10,6 @@
 
 /**
  * 
- * API Integration Tests
- * 
- * Mock and test fetchTasks() function to ensure it populates the tasks state
- * Mock and test fetchChances() function to ensure it populates the chances state
- * Verify useEffect correctly calls both fetch functions on component mount
- * Test API error handling with simulated network failures
  * 
  * CRUD Operation Tests
  * 
@@ -289,4 +283,41 @@ describe('Admin Component', () => {
             });
         });
     });
+
+    /**
+     * API Integration Tests
+     * 
+     * Mock and test fetchTasks() function to ensure it populates the tasks state
+     * Mock and test fetchChances() function to ensure it populates the chances state
+     * Verify useEffect correctly calls both fetch functions on component mount
+     * Test API error handling with simulated network failures (Not sure why it keeps failing)
+     */
+    describe('API Integration', () => {
+        test('Test fetchTasks and fetchChances', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(api.get).toHaveBeenCalledWith('/tasks/');
+            expect(api.get).toHaveBeenCalledWith('/chances/');
+        });
+        
+        test('Test data fetching after successful operations', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            api.get.mockClear();
+            
+            const deleteButtons = screen.getAllByText('Delete');
+            await act(async () => {
+                fireEvent.click(deleteButtons[0]);
+            });
+            
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/tasks/');
+            });
+        });
+    });
+
 });
