@@ -8,11 +8,13 @@
  * @since 25-02-2025
 */
 
-// // For Github actions
-// const { TextEncoder, TextDecoder } = require('util');
-// global.TextEncoder = TextEncoder;
-// global.TextDecoder = TextDecoder;
-  
+// ResetPassword.test.jsx
+import React from 'react';
+import { render, screen } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import userEvent from '@testing-library/user-event';
+import ResetPassword from './ResetPassword';
+
 // Mock react-router-dom
 jest.mock('react-router-dom', () => ({
     useNavigate: () => jest.fn()
@@ -28,13 +30,6 @@ jest.mock('../api', () => ({
   
 // Mock CSS module
 jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
-
-// ResetPassword.test.jsx
-import React from 'react';
-import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import userEvent from '@testing-library/user-event';
-import ResetPassword from './ResetPassword';
 
 describe('ResetPassword Component', () => {
     /** 
