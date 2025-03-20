@@ -8,19 +8,19 @@
  * @since 12-03-2025
 */
 
-// Mock react-router-dom
-jest.mock('react-router-dom', () => ({
-    Link: ({ to, children, ...props }) => (
-      <a href={to} {...props}>{children}</a>
-    )
-}));
-
 // Home.test.jsx
 import React from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Home from './Home';
 import api from '../api';
+
+// Mock react-router-dom
+jest.mock('react-router-dom', () => ({
+    Link: ({ to, children, ...props }) => (
+      <a href={to} {...props}>{children}</a>
+    )
+}));
 
 // Mock the api module
 jest.mock('../api', () => ({
