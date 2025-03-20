@@ -11,7 +11,9 @@
 
 import { useState, useEffect } from "react"
 import api from "../api"
+import NavBar from "../components/Navbar";
 import styles from "../styles/Dashboard.module.css"
+import { Link } from "react-router-dom";
 
 /**
  * Home Component 
@@ -69,30 +71,22 @@ function Home() {
             .catch(err => alert(err))
     }
 
+    const leaderScore = rankedUsers.length > 0 ? rankedUsers[0].usergamestats?.score || 0 : 0;
+    const userScore = currentUser.usergamestats?.score || 0;
+
+    const progress = leaderScore > 0 ? (userScore / leaderScore) * 100 : 0;
+
     return <div className={styles.main_dashboard}>
         {/* Welcome message */}
         <h1 className={styles.heading}>Welcome back {currentUser.username}</h1>
 
         {/* Sidebar navigation */}
-        <nav>
-            <div className={styles.sidebar} style={{marginLeft: "20px"}}>
-                <div className={styles.logoContainer}>
-                    <h2 className={styles.logoText}>cliMate</h2>
-                </div>
-                <a href="home"><i className="bi bi-house-door-fill"  ></i></a>
-                <a href="board"><i className="bi bi-dice-3-fill"  ></i></a>
-                <a href="map"><i className="bi bi-map-fill"  ></i></a>
-                <a href="profile"><i className="bi bi-person-circle"  ></i></a>
-                <a href="logout"><i className="bi bi-box-arrow-right"  ></i></a>
-                {/* <a href="{% url 'password_change' %}">Password Change</a> */}
-            </div>
-            
-        </nav>
+        <NavBar />
 
         {/* Dashboard grid layout */}
         <div className={styles.grid}>
             <div className={styles.item}>
-                <a href="board">Level 1</a>
+                <Link to="/board">You are at</Link>
                 <h2>Innovation Centre</h2>
             </div>
 
@@ -115,10 +109,10 @@ function Home() {
 
             {/* Progress bar */}
             <div className={styles.item}>
-                <progress value="50" max="100" className={styles.progressBar}></progress>
+                <progress value={Math.min(progress,100)} max="100" className={styles.progressBar}></progress>
             </div>
             <div className={styles.item}>
-                <a href="map">Map</a>
+                <Link to="/map">Map</Link>
             </div>
 
             {/* Points section */}
@@ -129,7 +123,7 @@ function Home() {
                         <div className={styles.pointsIcon}>
                             <i className="bi bi-tree-fill" style={{textAlign:"center"}} ></i>
                         </div>
-                        <div style={{fontSize: "5vw", textAlign:"center"}}>{currentUser.usergamestats.score}</div>
+                        <h2>{currentUser.usergamestats.score}</h2>
                     </div>
                 </div>
             

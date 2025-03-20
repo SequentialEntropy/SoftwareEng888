@@ -3,37 +3,6 @@
     background-color: #C5E4E1;
 }
 
-.sidebar {
-    background-color:#3C3E4C;
-    /*display: flex;
-    flex-direction: column;
-    align-items: center;*/
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: fixed;
-    border-radius: 30px;
-    top: 5.5%;
-   /* justify-content: flex-start;*/
-
-}
-
-.sidebar i {
-    color: #85AEB3;
-  
-}
-
-
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 1.5vw;
-}
-
-
-
-
-
 
 
 .profile_container {
@@ -76,6 +45,16 @@
     text-align: left;
 }
 
+form{
+    display: flex;
+    flex-direction: column;
+}
+
+input{
+  height: 100%;
+
+}
+
 .profile_header {
     display: flex;
     flex-direction: column;
@@ -83,11 +62,15 @@
     margin-bottom: 20px;
 }
 
+
 .info_row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding: 10px 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 10vh;
+ 
 }
 
 .label {
@@ -109,7 +92,7 @@
     height: 1px;
     background-color: white;
     margin: 0;
-    margin-bottom: 10%;
+    margin-bottom: 5%;
 }
 
 .logout_btn {
@@ -122,10 +105,31 @@
     padding: 10px 20px;
     font-size: 16px;
     margin-top: 10px;
+    text-decoration: none;
     cursor: pointer;
 }
 
+
+
 .logout_btn:hover {
+    background: #47484f;
+}
+
+.deleteAccount_btn {
+    background: #1e1f28;
+    opacity:100%;
+    font-family: "Inter", serif;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    padding: 10px 20px;
+    font-size: 16px;
+    margin-top: 10px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.deleteAccount_btn:hover {
     background: #47484f;
 }
 
@@ -154,47 +158,41 @@
     z-index: 50; 
 }
 
+.edit {
+    background-color: #37394A; /* Change to your preferred color */
+    color: #94BEBA; /* Ensures text is readable */
+    border: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.edit:hover {
+    color: white; /* Optional: Hover effect */
+}
+
+@media (max-width: 480px){
+    .profile_container {
+        width: 60vw;
+        height: 65vh;
+        top: 40%;
+        
+    }
+
+
+
+}
+
 @media (min-width: 481px) and (max-width: 768px){
 
     .profile_container {
         width: 60vw;
-        height: 80vh;
-        margin-top: 7vw;
+        height: 70vh;
+        top: 40%;
         
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 10vh;
-        top: 3vw;
-        gap: 5vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 50px;
-        
-    }
+   
     
    
 }
@@ -206,37 +204,6 @@
         height: 80vh;
     }
 
-    .sidebar {
-        width: 10vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2.5vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
-    
     
 
 }
@@ -247,37 +214,6 @@
     .profile_container {
         width: 40vw;
         height: 80vh;
-    }
-
-    .sidebar {
-        width: 8vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 2vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 3vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
     }
 
 

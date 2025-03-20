@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 # from dotenv import load_dotenv
@@ -30,7 +31,12 @@ SECRET_KEY = 'django-insecure-q8dcsu32n+cbpl&cn&y-(n@t)^utg&1cg^et96&&la%-z#@t+5
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    "climate.genkiasahi.com",
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
+]
 # ALLOWED_HOSTS = ["*"]
 
 REST_FRAMEWORK = {
@@ -92,8 +98,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
+LOGIN_REDIRECT_URL = "/home"
+LOGOUT_REDIRECT_URL = "/login"
+
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Database
@@ -142,6 +149,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

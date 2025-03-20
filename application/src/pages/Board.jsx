@@ -20,6 +20,7 @@ import Chance from "../components/Chance"
 import Task from "../components/Task"
 import Square from "../components/Square"
 import Avatar from "../components/Avatar"
+import NavBar from "../components/Navbar"
 import { squares } from "../constants"
 
 /**
@@ -60,7 +61,7 @@ function Board() {
                 // toggle spinner
                 setCanSpin(usergamestats.task_completed)
                 // display current task
-                api.get("/accounts/tasks/").then(res => res.data).then(
+                api.get("/tasks/").then(res => res.data).then(
                     tasks => tasks.find(task => task.id === usergamestats.current_task)
                 ).then(
                     task => setChosenTask(task ? task : taskNotFound)
@@ -97,7 +98,7 @@ function Board() {
     }
 
     const generateRandomTask = async square => {
-        const tasks = await api.get("/accounts/tasks/").then(
+        const tasks = await api.get("/tasks/").then(
             res => res.data.filter(task => task.applicable_squares.includes(square))
         )
 
@@ -155,7 +156,7 @@ function Board() {
 
     const onClickChance = () => {
         setGetChance(false)
-        api.get("/accounts/chances/")
+        api.get("/chances/")
         .then(res => res.data)
         .then(chances => {
             const chance = (chances.length === 0) ? chanceNotFound : chances[Math.floor(Math.random() * chances.length)]
@@ -167,20 +168,17 @@ function Board() {
 
     return (
         <div className={styles.game}>   
-            <nav>
-                <div className={styles.sidebar} style={{marginLeft: "20px"}}>
-                    <div className={styles.logoContainer}>
-                        <h2 className={styles.logoText}>cliMate</h2>
-                    </div>
-                    <a href="home"><i className="bi bi-house-door-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="board"><i className="bi bi-dice-3-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="map"><i className="bi bi-map-fill" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="profile"><i className="bi bi-person-circle" style={{fontSize: "3.5vw"}} ></i></a>
-                    <a href="logout"><i className="bi bi-box-arrow-right" style={{fontSize: "3.5vw"}} ></i></a>
-                    
+            <NavBar />
+            <div>
+                {/* Points Container */}
+
+                <div className={styles.points_container}>
+                    <h1>{score} points</h1>
                 </div>
 
-            </nav>
+                {/* How to play popup */}
+                <HowToPlay />
+            </div>
             <div className={styles.main_board}>
                 {/* Avatar */}
                 <Avatar avatarSquare={avatarSquare} squareRefs={squareRefs} />
@@ -230,16 +228,7 @@ function Board() {
                 <Square {...squares[ 1]} squareRefs={squareRefs}/>
                 <Square {...squares[ 0]} squareRefs={squareRefs}/>
             </div>
-            <div>
-                {/* Points Container */}
-
-                <div className={styles.points_container}>
-                    <h1>{score} points</h1>
-                </div>
-
-                {/* How to play popup */}
-                <HowToPlay />
-            </div>
+            
         </div>
     )
 }

@@ -8,47 +8,18 @@
     position: absolute;
 }
 
-.sidebar {
-    background-color:#3C3E4C;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: fixed;
-    border-radius: 30px;
-    top: 5.5%;
-  
-
-}
-
-.sidebar i {
-    color: #85AEB3;
-  
-}
-
-
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 1.5vw;
-}
-
-
 
 
 .map_taskbar {
+    position: relative;
+    margin: auto;
     background-color: rgba(0, 0, 0, 0.5);
     border-radius: 25px;
     display: flex !important;
     justify-content:left !important;
     text-align:left!important;
-    width: 80vw;
-    height: 10%;
     border-radius: 25px;
     padding-left: 15px;
-    position: absolute;
-    top: 80px;
-    transform: translate(-50%, -50%);
-    margin-bottom: 50px;
     
 }
 
@@ -66,19 +37,12 @@
 }
 
 .map_container {
-    display: absolute !important;
-    justify-content: center !important;
-    align-items: center !important;
-    text-align: center !important;
-    position: absolute;
+    position: relative;
+    margin: auto;
     width: 80vw;
     height: 70%;
     border-radius: 25px;
-    position: absolute;
-    top: 58%;
-    margin-left: 30px;
-    margin-top:-30px;
-    transform: translate(-50%, -50%);
+    margin-top: 2vw;
 }
 
 .map {
@@ -87,90 +51,57 @@
     border-radius: 25px;
 }
 
+/* Mobile Styling */
 
+@media (max-width: 480px){
+    .map_taskbar{
+        width: 90vw;
+        height: 10%;
+        margin-top: 4vw;
+    }
+
+    .map_container{
+        width: 88vw;
+        height: 60%;
+        margin-top: 3vw;
+    }
+
+
+}
 
 @media (min-width: 481px) and (max-width: 768px){
 
     .map_taskbar{
-        left: 53vw;
-        width: 70vw;
+        width: 90vw;
+        height: 10%;
+        margin-top: 3vw;
     }
 
     .map_container{
-        left: 49vw;
-        width: 70vw;
-    }
-
-    .sidebar {
-        width: 9vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 4.5vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2.5vw;
+        width: 88vw;
+        height: 60%;
         margin-top: 2vw;
     }
 
-    .sidebar i{
-        font-size: 5.5vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-    }
-
+    
+    
 }
 
 @media (min-width: 769px) and (max-width: 1199px){
 
     .map_taskbar{
-        left: 53vw;
+        width: 82vw;
+        height: 10%;
+        margin-top: 3vw;
+        margin-left: 15vw;
     }
     .map_container{
-        left: 50vw;
-    }
-
-    .sidebar {
-        width: 9vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 2.5vw;
+        width: 82vw;
+        height: 68%;
         margin-top: 2vw;
+        margin-left: 15vw;
     }
 
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-    }
      
 
 }
@@ -179,40 +110,17 @@
 @media (min-width: 1200px){
 
     .map_taskbar{
-        left: 52vw;
+        width: 86vw;
+        height: 10%;
+        margin-top: 3vw;
+        margin-left: 10vw;
     }
     .map_container{
-        left: 50vw;
-    }
-
-    .sidebar {
-        width: 7vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1.5vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 1.5vw;
+        width: 86vw;
+        height: 60%;
         margin-top: 2vw;
+        margin-left: 10vw;
+    
     }
 
-    .sidebar i{
-        font-size: 2.5vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
 }

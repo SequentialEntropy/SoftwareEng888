@@ -33,51 +33,7 @@
     font-family: "Hammersmith One";
 }
 
-/* Sidebar navigation */
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
 
-}
-
-.sidebar i {
-    color: #85AEB3;
-    font-size: 4vw;
-  
-}
-
-
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
 
 /* Dashboard grid layout */
 .grid {
@@ -140,7 +96,8 @@
     align-items: center;
     gap: 20px;
     border-radius: 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+/*     background-color: rgba(0, 0, 0, 0.5); */
+    background-color: #37394A;
 
 
 }
@@ -257,6 +214,130 @@
 }
 
 
+/* Mobile Styling */
+@media (max-width: 480px){
+
+    .heading{
+        width: 80vw;
+        
+    }
+
+    .grid{
+        width: 90vw;
+        height: 100%;
+        max-height: 80vh;
+        margin-left: auto;
+        margin-right: auto;
+        gap: 1.5vw;
+      
+    }
+
+    /* Game Widget */
+
+    .grid .item:nth-child(1){
+        min-height: 28vh;
+        max-height: 35vh;
+    }
+
+    .grid .item:nth-child(1) a,
+    .grid .item:nth-child(1) h2 {
+        font-size: 5.5vw;
+    }
+
+    /* Leaderboard Widget */
+
+    .grid .item:nth-child(2) {
+
+        width: 33vw;
+        margin-left: 2vw;
+        min-height: 34vh;
+        max-height: 40vw;
+    
+    }
+
+    .grid .item:nth-child(2) h1{
+        font-size: 5vw;
+        margin-bottom: 0;
+        margin-top: 2vw;
+        
+    }
+
+    .grid .item:nth-child(2) h3{
+        font-size: 4vw;
+        
+        
+    }
+
+    .grid .item:nth-child(2) .profileName{
+        font-size: 2.5vw;
+    }
+
+    .grid .item:nth-child(2) .profileItem{
+        height: 8vw;
+        width: 24vw;
+        
+        
+    }
+
+    .grid .item:nth-child(2) i{
+        font-size: 8vw;
+    }
+
+    
+    
+    /* Progress Bar */
+    .progressBar{
+        height: 6vh;
+    }
+    
+
+    /* Map Widget */
+
+    .grid .item:nth-child(4) {
+        min-height: 32vh;
+        max-height: 33vh;
+        margin-top:0;
+      
+    
+    }
+
+
+    /* Points Widget */
+    .grid .item:nth-child(5) {
+        margin-left: 2vw;
+        margin-top: 0; 
+        min-height: 32vh;
+        max-height: 33vh;
+    }
+
+    .grid .item:nth-child(5) i{
+        font-size: 12vw;
+        line-height: 1.5;
+    }
+
+    .grid .item:nth-child(5) h2{
+        font-size: 8vw;
+        line-height: 1;
+        margin-top: 0.5vw;
+        
+    }
+
+    .grid .item:nth-child(5) h1{
+        margin-top: 5vw;
+        font-size: 5vw;
+    }
+
+    .pointsItem{
+        margin-top: 1vw;
+    }
+
+    
+
+
+
+
+}
+
 
 
 /* Tablet Styling */
@@ -269,17 +350,18 @@
     .grid{
         width: 90vw;
         height: 100%;
-        max-height: 73vw;
+        max-height: 80vh;
         margin-left: auto;
         margin-right: auto;
-        gap: 1vw;
+        gap: 1.5vw;
       
     }
 
     /* Game Widget */
 
     .grid .item:nth-child(1){
-        min-height: 28vw;
+        min-height: 30vh;
+        max-height: 35vh;
     }
 
     .grid .item:nth-child(1) a,
@@ -293,8 +375,8 @@
 
         width: 33vw;
         margin-left: 2vw;
-        min-height: 20vw;
-        max-height: 40vw;
+        min-height: 36vh;
+        max-height: 45vw;
     
     }
 
@@ -329,16 +411,16 @@
     
     
     /* Progress Bar */
-    .grid .item:nth-child(3){
-        height: 10vw;
+    .progressBar{
+        height: 5vh;
     }
-
     
 
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        height: 30vw;
+        min-height: 35vh;
+        max-height: 38vh;
         margin-top:0;
       
     
@@ -349,7 +431,8 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        height: 30vw;
+        min-height: 35vh;
+        max-height: 38vh;
     }
 
     .grid .item:nth-child(5) i{
@@ -373,42 +456,7 @@
         margin-top: 3vw;
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
     
-        
-    }
 
 }
 
@@ -422,17 +470,19 @@
 
     .grid{
         width: 85vw;
-        height: 100%;
+        height: 83vh;
         margin-left: 13vw;
         padding: 0;
         row-gap: 1vw;
+
       
     }
 
     /* Game Widget */
 
     .grid .item:nth-child(1){
-        height: 24vw;
+        min-height: 30vh;
+        max-height: 50vh;
     }
 
     .grid .item:nth-child(1) a,
@@ -446,7 +496,8 @@
 
         width: 33vw;
         margin-left: 2vw;
-        height: 31vw;
+        min-height: 31vh;
+        max-height: 50vh;
     
     }
 
@@ -477,14 +528,16 @@
     
     
     /* Progress Bar */
-    .grid .item:nth-child(3){
-        height: 8vw;
+    .progressBar{
+        height: 10vh;
     }
+  
 
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        height: 25vw;
+        min-height: 25vh;
+        max-height: 50vh;
         margin-top:0;
     
     }
@@ -494,7 +547,8 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        height: 25vw;
+        min-height: 25vh;
+        max-height: 50vh;
     }
 
     .grid .item:nth-child(5) i{
@@ -519,30 +573,6 @@
         margin-top: 1.5vw;
     }
 
-    .sidebar {
-        width: 8vw;
-        padding: 1.5vw 0;
-        height: 88vh;
-        position: absolute;
-        border-radius: 30px;
-        gap: 3vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        color: #85AEB3;
-        font-size: 4vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        color: #85AEB3;
-        font-family: 'Hammersmith One';
-        font-size: 2vw;
-    }
 
 
 
@@ -559,14 +589,17 @@
 
     .grid{
         width: 88vw;
-        height: 100%;
-        margin-left: 9vw;
+        height: 84vh;
+        margin-left: 10vw;
+        gap: 1vw;
         
     }
 
     /* Game Widget */
     .grid .item:nth-child(1) {
-        height: 16vw;
+        min-height: 28vh;
+        max-height: 35vh;
+        
         
     }
 
@@ -576,7 +609,9 @@
 
         width: 33vw;
         margin-left: 2vw;
-        height: 18vw;
+        min-height: 35vh;
+        max-height: 45vh;
+        
     
     }
 
@@ -604,17 +639,16 @@
 
 
     /* Progress Bar */
-    .grid .item:nth-child(3) {
-        height: 4vw;
-        margin-bottom: 0;
-        margin-top: 0;
+    .progressBar {
+        height: 10vh;
     }
 
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        height: 16vw;
         margin-top: 0;
+        min-height: 20vh;
+        max-height: 40vh;
 
     
     }
@@ -624,7 +658,8 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        height:  16vw;
+        min-height: 20vh;
+        max-height: 40vh;
     }
 
     .grid .item:nth-child(5) i{
@@ -647,23 +682,5 @@
         margin-top: 0.7vw;
     }
 
-    .sidebar {
-        width: 7vw;
-        height: 90vh;
-        gap: 2vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        font-size: 3vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        font-size: 1.8vw;
-    }
 
 }

@@ -14,16 +14,34 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import path, include, re_path
+from django.shortcuts import render
 from django.views.generic.base import TemplateView
+from rest_framework.routers import DefaultRouter
+
+from accounts.views import TaskViewSet, ChanceViewSet
+
+task_router = DefaultRouter()
+task_router.register("", TaskViewSet)
+
+chance_router = DefaultRouter()
+chance_router.register("", ChanceViewSet)
+
+def react_app(request):
+    try:
+        return render(request, "index.html")  # Always return React's index.html
+    except:
+        return render(request, "not_found.html")
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('djangoadmin/', admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
+
+    path("tasks/", include(task_router.urls)),
+    path("chances/", include(chance_router.urls)),
 
     path("accounts/", include("accounts.urls")),
     path("accounts/", include("django.contrib.auth.urls")),
 
-    path("", TemplateView.as_view(template_name="home.html"), name="home"),
-    path("accounts/board", TemplateView.as_view(template_name="board.html"), name="board"),
+    re_path(r"^(?!api/).*", react_app),
 ]

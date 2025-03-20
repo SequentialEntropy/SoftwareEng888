@@ -7,13 +7,13 @@
  * @author Genki Asahi 
  * @author Yap Wen Xing
  * @author Dany Kelzi
- * @version 1.1.0
- * @since 23-02-2025
+ * @version 1.1.2
+ * @since 17-03-2025
  */
 
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import styles from "../styles/Form.module.css";
 
@@ -31,6 +31,8 @@ import styles from "../styles/Form.module.css";
 function Form({ route, method }) {
     // State for storing the input username
     const [username, setUsername] = useState("");
+
+    const [email, setEmail] = useState("");
 
     // State for storing the password input
     const [password, setPassword] = useState("");
@@ -67,7 +69,7 @@ function Form({ route, method }) {
      * @param {Event} e - Form submission event.
      */
 
-    const [errorMessage, setErrorMessage] = useState(""); // New state for errors
+    const [errorMessages, setErrorMessages] = useState([]); // New state for errors
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -81,9 +83,27 @@ function Form({ route, method }) {
         } else {
             setPasswordError("");
         }
+
+        // Password validation
+        const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
+        if (method === "register" && !passwordRegex.test(password)) {
+            setPasswordError("Password must be at least 8 characters, with a number and special character.");
+            setLoading(false);
+            return;
+        } else {
+            setPasswordError("");
+        }
     
         try {
-            const res = await api.post(route, { username, password });
+            let data
+            if (method === "login") {
+                data = { username, password }
+            } else {
+                data = { username, password, email }
+            }
+            console.log(data)
+
+            const res = await api.post(route, data);
     
             if (method === "login") {
                 // Store the authentication tokens
@@ -94,16 +114,7 @@ function Form({ route, method }) {
                 navigate("/login");
             }
         } catch (error) {
-            if (error.response && error.response.data) {
-                // Check if the error is about the username being taken
-                if (error.response.data.username) {
-                    setErrorMessage(error.response.data.username);
-                } else {
-                    setErrorMessage(error.response.data.error || "An error occurred. Please try again.");
-                }
-            } else {
-                setErrorMessage("An error occurred. Please try again later.");
-            }
+            setErrorMessages(error.response.data)
         } finally {
             setLoading(false)
         }
@@ -115,10 +126,10 @@ function Form({ route, method }) {
     
             {/* Header section */}
             <div className={styles.header}>
-                <a className={styles.logo} href="/">888</a>
+                <Link className={styles.logo} to="/">888</Link>
                 <h1 className={styles.heading}>cliMate</h1>
-                <a className={styles.header_btn_login} href="login">Login</a>
-                <a className={styles.header_btn_sign} href="Register">Sign Up</a>
+                <Link className={styles.header_btn_login} to="/login">Login</Link>
+                <Link className={styles.header_btn_sign} to="/register">Sign Up</Link>
                 
             </div>
     
@@ -129,20 +140,29 @@ function Form({ route, method }) {
                     <h2>{name}</h2>
                     <form onSubmit={handleSubmit}>
                         <div className="form-group">
-                            {/* Username input field */}
-                            <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username/Email" required />
-    
-                            {/* Password input field */}
-                            <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-    
-                            {/* Confirm Password input field */}
+
+                            {/* Login input fields */}
+                            
+                            {method == "login" && (
+                                <>
+                                <input type="text" className={`form-control ${styles.login_field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+                                <input type="password" className={`form-control ${styles.login_field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
+                                <button className={styles.forgot_password_btn}>Forgot Password</button>
+                                </>
+                            )}
+
+                        
+                            {/* Sign Up input fields*/}
                             {method === "register" && (
                                 <>
+                                    <input type="text" className={`form-control ${styles.field}`} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
+                                    <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
+                                    <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
-                                        <label>
-                                            <input type="checkbox" />
+                                        <label style = {{width:  "100%"}}>
+                                            <input type="checkbox" required/>
                                             By signing up you agree to our{" "}
                                             <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.
                                         </label>
@@ -215,8 +235,10 @@ function Form({ route, method }) {
                                 </>
                             )}
                         </div>
-                        {/* Display error message after signip forms*/}
-                        {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
+                        {/* Display error message after signup forms*/}
+                        {Object.entries(errorMessages).map(([field, message]) => (
+                            <p key={field} style={{ color: "red", textAlign: "center" }}>{message}</p>
+                        ))}
 
                         {/* Submit button */}
                         <button type="submit" className={styles.login_btn} disabled={loading}>
