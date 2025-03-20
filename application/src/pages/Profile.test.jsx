@@ -8,24 +8,6 @@
  * @since 20-03-2025
 */
 
-/**
- * 
- * 
- * Edge Cases
- * Error Handling
- * 
- * Test behavior when the API is unreachable
- * Verify handling of different error response formats
- * Test displaying multiple error messages simultaneously
- * 
- * Data Validation
- * 
- * Verify input validation for email format (if implemented)
- * Test behavior with empty input fields
- * Check handling of special characters in username/email
- * 
- */
-
 // Profile.test.jsx
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
@@ -36,6 +18,21 @@ import api from '../api';
 const renderWithRouter = (ui, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(ui);
+};
+
+const expectTextInDocument = (text) => {
+    const characters = text.split('');
+    for (const char of characters) {
+        if (char !== ' ') {
+            try {
+                expect(screen.getAllByText(char).length).toBeGreaterThan(0);
+            } catch (error) {
+                console.error(`Character "${char}" from text "${text}" not found in document`);
+                return false;
+            }
+        }
+    }
+    return true;
 };
 
 // Mock react-router-dom
@@ -485,6 +482,238 @@ describe('Profile Component', () => {
             fireEvent.keyDown(emailInput, { key: 'Enter', code: 'Enter' });
             expect(emailInput).not.toBeDisabled();
             expect(api.put).not.toHaveBeenCalled();
+        });
+    });
+
+    /**
+     * Edge Cases
+     * 1. Test behavior when the API is unreachable
+     * 2. Verify handling of different error response formats
+     * 3. Test displaying multiple error messages simultaneously
+     * 4. Verify input validation for email format
+     * 5. Test behavior with empty input fields
+     * 6. Check handling of special characters in username/email
+     */
+    describe('Edge Cases', () => {
+        test('Test unreachable API', async () => {
+            // Mock window.alert
+            const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+            api.get.mockRejectedValueOnce(new Error('Network error'));
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                expect(mockAlert).toHaveBeenCalledWith('Error fetching user details: Error: Network error');
+            });
+            mockAlert.mockRestore();
+        });
+
+        test('Test handling of different error response formats', async () => {
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            // Test case 1: Error message as a string
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: { error: "Server error occurred" }
+                }
+            });
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            const emailInput = screen.getAllByRole('textbox')[0];
+            fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
+            let saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(screen.getByText("Server error occurred")).toBeInTheDocument();
+            });
+            
+            // Test case 2: Error response as multiple fields (converted to object)
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: { 
+                        error1: "Email is invalid", 
+                        error2: "Another error occurred" 
+                    }
+                }
+            });
+            
+            saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(screen.getByText("Email is invalid")).toBeInTheDocument();
+                expect(screen.getByText("Another error occurred")).toBeInTheDocument();
+            });
+            
+            // Test case 3: Nested error objects (flattened)
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: { email: "Invalid email format" }
+                }
+            });
+            
+            saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(screen.getByText("Invalid email format")).toBeInTheDocument();
+            });
+            
+            // Test case 4: Error with response.data that has proper structure
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: { error: "Network Error" }
+                }
+            });
+            
+            saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(screen.getByText("Network Error")).toBeInTheDocument();
+            });
+        });
+
+        test('Test display multiple error messages simultaneously', async () => {
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            // Mock failed API put with multiple errors
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: {
+                        username: 'Username too short',
+                        email: 'Invalid email format'
+                    }
+                }
+            });
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[1].value).toBe('testuser');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[1]);
+            const usernameInput = screen.getAllByRole('textbox')[1];
+            fireEvent.change(usernameInput, { target: { value: 'a' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            // Wait for error messages to appear
+            await waitFor(() => {
+                expect(screen.getByText('Username too short')).toBeInTheDocument();
+                expect(screen.getByText('Invalid email format')).toBeInTheDocument();
+            });
+        });
+
+        test('Verify input validation for email format', async () => {
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            // Mock validation errors for different email formats
+            const invalidEmails = [
+                { email: 'plaintext', error: 'Enter a valid email address.' },
+                { email: 'missing@tld', error: 'Email must include a valid domain.' },
+                { email: '@missing-username.com', error: 'Email must have a username.' },
+                { email: 'spaces in@email.com', error: 'Email cannot contain spaces.' }
+            ];
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            
+            const emailInput = screen.getAllByRole('textbox')[0];
+            
+            for (const { email, error } of invalidEmails) {
+                api.put.mockRejectedValueOnce({
+                    response: {
+                        data: { email: error }
+                    }
+                });
+
+                // Enter invalid email
+                fireEvent.change(emailInput, { target: { value: email } });
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+                
+                await waitFor(() => {
+                        expect(screen.getByText(error)).toBeInTheDocument();
+                });
+            }
+            
+            api.put.mockResolvedValueOnce({});
+            
+            // Enter a valid email
+            fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            await waitFor(() => {
+                expect(emailInput).toBeDisabled();
+                expect(emailInput.value).toBe('valid@example.com');
+            });
+            
+            // Verify API was called with correct value
+            expect(api.put).toHaveBeenCalledWith('/accounts/me/', { email: 'valid@example.com' });
+        });
+
+        test('Test empty input values', async () => {
+            api.put.mockResolvedValueOnce({});
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[1].value).toBe('testuser');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[1]);
+            
+            const usernameInput = screen.getAllByRole('textbox')[1];
+            fireEvent.change(usernameInput, { target: { value: '' } });
+            
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            // Verify API call was made with empty string
+            expect(api.put).toHaveBeenCalledWith('/accounts/me/', { username: '' });
+        });
+        
+        test('Test special characters in input', async () => {
+            api.put.mockResolvedValueOnce({});
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[1].value).toBe('testuser');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[1]);
+            const usernameInput = screen.getAllByRole('textbox')[1];
+            fireEvent.change(usernameInput, { target: { value: 'test_user@123!#' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            // Verify API call was made with special characters
+            expect(api.put).toHaveBeenCalledWith('/accounts/me/', { username: 'test_user@123!#' });
         });
     });
 });
