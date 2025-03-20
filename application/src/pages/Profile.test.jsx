@@ -10,11 +10,7 @@
 
 /**
  * 
- * API Interactions
- * 
- * Mock successful API responses and verify state updates
- * Test error handling in getUserDetails
- * Verify error messages are captured and displayed from API responses
+
  * 
  * Component Rendering Tests
  * Initial Render
@@ -207,4 +203,59 @@ describe('Profile Component', () => {
         });
     });
 
+    /**
+     * API Interactions
+     * 
+     * Verify state updates
+     * Test error handling in getUserDetails
+     * Verify error messages are captured and displayed from API responses
+     */
+    describe('API Interactions', () => {
+        test('Verify state updates', () => {
+            render(<Board />);
+            expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+            expect(api.get).toHaveBeenCalledTimes(1);
+        });
+
+        test('Test error handling in getUserDetails', async () => {
+            const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
+            api.get.mockRejectedValueOnce(new Error('Network error'));
+
+            render(<Board />);
+            await waitFor(() => {
+                expect(mockAlert).toHaveBeenCalledWith('Error fetching user details: Error: Network error');
+            });
+            mockAlert.mockRestore();
+        });
+
+        test('Verify error messages are captured and displayed from API responses', async () => {
+            // Mock successful initial API
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            // Mock failed API put with error message
+            api.put.mockRejectedValueOnce({
+                response: {
+                data: { username: 'Username already taken' }
+                }
+            });
+            
+            render(<Board />);
+            
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[1].value).toBe('testuser');
+            });
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[1]);
+            const usernameInput = screen.getAllByRole('textbox')[1];
+            fireEvent.change(usernameInput, { target: { value: 'takenusername' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            await waitFor(() => {
+                expect(screen.getByText('Username already taken')).toBeInTheDocument();
+            });
+        });
+    });
 });
