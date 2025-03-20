@@ -15,15 +15,17 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import ResetPassword from './ResetPassword';
 
-// Mock react-router-dom - fix Link component issue
+// Mock react-router-dom
 jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
     Link: ({ children, to }) => (
         <a href={to} data-testid="mock-link">
             {children}
         </a>
     ),
-    useNavigate: () => jest.fn()
+    useNavigate: () => jest.fn(),
+    Routes: ({ children }) => <div data-testid="mock-routes">{children}</div>,
+    Route: ({ children }) => <div data-testid="mock-route">{children}</div>,
+    BrowserRouter: ({ children }) => <div data-testid="mock-browser-router">{children}</div>
 }));
 
 // Mock the API module
@@ -51,6 +53,7 @@ describe('ResetPassword Component', () => {
      * Test 6: Verify form structure
     */
     
+    // Isolate component rendering for tests
     const renderComponent = () => {
         return render(<ResetPassword />);
     };
@@ -95,6 +98,8 @@ describe('ResetPassword Component', () => {
         const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
         expect(newPasswordInput).toHaveAttribute('type', 'form-control');
         expect(confirmPasswordInput).toHaveAttribute('type', 'form-control');
+        // Note: This test documents the current implementation, but 'form-control' 
+        // should ideally be a className, not a type attribute (which should be 'password')
     });
     
     test('Submit button', async () => {
