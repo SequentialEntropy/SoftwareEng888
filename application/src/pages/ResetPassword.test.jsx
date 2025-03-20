@@ -27,7 +27,7 @@ import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import '@testing-library/jest-dom';
-import ResetPassword from './ResetPassword';
+import ResetPassword from '../pages/ResetPassword';
 
 describe('ResetPassword Component', () => {
     /** 
