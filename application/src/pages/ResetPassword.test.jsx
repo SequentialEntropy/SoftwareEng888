@@ -94,7 +94,6 @@ describe('ResetPassword Component', () => {
                 input.value = 'TestPassword123!';
                 input.dispatchEvent(new Event('input', { bubbles: true }));
                 input.dispatchEvent(new Event('change', { bubbles: true }));
-                await waitFor(() => {});
             });
             
             expect(input.value).toBe('TestPassword123!');
