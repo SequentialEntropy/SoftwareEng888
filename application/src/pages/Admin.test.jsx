@@ -10,12 +10,6 @@
 
 /**
  * 
- * Form Integration Tests
- * 
- * Verify AdminTaskForm receives the correct selectedTask prop
- * Test that onSuccess callback works when a task is created/updated
- * Verify AdminChanceForm receives the correct selectedChance prop
- * Test that onSuccess callback works when a chance is created/updated
  * 
  * Responsive Design Tests
  * 
@@ -423,5 +417,58 @@ describe('Admin Component', () => {
         });
     });
 
-    
+    /*
+    * Form Integration Tests
+    * 
+    * Verify AdminTaskForm receives the correct selectedTask prop
+    * Test that onSuccess callback works when a task is created/updated
+    * Verify AdminChanceForm receives the correct selectedChance prop
+    * Test that onSuccess callback works when a chance is created/updated
+    */
+    describe('Form Integration', () => {
+        test('Test onSuccess callback when a task is created/updated', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(screen.queryByText('Save Task')).not.toBeInTheDocument();
+            expect(screen.getByTestId('task-form-success')).toHaveTextContent('Add Task');
+        });
+        
+        test('Test AdminTaskForm receives the correct selectedTask prop', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[0]);
+            });
+            
+            expect(screen.getByTestId('task-form-success')).toHaveTextContent('Save Task');
+        });
+        
+        test('Test onSuccess callback when a chance is created/updated', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            expect(screen.queryByText('Save Chance')).not.toBeInTheDocument();
+            expect(screen.getAllByTestId('chance-form-success')[0]).toHaveTextContent('Add Chance');
+        });
+        
+        test('Test AdminChanceForm receives the correct selectedChance prop', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[2]);
+            });
+            
+            const saveChanceButtons = screen.getAllByTestId('chance-form-success');
+            expect(saveChanceButtons[0]).toHaveTextContent('Save Chance');
+        });
+    });
 });
