@@ -9,13 +9,6 @@
 */
 
 /**
- * Component Rendering Tests
- *
- * Verify the admin dashboard renders correctly with all expected sections
- * Check that headings, panels, and navigation elements display properly
- * Ensure task and chance lists render when data is available
- * Verify empty states display appropriately when no data exists
- * 
  * State Management Tests
  * 
  * Confirm initial state is correctly set (empty arrays for tasks and chances)
@@ -68,3 +61,159 @@
  * Test concurrent operations (e.g., editing an item while another is being deleted)
  * Check behavior when very large lists of tasks or chances are returned
  */
+
+// Admin.test.jsx
+import { act } from 'react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import '@testing-library/jest-dom';
+import Admin from './Admin';
+import api from '../api';
+
+// Mock API module
+jest.mock('../api', () => ({
+    get: jest.fn(),
+    put: jest.fn(),
+    post: jest.fn(),
+    delete: jest.fn()
+}));
+
+// Mock child component
+jest.mock('../components/Navbar', () => {
+    return function MockNavBar() {
+        return <div data-testid="navbar-mock" />;
+    };
+});
+
+jest.mock('../components/AdminTaskForm', () => {
+    return function MockAdminTaskForm({ selectedTask, onSuccess }) {
+        return (
+            <div data-testid="task-form-mock">
+                <button onClick={onSuccess} data-testid="task-form-success">
+                {selectedTask ? 'Save Task' : 'Add Task'}
+                </button>
+            </div>
+        );
+    };
+});
+
+jest.mock('../components/AdminChanceForm', () => {
+    return function MockAdminChanceForm({ selectedChance, onSuccess }) {
+        return (
+            <div data-testid="chance-form-mock">
+                <button onClick={onSuccess} data-testid="chance-form-success">
+                {selectedChance ? 'Save Chance' : 'Add Chance'}
+                </button>
+            </div>
+        );
+    };
+});
+
+// Test data
+const mockTasks = [
+    { id: 1, description: 'Task 1', applicable_squares: [1, 2], score_to_award: 10 },
+    { id: 2, description: 'Task 2', applicable_squares: [3], score_to_award: 20 },
+];
+
+const mockChances = [
+    { id: 1, description: 'Chance 1', score_to_award: 5 },
+    { id: 2, description: 'Chance 2', score_to_award: 15 },
+];
+
+describe('Admin Component', () => {
+    beforeEach(() => {
+        jest.clearAllMocks();
+        
+        // Setup default API mock responses
+        api.get.mockImplementation((url) => {
+            if (url === '/tasks/') {
+                return Promise.resolve({ data: mockTasks });
+            }
+            if (url === '/chances/') {
+                return Promise.resolve({ data: mockChances });
+            }
+            return Promise.reject(new Error('Not found'));
+        });
+        
+        api.delete.mockResolvedValue({});
+        api.put.mockResolvedValue({});
+        api.post.mockResolvedValue({});
+
+        // Mock window.matchMedia for responsive design tests
+        Object.defineProperty(window, 'matchMedia', {
+            writable: true,
+            value: jest.fn().mockImplementation(query => ({
+                matches: false,
+                media: query,
+                onchange: null,
+                addListener: jest.fn(),
+                removeListener: jest.fn(),
+                addEventListener: jest.fn(),
+                removeEventListener: jest.fn(),
+                dispatchEvent: jest.fn(),
+            })),
+        });
+
+        // Mock console.error to avoid test output noise
+        jest.spyOn(console, 'error').mockImplementation(() => {});
+    });
+
+    afterEach(() => {
+        console.error.mockRestore();
+    });
+
+    /**
+     * Component Rendering Tests
+     *
+     * Verify the admin dashboard renders correctly with all expected sections
+     * Ensure task and chance lists render when data is available
+     * Verify empty states display appropriately when no data exists
+     */
+    describe('Component Rendering', () => {
+        test('Test admin dashboard renders correctly', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+            expect(screen.getByText('Manage Users')).toBeInTheDocument();
+            expect(screen.getByText('Manage Game')).toBeInTheDocument();
+            expect(screen.getByText('ADD TASK')).toBeInTheDocument();
+            expect(screen.getByText('ADD CHANCE')).toBeInTheDocument();
+            expect(screen.getByText('ADD LOCATION')).toBeInTheDocument();
+            expect(screen.getByTestId('task-form-mock')).toBeInTheDocument();
+            expect(screen.getAllByTestId('chance-form-mock')).toHaveLength(2);
+            expect(screen.getByTestId('navbar-mock')).toBeInTheDocument();
+        });
+
+        test('Test task and chance lists renders when data is available', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            await waitFor(() => {
+                expect(screen.getByText('Task 1')).toBeInTheDocument();
+                expect(screen.getByText('Task 2')).toBeInTheDocument();
+            });
+            
+            expect(screen.getAllByText('Chance 1')).toHaveLength(2);
+            expect(screen.getAllByText('Chance 2')).toHaveLength(2);
+        });
+            
+        test('renders empty lists when no data exists', async () => {
+            api.get.mockImplementation((url) => {
+                return Promise.resolve({ data: [] });
+            });
+            
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const taskList = screen.getAllByRole('list')[0];
+            expect(taskList.children).toHaveLength(0);
+
+            const chanceLists = screen.getAllByRole('list').slice(1);
+            chanceLists.forEach(list => {
+                expect(list.children).toHaveLength(0);
+            });
+        });
+    });
+});
