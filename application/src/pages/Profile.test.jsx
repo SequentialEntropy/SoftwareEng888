@@ -9,25 +9,7 @@
 */
 
 /**
- * User Interaction Tests
- * Edit Functionality
- * 
- * Test clicking EDIT button enables the corresponding field
- * Verify input field becomes editable with current value pre-populated
- * Test that typing in the enabled field updates the tempUser state
- * 
- * Save Functionality
- * 
- * Verify clicking SAVE button triggers API call with correct data
- * Test successful save updates the displayed user information
- * Confirm edit mode is turned off after successful save
- * Test error handling displays appropriate messages
- * 
- * Navigation
- * 
- * Verify Reset Password link navigates to "/reset-password"
- * Test Logout link navigates to "/logout"
- * Validate Delete Account link behavior (currently incomplete)
+
  * 
  * Integration Tests
  * API Integration
@@ -364,6 +346,117 @@ describe('Profile Component', () => {
                 expect(screen.getByText('Invalid email format')).toBeInTheDocument();
                 expect(screen.getByText('Username too short')).toBeInTheDocument();
             });
+        });
+    });
+
+    /**
+     * Navigation
+     * 
+     * 1. Verify Reset Password link navigates to "/reset-password"
+     * 2. Test Logout link navigates to "/logout"
+     */
+    describe('Navigation', () => {
+        test('Verify Reset Password link navigates to "/reset-password"', () => {
+            render(<Board />);
+            const resetPasswordLink = screen.getByText('Reset Password');
+            expect(resetPasswordLink).toHaveAttribute('href', '/reset-password');
+        });
+
+        test('Test Logout link navigates to "/logout"', () => {
+            render(<Board />);
+            const logoutLink = screen.getByText('Log Out');
+            expect(logoutLink).toHaveAttribute('href', '/logout');
+        });
+    });
+
+
+    /**
+     * Integration Tests
+     * 
+     * 1. Test the complete flow of fetching user data on component
+     * 2. Verify the update flow from editing a field to saving and displaying updated data
+     * 3. Test error scenarios and recovery paths
+     */
+    describe('Integration Tests', () => {
+        test('Test the complete flow of fetching user data on component', async () => {
+            renderWithRouter(<Board />);
+            expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+            await waitFor(() => {
+                expect(screen.getByText('testuser')).toBeInTheDocument();
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+                expect(inputs[1].value).toBe('testuser');
+            });
+        });
+
+        test('Verify the update flow', async () => {
+            // Mock successful API put
+            api.put.mockResolvedValueOnce({});
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            const emailInput = screen.getAllByRole('textbox')[0];
+            fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(emailInput).toBeDisabled();
+                expect(emailInput.value).toBe('newemail@example.com');
+            });
+            
+            // Verify API call was made with correct data
+            expect(api.put).toHaveBeenCalledWith('/accounts/me/', { email: 'newemail@example.com' });
+        });
+
+        test('should handle error and recovery flow', async () => {
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            api.put.mockRejectedValueOnce({
+                response: {
+                data: { email: 'Invalid email format' }
+                }
+            });
+            
+            api.put.mockResolvedValueOnce({});
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            
+            // Change to invalid email
+            const emailInput = screen.getAllByRole('textbox')[0];
+            fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+            let saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            await waitFor(() => {
+                expect(screen.getByText('Invalid email format')).toBeInTheDocument();
+            });
+            
+            // Change to valid email
+            fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
+            saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            await waitFor(() => {
+                expect(emailInput).toBeDisabled();
+                expect(emailInput.value).toBe('valid@example.com');
+            });
+            
+            // Verify second API call was made with correct data
+            expect(api.put).toHaveBeenCalledWith('/accounts/me/', { email: 'valid@example.com' });
         });
     });
 });
