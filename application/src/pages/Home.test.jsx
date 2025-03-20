@@ -319,8 +319,23 @@ describe('Home Component', () => {
         });
 
 
-        // test('user who is in the top 3', async () => {
-        // });
+        test('top 3 users correctly displayed', async () => {
+            render(<Home />);
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+                expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
+            });
+
+            const topUserElement = await screen.findByText(/topuser - 500/i);
+            expect(topUserElement).toBeInTheDocument();
+            const secondUserElement = await screen.findByText(/seconduser - 400/i);
+            expect(secondUserElement).toBeInTheDocument();
+            const thirdUserElement = await screen.findByText(/thirduser - 300/i);
+            expect(thirdUserElement).toBeInTheDocument();
+
+            const profileTexts = screen.getAllByText(/\w+ - \d+/i);
+            expect(profileTexts).toHaveLength(3);
+        });
     });
 
     /**
