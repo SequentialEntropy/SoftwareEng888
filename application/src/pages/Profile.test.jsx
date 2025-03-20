@@ -9,24 +9,6 @@
 */
 
 /**
- * 
-
- * 
- * Component Rendering Tests
- * Initial Render
- * 
- * Verify the component renders without crashing
- * Check that the document title is set to "Dashboard"
- * Confirm NavBar component is present
- * Validate user information display when data is loaded
- * 
- * Conditional Rendering
- * 
- * Verify input fields are disabled when not in edit mode
- * Confirm input fields are enabled when in edit mode
- * Check that the correct button (EDIT/SAVE) displays based on edit state
- * Verify error messages render correctly when present
- * 
  * User Interaction Tests
  * Edit Functionality
  * 
@@ -80,6 +62,11 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Board from './Profile';
 import api from '../api';
+
+const renderWithRouter = (ui, { route = '/' } = {}) => {
+    window.history.pushState({}, 'Test page', route);
+    return render(ui);
+};
 
 // Mock react-router-dom
 jest.mock('react-router-dom', () => ({
@@ -206,9 +193,9 @@ describe('Profile Component', () => {
     /**
      * API Interactions
      * 
-     * Verify state updates
-     * Test error handling in getUserDetails
-     * Verify error messages are captured and displayed from API responses
+     * 1. Verify state updates
+     * 2. Test error handling in getUserDetails
+     * 3. Verify error messages are captured and displayed from API responses
      */
     describe('API Interactions', () => {
         test('Verify state updates', () => {
@@ -255,6 +242,127 @@ describe('Profile Component', () => {
             fireEvent.click(saveButton);
             await waitFor(() => {
                 expect(screen.getByText('Username already taken')).toBeInTheDocument();
+            });
+        });
+    });
+
+    /**
+     * Component Rendering Tests
+     * 1. Verify the component renders without crashing
+     * 2. Confirm NavBar component is present
+     * 3. Validate user information display when data is loaded
+     * 4. Verify input fields are disabled when not in edit mode
+     * 5. Confirm input fields are enabled when in edit mode
+     * 6. Check that the correct button (EDIT/SAVE) displays based on edit state
+     * 7. Verify error messages render correctly when present
+     */
+    describe('Component Rendering', () => {
+        test('Verify the component renders without crashing', () => {
+            render(<Board />);
+            expect(screen.getByText('Log Out')).toBeInTheDocument();
+            expect(screen.getByText('Delete Account')).toBeInTheDocument();
+        });
+
+        test('Test render NavBar component', () => {
+            render(<Board />);
+            expect(screen.getByTestId('navbar-mock')).toBeInTheDocument();
+        });
+
+        test('Test display user information when data is loaded', async () => {
+            render(<Board />);
+            await waitFor(() => {
+                expect(screen.getByText('testuser')).toBeInTheDocument();
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+                expect(inputs[1].value).toBe('testuser');
+            });
+        });
+
+        test('Test disable input fields when not in edit mode', async () => {
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+              const inputs = screen.getAllByRole('textbox');
+              expect(inputs[0].value).toBe('test@example.com');
+              expect(inputs[1].value).toBe('testuser');
+            });
+            
+            const inputs = screen.getAllByRole('textbox');
+            expect(inputs[0]).toBeDisabled();
+            expect(inputs[1]).toBeDisabled();
+        });
+      
+        test('Test enable input fields when in edit mode', async () => {
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            const emailInput = screen.getAllByRole('textbox')[0];
+            expect(emailInput).not.toBeDisabled();
+            
+            const usernameInput = screen.getAllByRole('textbox')[1];
+            expect(usernameInput).toBeDisabled();
+        });
+      
+        test('Test display EDIT button when not in edit mode', async () => {
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            expect(editButtons).toHaveLength(2);
+        });
+      
+        test('Test display SAVE button when in edit mode', async () => {
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            
+            expect(screen.getByText('SAVE')).toBeInTheDocument();
+            expect(screen.getAllByText('EDIT')).toHaveLength(1);
+        });
+      
+        test('Test render error messages when present', async () => {
+            // Mock successful API
+            api.get.mockResolvedValueOnce({
+                data: { username: 'testuser', email: 'test@example.com' }
+            });
+            
+            // Mock failed API put with multiple errors
+            api.put.mockRejectedValueOnce({
+                response: {
+                    data: {
+                        email: 'Invalid email format',
+                        username: 'Username too short'
+                    }
+                }
+            });
+            
+            renderWithRouter(<Board />);
+            await waitFor(() => {
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+            });
+            const editButtons = screen.getAllByText('EDIT');
+            fireEvent.click(editButtons[0]);
+            const emailInput = screen.getAllByRole('textbox')[0];
+            fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+            const saveButton = screen.getByText('SAVE');
+            fireEvent.click(saveButton);
+            
+            await waitFor(() => {
+                expect(screen.getByText('Invalid email format')).toBeInTheDocument();
+                expect(screen.getByText('Username too short')).toBeInTheDocument();
             });
         });
     });
