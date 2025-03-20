@@ -2,12 +2,13 @@
 * Admin.module.css - Stylesheet for Admin page
 */
 
-
+/* Entire page styling */
 .admin_page{
     background-color: #c5e4e1;
     min-height: 100vh;
 }
 
+/* Heading styles */
 .heading{
     font-family: 'Hammersmith One';
     color: #fff;
@@ -41,6 +42,7 @@
     border-radius: 25px;
 }
 
+/* Subheading styles: user and game */
 .user_heading,
 .game_heading{
     font-family: 'Hammersmith One';
@@ -58,7 +60,6 @@
 
 
 /* Task and Chance Panels under Manage Game */
-
 .task_panel,
 .chance_panel{
     border-radius: 25px;
@@ -67,6 +68,7 @@
 
 }
 
+/* Styling for task and chance headings */
 .task_heading,
 .chance_heading{
     font-family: 'Hammersmith One';
@@ -76,6 +78,9 @@
     margin-top: 5%;
 }
 
+/* Task form styling */
+
+/* Main task form styling */
 .task_form{
     display: flex;
     flex-direction: column;
@@ -85,6 +90,7 @@
     margin: auto;
 }
 
+/* Styles inputs in .task_form */
 .task_form input{
     border-radius: 25px;
     margin-top: 0.5vw;
@@ -93,6 +99,7 @@
     font-size: 1vw;
 }
 
+/* Styles select dropdowns in .task_form */ 
 .task_form select{
     width: 70%;
     margin-top: 0.6vw;
@@ -104,6 +111,7 @@
     text-align: center;
 }
 
+/* Styles button in .task_form */ 
 .task_form button {
     margin-top: 1vw;
     border-radius: 25px;
@@ -115,6 +123,9 @@
     font-family: 'Hammersmith One';
 }
 
+/* Chance form styling */
+
+/* Main chance form styling */
 .chance_form{
     display: flex;
     flex-direction: column;
@@ -125,6 +136,7 @@
     
 }
 
+/* Styles inputs in .chance_form */
 .chance_form input{
     border-radius: 25px;
     margin-top: 0.5vw;
@@ -133,6 +145,7 @@
     font-size: 1vw;
 }
 
+/* Styles button in .chance_form */ 
 .chance_form button {
     margin-top: 1vw;
     border-radius: 25px;
@@ -149,7 +162,7 @@
 
 /* Mobile Styling */
 @media (max-width: 480px){
-
+    
     .user_panel{
         width: 80%;
         height: 28vh;
