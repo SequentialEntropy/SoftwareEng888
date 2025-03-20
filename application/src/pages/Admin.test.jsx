@@ -9,14 +9,6 @@
 */
 
 /**
- *
- * 
- * User Interaction Tests
- * 
- * Test clicking "Edit" button on a task updates selectedTask state
- * Test clicking "Edit" button on a chance updates selectedChance state
- * Verify clicking "Delete" button triggers appropriate deletion function
- * Test that the NavBar component receives proper props and functions
  * 
  * Form Integration Tests
  * 
@@ -372,4 +364,64 @@ describe('Admin Component', () => {
             expect(api.get).toHaveBeenCalledWith('/chances/');
         });
     });
+
+    /**
+    * User Interaction Tests
+    * 
+    * Test clicking "Edit" button on a task updates selectedTask state
+    * Test clicking "Edit" button on a chance updates selectedChance state
+    * Verify clicking "Delete" button triggers appropriate deletion function
+    */
+    describe('User Interaction', () => {
+        test('Test edit button on task to update selectedTask state', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+        
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[0]);
+            });
+            
+            expect(screen.getByText('Save Task')).toBeInTheDocument();
+        });
+        
+        test('Test edit button on chance to update selectedChance state', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[2]);
+            });
+            
+            const saveChanceButtons = screen.getAllByTestId('chance-form-success');
+            expect(saveChanceButtons[0]).toHaveTextContent('Save Chance');
+        });
+        
+        test('Test clearing selection when delete button is clicked for selected item', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[0]);
+            });
+            
+            expect(screen.getByText('Save Task')).toBeInTheDocument();
+            
+            const deleteButtons = screen.getAllByText('Delete');
+            await act(async () => {
+                fireEvent.click(deleteButtons[0]);
+            });
+            
+            await waitFor(() => {
+                expect(screen.queryByText('Save Task')).not.toBeInTheDocument();
+            });
+        });
+    });
+
+    
 });
