@@ -8,11 +8,11 @@
  * @since 12-03-2025
 */
 
-if (typeof global.TextEncoder === 'undefined') {
-    const util = require('util');
-    global.TextEncoder = util.TextEncoder;
-    global.TextDecoder = util.TextDecoder;
-}
+// if (typeof global.TextEncoder === 'undefined') {
+//     const util = require('util');
+//     global.TextEncoder = util.TextEncoder;
+//     global.TextDecoder = util.TextDecoder;
+// }
 
 // Mock react-router-dom
 jest.mock('react-router-dom', () => ({
