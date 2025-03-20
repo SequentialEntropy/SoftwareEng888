@@ -71,4 +71,16 @@ describe('ResetPassword Component', () => {
         const button = screen.getByRole('button', { name: /save changes/i });
         expect(button).toHaveAttribute('type', 'submit');
     });
+
+    test('form has the expected structure', () => {
+        const { container } = render(<ResetPassword />);
+        const forms = container.querySelectorAll('form');
+        expect(forms.length).toBe(1);
+        const formGroups = container.querySelectorAll('.form-group');
+        expect(formGroups.length).toBe(2);
+        const form = container.querySelector('form');
+        expect(form).toContainElement(screen.getByPlaceholderText(/enter new password/i));
+        expect(form).toContainElement(screen.getByPlaceholderText(/confirm new password/i));
+        expect(form).toContainElement(screen.getByRole('button', { name: /save changes/i }));
+    });
 });
