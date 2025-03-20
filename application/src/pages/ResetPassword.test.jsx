@@ -8,6 +8,20 @@
  * @since 25-02-2025
 */
 
+// For Github actions
+if (typeof TextEncoder === 'undefined') {
+    global.TextEncoder = require('util').TextEncoder;
+  }
+if (typeof TextDecoder === 'undefined') {
+    global.TextDecoder = require('util').TextDecoder;
+}
+  
+// Mock react-router-dom
+jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    useNavigate: () => jest.fn()
+}));
+
 // ResetPassword.test.jsx
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
