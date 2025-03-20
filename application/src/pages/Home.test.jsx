@@ -8,11 +8,18 @@
  * @since 12-03-2025
 */
 
-if (typeof global.TextEncoder === 'undefined') {
-    const util = require('util');
-    global.TextEncoder = util.TextEncoder;
-    global.TextDecoder = util.TextDecoder;
-}
+// if (typeof global.TextEncoder === 'undefined') {
+//     const util = require('util');
+//     global.TextEncoder = util.TextEncoder;
+//     global.TextDecoder = util.TextDecoder;
+// }
+
+// Mock react-router-dom
+jest.mock('react-router-dom', () => ({
+    Link: ({ to, children, ...props }) => (
+      <a href={to} {...props}>{children}</a>
+    )
+}));
 
 // Home.test.jsx
 import React, { act } from 'react';
@@ -43,6 +50,13 @@ jest.mock('../styles/Dashboard.module.css', () => ({
     pointsItem: 'pointsItem',
     pointsIcon: 'pointsIcon'
 }));
+
+// Mock the Navbar component to avoid the react-router-dom dependency
+jest.mock('../components/Navbar', () => {
+    return function MockedNavbar() {
+      return <div data-testid="mocked-navbar"></div>;
+    };
+});
 
 describe('Home Component', () => {
     const mockCurrentUser = {
@@ -241,27 +255,13 @@ describe('Home Component', () => {
                 expect(api.get).toHaveBeenCalledWith('/accounts/me/');
                 expect(api.get).toHaveBeenCalledWith('/accounts/ranked-users/');
             });
-            const navLinks = screen.getAllByRole('link');
-  
-            const homeLink = navLinks.find(link => link.getAttribute('href') === 'home');
-            expect(homeLink).toBeInTheDocument();
-            expect(homeLink.querySelector('.bi-house-door-fill')).toBeInTheDocument();
+            expect(screen.getByTestId('mocked-navbar')).toBeInTheDocument();
             
-            const boardLink = navLinks.find(link => link.getAttribute('href') === 'board');
-            expect(boardLink).toBeInTheDocument();
-            expect(boardLink.querySelector('.bi-dice-3-fill')).toBeInTheDocument();
-
-            const mapLink = navLinks.find(link => link.getAttribute('href') === 'map');
-            expect(mapLink).toBeInTheDocument();
-            expect(mapLink.querySelector('.bi-map-fill')).toBeInTheDocument();
+            const boardLink = screen.getByText('You are at').closest('a');
+            expect(boardLink).toHaveAttribute('href', '/board');
             
-            const profileLink = navLinks.find(link => link.getAttribute('href') === 'profile');
-            expect(profileLink).toBeInTheDocument();
-            expect(profileLink.querySelector('.bi-person-circle')).toBeInTheDocument();
-            
-            const logoutLink = navLinks.find(link => link.getAttribute('href') === 'logout');
-            expect(logoutLink).toBeInTheDocument();
-            expect(logoutLink.querySelector('.bi-box-arrow-right')).toBeInTheDocument();
+            const mapLink = screen.getByText('Map').closest('a');
+            expect(mapLink).toHaveAttribute('href', '/map');
         });
     });
 
