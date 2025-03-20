@@ -2,9 +2,9 @@ name: Run frontend tests
 
 on:
     push:
-        branches: [main, dev]
+        branches: main
     pull_request:
-        branches: [main, dev]
+        branches: main
 
 jobs:
   test:
@@ -27,10 +27,25 @@ jobs:
         cd application
         npm install
         
-    - name: Run tests
+    - name: Run Board test
       run: |
         cd application
-        npm test
+        npm test Board.test.jsx
+
+    - name: Run Home test
+      run: |
+        cd application
+        npm test Home.test.jsx
+
+    - name: Run Reset Password test
+      run: |
+        cd application
+        npm test ResetPassword.test.jsx
+
+    - name: Run Profile test
+      run: |
+        cd application
+        npm test Profile.test.jsx
         
     - name: Generate test coverage report
       run: |
