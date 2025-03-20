@@ -9,7 +9,7 @@
 */
 
 // Profile.test.jsx
-import React from 'react';
+import React, { act } from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import Board from './Profile';
@@ -18,21 +18,6 @@ import api from '../api';
 const renderWithRouter = (ui, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
     return render(ui);
-};
-
-const expectTextInDocument = (text) => {
-    const characters = text.split('');
-    for (const char of characters) {
-        if (char !== ' ') {
-            try {
-                expect(screen.getAllByText(char).length).toBeGreaterThan(0);
-            } catch (error) {
-                console.error(`Character "${char}" from text "${text}" not found in document`);
-                return false;
-            }
-        }
-    }
-    return true;
 };
 
 // Mock react-router-dom
@@ -63,7 +48,6 @@ jest.mock('../styles/Profile.module.css', () => ({
     edit: 'edit',
     line: 'line',
     logout_btn: 'logout_btn',
-    deleteAccount_btn: 'deleteAccount_btn'
 }));
 
 
@@ -76,7 +60,7 @@ describe('Profile Component', () => {
         
         // Mock successful API response for get user details
         api.get.mockResolvedValue({
-        data: { username: 'testuser', email: 'test@example.com' }
+            data: { username: 'testuser', email: 'test@example.com' }
         });
     });
     
@@ -93,15 +77,23 @@ describe('Profile Component', () => {
      * 5. Validate handleSave updates the user state after successful API call
      */
     describe('User State Management', () => {
-        test('test initial state values', () => {
-            render(<Board />);
+        test('test initial state values', async () => {
+            api.get.mockImplementationOnce(() => new Promise(() => {}));
+            
+            await act(async () => {
+                render(<Board />);
+            });
+            
             const inputs = screen.getAllByRole('textbox');
             expect(inputs[0].value).toBe('');
             expect(inputs[1].value).toBe('');
         });
 
         test('Verify getUserDetails populate user state correctly', async () => {
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
@@ -111,48 +103,83 @@ describe('Profile Component', () => {
         });
 
         test('Verify edit mode toggles correctly when handleEdit is called', async () => {
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
             expect(usernameInput).toBeDisabled();
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             expect(usernameInput).not.toBeDisabled();
         });
 
         test('Confirm handleChange updates the tempUser state properly', async () => {
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: 'newusername' } });
+            
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: 'newusername' } });
+            });
+            
             expect(usernameInput.value).toBe('newusername');
         });
 
         test('Validate handleSave updates the user state after successful API call', async () => {
             api.put.mockResolvedValue({});
-            render(<Board />);
+            
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: 'newusername' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: 'newusername' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
+            
             await waitFor(() => {
                 expect(usernameInput).toBeDisabled();
                 expect(usernameInput.value).toBe('newusername');
             });
+            
             expect(api.put).toHaveBeenCalledWith('/accounts/me/', { username: 'newusername' });
         });
     });
@@ -165,8 +192,11 @@ describe('Profile Component', () => {
      * 3. Verify error messages are captured and displayed from API responses
      */
     describe('API Interactions', () => {
-        test('Verify state updates', () => {
-            render(<Board />);
+        test('Verify state updates', async () => {
+            await act(async () => {
+                render(<Board />);
+            });
+            
             expect(api.get).toHaveBeenCalledWith('/accounts/me/');
             expect(api.get).toHaveBeenCalledTimes(1);
         });
@@ -175,10 +205,14 @@ describe('Profile Component', () => {
             const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
             api.get.mockRejectedValueOnce(new Error('Network error'));
 
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 expect(mockAlert).toHaveBeenCalledWith('Error fetching user details: Error: Network error');
             });
+            
             mockAlert.mockRestore();
         });
 
@@ -191,22 +225,35 @@ describe('Profile Component', () => {
             // Mock failed API put with error message
             api.put.mockRejectedValueOnce({
                 response: {
-                data: { username: 'Username already taken' }
+                    data: { username: 'Username already taken' }
                 }
             });
             
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
             
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: 'takenusername' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: 'takenusername' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
+            
             await waitFor(() => {
                 expect(screen.getByText('Username already taken')).toBeInTheDocument();
             });
@@ -224,19 +271,28 @@ describe('Profile Component', () => {
      * 7. Verify error messages render correctly when present
      */
     describe('Component Rendering', () => {
-        test('Verify the component renders without crashing', () => {
-            render(<Board />);
+        test('Verify the component renders without crashing', async () => {
+            await act(async () => {
+                render(<Board />);
+            });
+            
             expect(screen.getByText('Log Out')).toBeInTheDocument();
             expect(screen.getByText('Delete Account')).toBeInTheDocument();
         });
 
-        test('Test render NavBar component', () => {
-            render(<Board />);
+        test('Test render NavBar component', async () => {
+            await act(async () => {
+                render(<Board />);
+            });
+            
             expect(screen.getByTestId('navbar-mock')).toBeInTheDocument();
         });
 
         test('Test display user information when data is loaded', async () => {
-            render(<Board />);
+            await act(async () => {
+                render(<Board />);
+            });
+            
             await waitFor(() => {
                 expect(screen.getByText('testuser')).toBeInTheDocument();
                 const inputs = screen.getAllByRole('textbox');
@@ -246,11 +302,14 @@ describe('Profile Component', () => {
         });
 
         test('Test disable input fields when not in edit mode', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
-              const inputs = screen.getAllByRole('textbox');
-              expect(inputs[0].value).toBe('test@example.com');
-              expect(inputs[1].value).toBe('testuser');
+                const inputs = screen.getAllByRole('textbox');
+                expect(inputs[0].value).toBe('test@example.com');
+                expect(inputs[1].value).toBe('testuser');
             });
             
             const inputs = screen.getAllByRole('textbox');
@@ -259,14 +318,20 @@ describe('Profile Component', () => {
         });
       
         test('Test enable input fields when in edit mode', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
             const emailInput = screen.getAllByRole('textbox')[0];
             expect(emailInput).not.toBeDisabled();
             
@@ -275,7 +340,10 @@ describe('Profile Component', () => {
         });
       
         test('Test display EDIT button when not in edit mode', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
@@ -286,14 +354,19 @@ describe('Profile Component', () => {
         });
       
         test('Test display SAVE button when in edit mode', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
             
             expect(screen.getByText('SAVE')).toBeInTheDocument();
             expect(screen.getAllByText('EDIT')).toHaveLength(1);
@@ -315,17 +388,30 @@ describe('Profile Component', () => {
                 }
             });
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
             const emailInput = screen.getAllByRole('textbox')[0];
-            fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(screen.getByText('Invalid email format')).toBeInTheDocument();
@@ -341,14 +427,20 @@ describe('Profile Component', () => {
      * 2. Test Logout link navigates to "/logout"
      */
     describe('Navigation', () => {
-        test('Verify Reset Password link navigates to "/reset-password"', () => {
-            render(<Board />);
+        test('Verify Reset Password link navigates to "/reset-password"', async () => {
+            await act(async () => {
+                render(<Board />);
+            });
+            
             const resetPasswordLink = screen.getByText('Reset Password');
             expect(resetPasswordLink).toHaveAttribute('href', '/reset-password');
         });
 
-        test('Test Logout link navigates to "/logout"', () => {
-            render(<Board />);
+        test('Test Logout link navigates to "/logout"', async () => {
+            await act(async () => {
+                render(<Board />);
+            });
+            
             const logoutLink = screen.getByText('Log Out');
             expect(logoutLink).toHaveAttribute('href', '/logout');
         });
@@ -364,8 +456,12 @@ describe('Profile Component', () => {
      */
     describe('Integration Tests', () => {
         test('Test the complete flow of fetching user data on component', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             expect(api.get).toHaveBeenCalledWith('/accounts/me/');
+            
             await waitFor(() => {
                 expect(screen.getByText('testuser')).toBeInTheDocument();
                 const inputs = screen.getAllByRole('textbox');
@@ -378,18 +474,30 @@ describe('Profile Component', () => {
             // Mock successful API put
             api.put.mockResolvedValueOnce({});
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
             const emailInput = screen.getAllByRole('textbox')[0];
-            fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(emailInput).toBeDisabled();
@@ -407,34 +515,52 @@ describe('Profile Component', () => {
             
             api.put.mockRejectedValueOnce({
                 response: {
-                data: { email: 'Invalid email format' }
+                    data: { email: 'Invalid email format' }
                 }
             });
             
             api.put.mockResolvedValueOnce({});
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
 
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
             
             // Change to invalid email
             const emailInput = screen.getAllByRole('textbox')[0];
-            fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
-            let saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'invalid-email' } });
+            });
+            
+            await act(async () => {
+                let saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
+            
             await waitFor(() => {
                 expect(screen.getByText('Invalid email format')).toBeInTheDocument();
             });
             
             // Change to valid email
-            fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
-            saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
+            
             await waitFor(() => {
                 expect(emailInput).toBeDisabled();
                 expect(emailInput.value).toBe('valid@example.com');
@@ -455,7 +581,10 @@ describe('Profile Component', () => {
         test('Test submit form fail on button clicks when editing', async () => {
             const preventDefaultMock = jest.fn();
 
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
@@ -463,23 +592,40 @@ describe('Profile Component', () => {
             
             const form = screen.getAllByRole('textbox')[0].closest('form');
             form.onsubmit = preventDefaultMock;
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
-            fireEvent.submit(form);
+            
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
+            await act(async () => {
+                fireEvent.submit(form);
+            });
+            
             expect(preventDefaultMock).toHaveBeenCalled();
         });
 
         test('Test submit form fail when pressing Enter in input fields', async () => {
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
             const emailInput = screen.getAllByRole('textbox')[0];
-            fireEvent.keyDown(emailInput, { key: 'Enter', code: 'Enter' });
+            
+            await act(async () => {
+                fireEvent.keyDown(emailInput, { key: 'Enter', code: 'Enter' });
+            });
+            
             expect(emailInput).not.toBeDisabled();
             expect(api.put).not.toHaveBeenCalled();
         });
@@ -500,10 +646,14 @@ describe('Profile Component', () => {
             const mockAlert = jest.spyOn(window, 'alert').mockImplementation(() => {});
             api.get.mockRejectedValueOnce(new Error('Network error'));
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 expect(mockAlert).toHaveBeenCalledWith('Error fetching user details: Error: Network error');
             });
+            
             mockAlert.mockRestore();
         });
 
@@ -512,31 +662,43 @@ describe('Profile Component', () => {
                 data: { username: 'testuser', email: 'test@example.com' }
             });
             
-            // Test case 1: Error message as a string
+            // Test case 1: Error message as a string (wrapped in an object)
             api.put.mockRejectedValueOnce({
                 response: {
                     data: { error: "Server error occurred" }
                 }
             });
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
+            
             const emailInput = screen.getAllByRole('textbox')[0];
-            fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
-            let saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'newemail@example.com' } });
+            });
+            
+            await act(async () => {
+                let saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(screen.getByText("Server error occurred")).toBeInTheDocument();
             });
             
-            // Test case 2: Error response as multiple fields (converted to object)
+            // Test case 2: Error response as multiple fields
             api.put.mockRejectedValueOnce({
                 response: {
                     data: { 
@@ -546,23 +708,27 @@ describe('Profile Component', () => {
                 }
             });
             
-            saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                let saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(screen.getByText("Email is invalid")).toBeInTheDocument();
                 expect(screen.getByText("Another error occurred")).toBeInTheDocument();
             });
             
-            // Test case 3: Nested error objects (flattened)
+            // Test case 3: Single field error
             api.put.mockRejectedValueOnce({
                 response: {
                     data: { email: "Invalid email format" }
                 }
             });
             
-            saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                let saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(screen.getByText("Invalid email format")).toBeInTheDocument();
@@ -575,8 +741,10 @@ describe('Profile Component', () => {
                 }
             });
             
-            saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                let saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             await waitFor(() => {
                 expect(screen.getByText("Network Error")).toBeInTheDocument();
@@ -598,18 +766,30 @@ describe('Profile Component', () => {
                 }
             });
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: 'a' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: 'a' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             // Wait for error messages to appear
             await waitFor(() => {
@@ -631,14 +811,19 @@ describe('Profile Component', () => {
                 { email: 'spaces in@email.com', error: 'Email cannot contain spaces.' }
             ];
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[0].value).toBe('test@example.com');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[0]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[0]);
+            });
             
             const emailInput = screen.getAllByRole('textbox')[0];
             
@@ -650,21 +835,32 @@ describe('Profile Component', () => {
                 });
 
                 // Enter invalid email
-                fireEvent.change(emailInput, { target: { value: email } });
-                const saveButton = screen.getByText('SAVE');
-                fireEvent.click(saveButton);
+                await act(async () => {
+                    fireEvent.change(emailInput, { target: { value: email } });
+                });
+                
+                await act(async () => {
+                    const saveButton = screen.getByText('SAVE');
+                    fireEvent.click(saveButton);
+                });
                 
                 await waitFor(() => {
-                        expect(screen.getByText(error)).toBeInTheDocument();
+                    expect(screen.getByText(error)).toBeInTheDocument();
                 });
             }
             
             api.put.mockResolvedValueOnce({});
             
             // Enter a valid email
-            fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                fireEvent.change(emailInput, { target: { value: 'valid@example.com' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
+            
             await waitFor(() => {
                 expect(emailInput).toBeDisabled();
                 expect(emailInput.value).toBe('valid@example.com');
@@ -677,20 +873,30 @@ describe('Profile Component', () => {
         test('Test empty input values', async () => {
             api.put.mockResolvedValueOnce({});
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
             
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: '' } });
             
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: '' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             // Verify API call was made with empty string
             expect(api.put).toHaveBeenCalledWith('/accounts/me/', { username: '' });
@@ -699,18 +905,30 @@ describe('Profile Component', () => {
         test('Test special characters in input', async () => {
             api.put.mockResolvedValueOnce({});
             
-            renderWithRouter(<Board />);
+            await act(async () => {
+                renderWithRouter(<Board />);
+            });
+            
             await waitFor(() => {
                 const inputs = screen.getAllByRole('textbox');
                 expect(inputs[1].value).toBe('testuser');
             });
             
-            const editButtons = screen.getAllByText('EDIT');
-            fireEvent.click(editButtons[1]);
+            await act(async () => {
+                const editButtons = screen.getAllByText('EDIT');
+                fireEvent.click(editButtons[1]);
+            });
+            
             const usernameInput = screen.getAllByRole('textbox')[1];
-            fireEvent.change(usernameInput, { target: { value: 'test_user@123!#' } });
-            const saveButton = screen.getByText('SAVE');
-            fireEvent.click(saveButton);
+            
+            await act(async () => {
+                fireEvent.change(usernameInput, { target: { value: 'test_user@123!#' } });
+            });
+            
+            await act(async () => {
+                const saveButton = screen.getByText('SAVE');
+                fireEvent.click(saveButton);
+            });
             
             // Verify API call was made with special characters
             expect(api.put).toHaveBeenCalledWith('/accounts/me/', { username: 'test_user@123!#' });
