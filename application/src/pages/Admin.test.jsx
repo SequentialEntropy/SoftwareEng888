@@ -9,12 +9,6 @@
 */
 
 /**
- * State Management Tests
- * 
- * Confirm initial state is correctly set (empty arrays for tasks and chances)
- * Verify state updates properly when tasks and chances are fetched
- * Test that selectedTask and selectedChance state updates correctly when items are selected
- * Ensure state resets appropriately when items are deleted
  * 
  * API Integration Tests
  * 
@@ -213,6 +207,85 @@ describe('Admin Component', () => {
             const chanceLists = screen.getAllByRole('list').slice(1);
             chanceLists.forEach(list => {
                 expect(list.children).toHaveLength(0);
+            });
+        });
+    });
+
+    /* 
+     * State Management Tests
+     * 
+     * Confirm initial state is correctly set
+     * Verify state updates properly when tasks and chances are fetched
+     * Test that selectedTask and selectedChance state updates correctly when items are selected
+     * Ensure state resets appropriately when items are deleted
+     */
+    describe('State Management', () => {
+        test('Test initial state is correctly set', async () => {
+            const resolveTasksPromise = new Promise(resolve => setTimeout(() => resolve({ data: mockTasks }), 100));
+            const resolveChancesPromise = new Promise(resolve => setTimeout(() => resolve({ data: mockChances }), 100));
+            
+            api.get.mockImplementation((url) => {
+                if (url === '/tasks/') return resolveTasksPromise;
+                if (url === '/chances/') return resolveChancesPromise;
+                return Promise.reject(new Error('Not found'));
+            });
+            
+            render(<Admin />);
+            expect(screen.queryByText('Task 1')).not.toBeInTheDocument();
+            expect(screen.queryByText('Chance 1')).not.toBeInTheDocument();
+            
+            await waitFor(() => {
+                expect(screen.getByText('Task 1')).toBeInTheDocument();
+                expect(screen.getAllByText('Chance 1')).toHaveLength(2);
+            });
+        });
+
+        test('Verify state updates', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[0]);
+            });
+            
+            expect(screen.getByText('Save Task')).toBeInTheDocument();
+        });
+        
+        test('Test selectedChance state updates when a chance is selected for editing', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[2]); 
+            });
+            
+            const saveChanceButtons = screen.getAllByText('Save Chance');
+            expect(saveChanceButtons[0]).toBeInTheDocument();
+        });
+        
+        test('Test state resets when task is deleted', async () => {
+            await act(async () => {
+                render(<Admin />);
+            });
+            
+            const editButtons = screen.getAllByText('Edit');
+            await act(async () => {
+                fireEvent.click(editButtons[0]);
+            });
+            
+            expect(screen.getByText('Save Task')).toBeInTheDocument();
+            
+            const deleteButtons = screen.getAllByText('Delete');
+            await act(async () => {
+                fireEvent.click(deleteButtons[0]);
+            });
+            
+            await waitFor(() => {
+                expect(screen.queryByText('Save Task')).not.toBeInTheDocument();
             });
         });
     });
