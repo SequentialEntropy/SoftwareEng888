@@ -13,21 +13,21 @@
 // global.TextEncoder = TextEncoder;
 // global.TextDecoder = TextDecoder;
   
-// // Mock react-router-dom
-// jest.mock('react-router-dom', () => ({
-//     useNavigate: () => jest.fn()
-// }));
+// Mock react-router-dom
+jest.mock('react-router-dom', () => ({
+    useNavigate: () => jest.fn()
+}));
 
-// // Mock the API module that uses import.meta
-// jest.mock('../api', () => ({
-//     post: jest.fn(),
-//     get: jest.fn(),
-//     put: jest.fn(),
-//     delete: jest.fn()
-// }));
+// Mock the API module that uses import.meta
+jest.mock('../api', () => ({
+    post: jest.fn(),
+    get: jest.fn(),
+    put: jest.fn(),
+    delete: jest.fn()
+}));
   
-// // Mock CSS module
-// jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
+// Mock CSS module
+jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
 
 // ResetPassword.test.jsx
 import React from 'react';
