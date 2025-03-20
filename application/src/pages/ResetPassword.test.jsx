@@ -15,21 +15,31 @@ import '@testing-library/jest-dom';
 import userEvent from '@testing-library/user-event';
 import ResetPassword from './ResetPassword';
 
-// Mock react-router-dom
+// Mock react-router-dom - fix Link component issue
 jest.mock('react-router-dom', () => ({
+    ...jest.requireActual('react-router-dom'),
+    Link: ({ children, to }) => (
+        <a href={to} data-testid="mock-link">
+            {children}
+        </a>
+    ),
     useNavigate: () => jest.fn()
 }));
 
-// Mock the API module that uses import.meta
+// Mock the API module
 jest.mock('../api', () => ({
     post: jest.fn(),
     get: jest.fn(),
     put: jest.fn(),
     delete: jest.fn()
-}));
-  
+}), { virtual: true });
+
 // Mock CSS module
 jest.mock('../styles/ResetPassword.module.css', () => ({}), { virtual: true });
+
+// Mock any potential components or wrappers
+jest.mock('../components/Navbar', () => () => <div data-testid="mock-navbar" />, { virtual: true });
+jest.mock('../components/Layout', () => ({ children }) => <div data-testid="mock-layout">{children}</div>, { virtual: true });
 
 describe('ResetPassword Component', () => {
     /** 
@@ -40,8 +50,13 @@ describe('ResetPassword Component', () => {
      * Test 5: Test submit button
      * Test 6: Verify form structure
     */
+    
+    const renderComponent = () => {
+        return render(<ResetPassword />);
+    };
+    
     test('renders the reset password form', () => {
-        render(<ResetPassword />);
+        renderComponent();
         expect(screen.getByText('Reset Password')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Enter new password')).toBeInTheDocument();
         expect(screen.getByPlaceholderText('Confirm new password')).toBeInTheDocument();
@@ -50,7 +65,7 @@ describe('ResetPassword Component', () => {
 
     test('allows input in password fields', async () => {
         const user = userEvent.setup();
-        render(<ResetPassword />);
+        renderComponent();
         const newPasswordInput = screen.getByPlaceholderText('Enter new password');
         const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
         await user.type(newPasswordInput, 'newSecurePassword123!');
@@ -59,11 +74,10 @@ describe('ResetPassword Component', () => {
         expect(confirmPasswordInput).toHaveValue('newSecurePassword123!');
     });
 
-    
     test('submits the form when submitted', async () => {
         const user = userEvent.setup();
         const handleSubmit = jest.fn(e => e.preventDefault());
-        const { container } = render(<ResetPassword />);
+        const { container } = renderComponent();
         const form = container.querySelector('form');
         form.onsubmit = handleSubmit;
         const newPasswordInput = screen.getByPlaceholderText('Enter new password');
@@ -75,19 +89,17 @@ describe('ResetPassword Component', () => {
         expect(handleSubmit).toHaveBeenCalledTimes(1);
     });
 
-    
     test('input fields have the current type attribute', () => {
-        render(<ResetPassword />);
+        renderComponent();
         const newPasswordInput = screen.getByPlaceholderText('Enter new password');
         const confirmPasswordInput = screen.getByPlaceholderText('Confirm new password');
         expect(newPasswordInput).toHaveAttribute('type', 'form-control');
         expect(confirmPasswordInput).toHaveAttribute('type', 'form-control');
     });
     
-    
     test('Submit button', async () => {
         const user = userEvent.setup();
-        render(<ResetPassword />);
+        renderComponent();
         const submitButton = screen.getByRole('button', { name: 'Save Changes' });
         expect(submitButton.tagName).toBe('BUTTON');
         expect(submitButton).toHaveAttribute('type', 'submit');
@@ -98,10 +110,10 @@ describe('ResetPassword Component', () => {
     });
 
     test('form has the expected structure', () => {
-        const { container } = render(<ResetPassword />);
+        const { container } = renderComponent();
         const form = container.querySelector('form');
         expect(form).not.toBeNull();
-        expect(form.children.length).toBe(3);
+        expect(form.children.length).toBe(3); // 2 form groups and 1 button
         const formGroups = form.querySelectorAll('.form-group');
         expect(formGroups.length).toBe(2);
         const firstFormGroup = formGroups[0];
