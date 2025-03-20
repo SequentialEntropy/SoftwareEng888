@@ -41,6 +41,11 @@ jobs:
       run: |
         cd application
         npm test ResetPassword.test.jsx
+
+    - name: Run Profile test
+      run: |
+        cd application
+        npm test Profile.test.jsx
         
     - name: Generate test coverage report
       run: |
