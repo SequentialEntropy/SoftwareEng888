@@ -1,3 +1,14 @@
+/*
+* Landing.module.css - Stylesheet for the Landing page
+* 
+* @file Defines the styles for the Get Started, login, sign up button and cliMate header
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-03-2025
+*/
+
+/* Styles main layout */
 .landing_page{
     background-image: url('../assets/background.jpg');
     background-repeat: no-repeat;
@@ -8,6 +19,7 @@
     position: absolute;
 }
 
+/* Styles header */
 .landing_header{
     display: flex;
     justify-content: center;
@@ -16,6 +28,7 @@
     height: 90px; 
 }
 
+/* Styles '888' logo */
 .logo{
     position: absolute;
     top: 30px;
@@ -26,6 +39,7 @@
     font-size: 2.5rem;
 }
 
+/* Styles login button */
 .login_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -35,6 +49,8 @@
     margin-top: 20px;
 
 }
+
+/* Styles 'Sign Up' button */
 .signup_btn{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -48,10 +64,12 @@
     
 }
 
+/* Hover effect of 'Sign Up' button */
 .signup_btn:hover{
     background-color: #688089;
 }
 
+/* Styles main section below header */
 .landing_main{
     margin: auto;
     margin-top: 10%;
@@ -65,6 +83,7 @@
     
 }
 
+/* Styles 'cliMate' title */
 .title{
     font-family: 'Hammersmith One';
     padding: 0;
@@ -72,6 +91,7 @@
 
 }
 
+/* Styles 'Play for good' slogan */
 .slogan{
     font-family: 'Londrina Solid';
     margin-top: 0;
@@ -80,6 +100,7 @@
  
 }
 
+/* Styles 'Get Started' button */
 .start_btn{
     position: relative;
     margin-top: 50px;
@@ -105,6 +126,7 @@
     
 }
 
+/* Hover effect for 'Get Started' button */
 .start_btn:hover{
     background-color: #37394a;
     
@@ -113,35 +135,39 @@
 /* Mobile Styling */
 @media(max-width: 480px){
 
+    /* Styles '888' logo */
     .logo{
         left: 25px;
         font-size: 2rem;
     }
     
-
+    /* Styles login button*/
     .login_btn{
         font-size: 5vw;
         right: 30vw;  
     }
-  
+
+    /* Styles sign up button */
     .signup_btn{
         font-size: 5vw;
     }
 
+    /* Styles main section below header*/
     .landing_main{
         margin-top: 25vw;
     }
     
-
+    /* Styles 'cliMate' title */
     .title{
         font-size: 13vw;
-        
     }
-    
+
+    /* Styles 'play for good' slogan */
     .slogan{
         font-size: 6vw;
     }
 
+    /* Styles 'Get Started' button */
     .start_btn{
         font-size: 6vw;
         height: 11vw;
@@ -157,30 +183,34 @@
 
 @media (min-width: 481px) and (max-width: 768px) {
 
-   
+   /* Styles login button */
     .login_btn{
         font-size: 4.5vw;
         right: 25vw;  
     }
-  
+
+    /* Styles sign up button */
     .signup_btn{
         font-size: 4.5vw;
     }
 
+    /* Styles main section below header */
     .landing_main{
         margin-top: 18vw;
     }
-    
 
+    /* Styles 'cliMate' title */
     .title{
         font-size: 10vw;
         
     }
-    
+
+    /* Styles 'play for good' slogan */
     .slogan{
         font-size: 4.5vw;
     }
 
+    /* Styles 'Get Started' button */
     .start_btn{
         font-size: 5vw;
         height: 9vw;
@@ -195,30 +225,36 @@
 
 @media (min-width: 769px) and (max-width: 1199px) {
 
+    /* Styles login button */
     .login_btn{
         font-size: 3vw;
         right: 18vw;
     }
 
+    /* Styles sign up button */
     .signup_btn{
         font-size: 3vw;
         
     }
 
+    /* Styles main section below header */
     .landing_main{
         margin-top: 14vw;   
         
     }
 
+    /* Styles 'cliMate' header */
     .title{
         font-size: 7vw;
         
     }
-    
+
+    /* Styles 'play for good' slogan */
     .slogan{
         font-size: 3vw;
     }
 
+    /* Styles 'Get Started' button */
     .start_btn{
         font-size: 3vw;
         height: 5.5vw;
@@ -237,31 +273,36 @@
 
 @media (min-width: 1200px) {
 
+    /* Styles login button */
     .login_btn{
         font-size: 2vw;
         right: 14vw;
     }
 
+    /* Styles sign up button */
     .signup_btn{
         font-size: 2vw;
         
     }
 
+    /* Styles main section below header */
     .landing_main{
         margin-top: 10vw;    
         
     }
 
-    
+    /* Styles 'cliMate' title */
     .title{
         font-size: 6vw;
         
     }
 
+    /* Styles 'Get Started' slogan */
     .slogan{
         font-size: 2.5vw;
     }
 
+    /* Styles 'Get Started' button */
     .start_btn{
         font-size: 2.5vw;
         height: 4.5vw;
