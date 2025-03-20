@@ -13,7 +13,7 @@ import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import ResetPassword from './ResetPassword';
-import { act } from 'react-dom/test-utils';
+import { act } from 'react';
 
 // Mock react-router-dom
 jest.mock('react-router-dom', () => ({
