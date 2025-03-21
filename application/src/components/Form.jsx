@@ -224,7 +224,7 @@ function Form({ route, method }) {
                                             <h3 style={{ color: "black" }}>4. Changes to terms</h3>
                                             <p style={{ color: "black" }}>We reserve the right to update these Terms and Conditions at any time. Your continued use of the website signifies your acceptance of any changes.</p>
                                             <h3 style={{ color: "black" }}> Contact us</h3>
-                                            <p style={{ color: "black" }}>If you have any questions about these Terms and Conditions, don't hesitate to contact us. </p>
+                                            <p style={{ color: "black" }}>If you have any questions about these Terms and Conditions, don't hesitate to contact us at climate.customerservice@gmail.com. </p>
                                         </div>
                                         </div>
                                     )}
