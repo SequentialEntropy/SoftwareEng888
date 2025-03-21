@@ -46,6 +46,11 @@ jobs:
       run: |
         cd application
         npm test Profile.test.jsx
+
+    - name: Run Admin test
+      run: |
+        cd application
+        npm test Admin.test.jsx
         
     - name: Generate test coverage report
       run: |
