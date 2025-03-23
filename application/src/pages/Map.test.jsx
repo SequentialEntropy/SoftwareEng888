@@ -225,7 +225,6 @@ describe("Map Component", () => {
         // });
     });
 
-    
     /** 
      * Integration tests
      * 1. Test display task info when task is loaded
