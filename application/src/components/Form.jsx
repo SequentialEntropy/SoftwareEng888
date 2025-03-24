@@ -161,7 +161,7 @@ function Form({ route, method }) {
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
-                                        <label style = {{width:  "100%"}}>
+                                        <label className={styles.signup_label}>
                                             <input type="checkbox" required/>
                                             By signing up you agree to our{" "}
                                             <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.

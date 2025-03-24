@@ -26,7 +26,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin-top: 5%;
+    
     
 
 }
@@ -96,6 +98,7 @@
     height: 65vh;
     border-radius: 10px;
     
+    
 }
 
 /* Style for h2 element of login container */
@@ -110,6 +113,8 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
+  
 }
 
 
@@ -148,6 +153,15 @@
     padding: 10px;
 }
 
+/* Style for T&C checkbox*/
+.signup_label{
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+
+
 
 /* Mobile Styling */
 
@@ -155,7 +169,7 @@
 
     /* Sets width of login container */
     .login_container{
-        width: 60vw;
+        width: 70vw;
     }
 
     /* Sets height of header */
@@ -200,18 +214,24 @@
     /* Styles form of login container */
     .login_container form {
         width: 50vw;
+        gap: 0.5vw;
     }
 
     /* Styles button of login container */
     .login_container button {
         margin: 2.5vw;
+        width: 80%;
+    }
+
+    .login_container .forgot_password_btn{
+        width: 80%;
     }
 
 
 
     /* Form fields */
     .field {
-        width: 50vw;
+        width: 55vw;
     }
 
 
@@ -224,6 +244,7 @@
     /* Sets width of login container */
     .login_container{
         width: 50vw;
+        height: 70vh;
     }
 
     /* Sets height of header */
@@ -261,27 +282,37 @@
     /* Styles form of login container */
     .login_container form {
         width: 30vw;
+        gap: 0.5vw;
     
     }
 
     /* Styles h2 element of login container */
     .login_container h2 {
-        font-size: 6vw;
+        font-size: 8vw;
         margin: 0;
        
     }
 
     /* Styles label element of login container */
     .login_container label{
-        font-size: 2vw;
+        font-size: 1.8vw;
         line-height: 1;
+        margin-top: 1vw;
     }
 
     /* Styles button of login container */
     .login_container button {
-        margin: 1.5vw;
-        margin-top: 2.8vw;
-        margin-bottom: 0.5vw;
+       margin: 0;
+       padding: 2%;
+       width: 80%;
+       margin-top: 1vw;
+    
+      
+    }
+
+    .login_container .forgot_password_btn{
+        margin-bottom: 2vw;
+        width: 80%;
     }
 
 
@@ -340,6 +371,11 @@
         
     }
 
+    .login_container form{
+        gap: 2vw;
+    }
+
+
     /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 5vw;
@@ -349,15 +385,22 @@
 
     /* Styles label of login container */
     .login_container label{
-        font-size: 1.5vw;
+        font-size: 1.2vw;
         line-height: 1;
+        margin-top: 1vw;
     }
 
     /* Styles button of login container */
     .login_container button {
-        margin: 1.5vw;
-        margin-top: 2vw;
-        margin-bottom: 0.5vw;
+        margin: 0;
+        width: 80%;
+        padding: 1.5%;
+ 
+        
+    }
+
+    .login_container .forgot_password_btn{
+        width: 50%;
     }
 
 
@@ -421,25 +464,43 @@
 
     /* Styles h2 element of login container */
     .login_container h2 {
-        font-size: 5vw;
+        font-size: 4vw;
     }
 
     /* Styles label of login container */
     .login_container label{
-        font-size: 1.2vw;
+        font-size: 1vw;
         line-height: 1;
+        margin: 0;
     }
 
     /* Styles button of login container */
     .login_container button {
-        margin: 1.5vw;
+        margin: 1vw;
+        padding: 1%;
+        width: 70%;
+       
     }
+
+    .login_container .forgot_password_btn{
+        margin-top: 0.5vw;
+        margin-bottom: 1vw;
+        width: 60%;
+    }
+
+    .login_container form{
+        gap: 1vw;
+    }
+
+   
 
 
 
     /* Form fields */
     .field {
         width: 20vw;
+        height: 15%;
+        margin: 0.5vw;
     }
 
     .login_field{
