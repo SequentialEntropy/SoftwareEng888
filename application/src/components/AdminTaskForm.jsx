@@ -75,16 +75,6 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
 
             {squares.map(square => (
                 <div key={square.id} className={styles.form_group}>
-                    {/* <input
-                        type="checkbox"
-                        id="task_completed"
-                        name="task_completed"
-                        checked={formData.usergamestats.task_completed}
-                        onChange={onGameStatsChange}
-                    />
-                    <label htmlFor="task_completed">
-                        Task Completed
-                    </label> */}
                     <input
                         type="checkbox"
                         id={square.id}
