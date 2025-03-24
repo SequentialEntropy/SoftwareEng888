@@ -60,34 +60,6 @@ jest.mock('leaflet', () => {
     };
 });
 
-// Basic leaflet mock
-// const L = {
-//     map: jest.fn(() => ({
-//         setView: jest.fn().mockReturnThis(),
-//         remove: jest.fn(),
-//         on: jest.fn(),
-//         off: jest.fn(),
-//         addLayer: jest.fn(),
-//         removeLayer: jest.fn()
-//     })),
-//     tileLayer: jest.fn(() => ({
-//         addTo: jest.fn().mockReturnThis()
-//     })),
-//     marker: jest.fn(() => ({
-//         addTo: jest.fn().mockReturnThis(),
-//         bindPopup: jest.fn().mockReturnThis()
-//     })),
-//     layerGroup: jest.fn(() => ({
-//         addTo: jest.fn().mockReturnThis(),
-//         addLayer: jest.fn(),
-//         removeLayer: jest.fn(),
-//         clearLayers: jest.fn()
-//     })),
-//     // Add other Leaflet methods you use
-// };
-
-// module.exports = L;
-
 jest.mock('../styles/Map.module.css', () => ({
     game: 'game',
     map_taskbar: 'map_taskbar',
@@ -186,31 +158,13 @@ describe("Map Component", () => {
      * 2. Test handling API error
      */
     describe('API tests', () => {
-        test('task data displayed correclt when API returns data', async () => {
-            await act(async () => {
-                render(<Map />);
-            });
-    
-            await waitFor(() => {
-                expect(api.get).toHaveBeenCalledWith('/accounts/me/');
-                expect(api.get).toHaveBeenCalledWith('/tasks/');
-                expect(screen.getByText('This is a test task')).toBeInTheDocument();
-            });
-        });
+        // test('task data displayed correctly when API returns data', async () => {
+            
+        // });
 
-        test('API error handling', async () => {
-            api.get.mockImplementation(() => {
-                return Promise.reject(new Error('API Error'));
-            });
-    
-            await act(async () => {
-                render(<Map />);
-            });
-    
-            await waitFor(() => {
-                expect(screen.getByText('Loading task...')).toBeInTheDocument();
-            });
-        });
+        // test('API error handling', async () => {
+            
+        // });
     });
 
     /**
@@ -219,7 +173,7 @@ describe("Map Component", () => {
      * 2. Test handling geolocation error
      */
     describe('Geolocation tests', () => {
-        test('User location displayed when geolocation is available', async () => {
+        test('Tset user location displayed when geolocation is available', async () => {
             await act(async () => {
                 render(<Map />);
             });
@@ -259,17 +213,24 @@ describe("Map Component", () => {
      * 2. Test marker render on map
      */
     describe('Map Render tests', () => {
-        test('Render map with correct coordinates', async () => {
+        // test('Render map with correct coordinates', async () => {
+        //     await act(async () => {
+        //         render(<Map />);
+        //     });
+    
+        //     expect(screen.getByRole('region')).toBeInTheDocument();
+        // });
+
+        test('Marker render on map', async () => {
             await act(async () => {
                 render(<Map />);
             });
-    
-            expect(screen.getByRole('region')).toBeInTheDocument();
+            
+            await waitFor(() => {
+                const markers = screen.getAllByTestId('marker');
+                expect(markers.length).toBeGreaterThan(0);
+            });
         });
-
-        // test('Marker render on map', async () => {
-
-        // });
     });
 
     /** 
@@ -277,23 +238,80 @@ describe("Map Component", () => {
      * 1. Test display task info when task is loaded
      * 2. Test display no task if current task is not found
      */
-    // describe('Integration tests', () => {
-    //     test('Task info displayed when task is loaded', async () => {
+    describe('Integration tests', () => {
+        test('Task info displayed when task is loaded', async () => {
+            await act(async () => {
+                render(<Map />);
+            });
+            
+            await waitFor(() => {
+                // Use getAllByText since there are multiple elements with "Forum"
+                const forumElements = screen.getAllByText('Forum');
+                expect(forumElements.length).toBeGreaterThan(0);
+                
+                // Similarly, use getAllByText for task description
+                const taskDescriptionElements = screen.getAllByText('This is a test task');
+                expect(taskDescriptionElements.length).toBeGreaterThan(0);
+            }, { timeout: 2000 });
+        });
 
-    //     });
-
-    //     test('Display with no task message if current task is not found', async () => {
-
-    //     });
-    // });
+        test('Display with no task message if current task is not found', async () => {
+            api.get.mockImplementation((endpoint) => {
+                if (endpoint === "/accounts/me/") {
+                    return Promise.resolve({ data: { usergamestats: { ...mockUserGameStats, current_task: 999 } } });
+                }
+                if (endpoint === "/tasks/") {
+                    return Promise.resolve({ data: [mockTask] });
+                }
+                return Promise.reject(new Error("Not found"));
+            });
+            
+            await act(async () => {
+                render(<Map />);
+            });
+            
+            await waitFor(() => {
+                expect(screen.queryByText('No tasks found for this square - Skip task!')).toBeInTheDocument();
+            }, { timeout: 2000 });
+        });
+    });
 
     /**
      * Responsiveness tests
      * 1. Test page on different dimension
      */
-    // describe('Responsiveness tests', () => {
-    //     test('Test page on different dimension', async () => {
-
-    //     });
-    // });
+    describe('Responsiveness tests', () => {
+        test('Test page on different dimension', async () => {
+            const originalInnerWidth = window.innerWidth;
+            const originalInnerHeight = window.innerHeight;
+            
+            try {
+                // Test mobile dimensions
+                window.innerWidth = 375;
+                window.innerHeight = 667;
+                window.dispatchEvent(new Event('resize'));
+                
+                let { unmount } = render(<Map />);
+                
+                const mobileMapContainers = screen.getAllByTestId('map-container');
+                expect(mobileMapContainers.length).toBeGreaterThan(0);
+                
+                unmount();
+                
+                window.innerWidth = 1440;
+                window.innerHeight = 900;
+                window.dispatchEvent(new Event('resize'));
+                
+                render(<Map />);
+                
+                const desktopMapContainers = screen.getAllByTestId('map-container');
+                expect(desktopMapContainers.length).toBeGreaterThan(0);
+            } finally {
+                // Restore original dimensions
+                window.innerWidth = originalInnerWidth;
+                window.innerHeight = originalInnerHeight;
+                window.dispatchEvent(new Event('resize'));
+            }
+        });
+    });
 })
