@@ -28,6 +28,17 @@ class RankedUsersView(generics.ListAPIView):
     queryset = User.objects.select_related("usergamestats").order_by("-usergamestats__score")
     serializer_class = UserSerializer
 
+class AdminUserViewSet(viewsets.ModelViewSet):
+    """
+    Admin ViewSet to manage users and their game stats.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    permission_classes = [IsAdminUser]  # Only admins can access this
+
+    def get(self, request):
+        print(request.user)
+
 class TaskViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskSerializer
