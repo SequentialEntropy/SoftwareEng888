@@ -26,7 +26,9 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     margin-top: 5%;
+    
     
 
 }
@@ -41,12 +43,14 @@
 
 }
 
+/* Styles for heading 'cliMate' */
 .heading{
     font-family: 'Hammersmith One';
     color: #fff;
     
 }
 
+/* Styles for logo '888' */
 .logo{
     position: absolute;
     font-family: 'Chango';
@@ -63,6 +67,8 @@
 
 
 }
+
+/* Styles for 'Sign up' button */
 .header_btn_sign{
     text-decoration: none;
     font-family: 'Londrina Solid';
@@ -74,6 +80,7 @@
     
 }
 
+/* Hover effect for 'Sign Up' button */
 .header_btn_sign:hover{
     background-color: #688089;
 }
@@ -91,26 +98,32 @@
     height: 65vh;
     border-radius: 10px;
     
+    
 }
 
+/* Style for h2 element of login container */
 .login_container h2 {
     font-family: 'Londrina Solid';
     margin-top: 1.5vw;
 }
 
+/* Style for form of login container */
 .login_container form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
+  
 }
 
 
 /* Form fields */
-.field {
-    margin-top: 5%;
+.field,
+.login_field {
+    margin-top: 4%;
     margin-bottom: 5%;
-    height: 7vh;
+    height: 15%;
 }
 
 /* Login button */
@@ -120,14 +133,17 @@
     background-color: #37394A;
     padding: 3%;
     width: 14vw;
+    height: 15%;
     color: white;
     font-family: 'Inter';
 }
 
+/* Hover effect of login button */
 .login_btn:hover {
     background-color: #688089;
 }
 
+/* Style for forgot password button */
 .forgot_password_btn{
     border-radius: 10px;
     padding: 5px;
@@ -137,24 +153,47 @@
     padding: 10px;
 }
 
+/* Style for T&C checkbox*/
+.login_container label{
+    width: 100%;
+    font-size: 12px;
+    margin-bottom: 10px;
+}
+
+input[type="checkbox"]{
+    -webkit-appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    appearance: checkbox;
+}
+
+
+
 
 /* Mobile Styling */
 
 @media (max-width: 480px){
+
+    /* Sets width of login container */
     .login_container{
-        width: 60vw;
+        width: 70vw;
     }
 
+    /* Sets height of header */
     .header{
         height: 18vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 7vw;
         
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 5vw;
@@ -175,24 +214,43 @@
         
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
         font-size: 12vw;
        
     }
 
+    /* Styles form of login container */
     .login_container form {
         width: 50vw;
+        gap: 0.5vw;
     }
 
+    /* Styles button of login container */
     .login_container button {
         margin: 2.5vw;
+        margin-top: 4vw;
+        width: 80%;
     }
 
+    .login_container .forgot_password_btn{
+        width: 80%;
+        margin-bottom: 10vw;
+    }
 
+    .login_container label{
+        margin-top: 1vw;
+    }
 
+    
     /* Form fields */
     .field {
-        width: 50vw;
+        width: 55vw;
+    }
+
+    .login_field{
+        width: 100%;
+        height: 25%;
     }
 
 
@@ -201,20 +259,26 @@
 /* Tablet Styling */
 
 @media (min-width: 481px) and (max-width: 899px){
+    
+    /* Sets width of login container */
     .login_container{
         width: 50vw;
+        height: 75vh;
     }
 
+    /* Sets height of header */
     .header{
-        height: 16vw; 
+        height: 10vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 6vw;
         
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 6vw;
         font-size: 4vw;
@@ -231,21 +295,43 @@
         font-size: 3vw;
         padding: 1vw 2vw;
         right: 5%;
-  
-        
     }
 
+
+    /* Styles form of login container */
+    .login_container form {
+        width: 30vw;
+        gap: 0vw;
+    
+    }
+
+    /* Styles h2 element of login container */
     .login_container h2 {
-        font-size: 8vw;
+        font-size: 7vw;
+        margin: 0;
        
     }
 
-    .login_container form {
-        width: 40vw;
+    /* Styles label element of login container */
+    .login_container label{
+        font-size: 1.8vw;
+        line-height: 1;
+        margin-top: 1vw;
     }
 
+    /* Styles button of login container */
     .login_container button {
-        margin: 2.5vw;
+       margin: 0;
+       padding: 2%;
+       width: 80%;
+       margin-top: 1vw;
+    
+      
+    }
+
+    .login_container .forgot_password_btn{
+        margin-bottom: 2vw;
+        width: 80%;
     }
 
 
@@ -253,6 +339,13 @@
     /* Form fields */
     .field {
         width: 35vw;
+        margin-bottom: 0;
+        margin-top: 1vw;
+    }
+
+    .login_field{
+        width: 35vw;
+        height: 25%;
     }
 
 }
@@ -261,21 +354,24 @@
 /* Small Deskptop Styling */
 
 @media (min-width: 900px) and (max-width: 1199px){
-    
+
+    /* Sets width of login container */
     .login_container{
         width: 40vw;
     }
 
+    /* Sets height of header */
     .header{
         height: 12vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 4.5vw;
-        
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 4vw;
@@ -296,14 +392,36 @@
         
     }
 
-    .login_container h2 {
-        font-size: 6vw;
-       
+    .login_container form{
+        gap: 2vw;
     }
 
 
+    /* Styles h2 element of login container */
+    .login_container h2 {
+        font-size: 5vw;
+        margin: 0;
+       
+    }
+
+    /* Styles label of login container */
+    .login_container label{
+        font-size: 1.2vw;
+        line-height: 1;
+        margin-top: 1vw;
+    }
+
+    /* Styles button of login container */
     .login_container button {
-        margin: 1.5vw;
+        margin: 0;
+        width: 80%;
+        padding: 1.5%;
+ 
+        
+    }
+
+    .login_container .forgot_password_btn{
+        width: 50%;
     }
 
 
@@ -313,6 +431,11 @@
         width: 30vw;
     }
 
+    .login_field{
+        width: 30vw;
+        height: 25%;
+    }
+
 
 }
 
@@ -320,21 +443,23 @@
 
 @media (min-width: 1200px) {
 
+    /* Sets width of login container */
     .login_container{
         width: 28vw;
     }
 
-    
+    /* Sets height of header */
     .header{
         height: 8vw; 
     }
-    
+
+    /* Styles heading */
     .heading{
         margin-top: 2vw;
         font-size: 4vw;
-        
     }
-    
+
+    /* Styles logo */
     .logo{
         left: 5vw;
         font-size: 3vw;
@@ -351,28 +476,58 @@
         font-size: 2vw;
         padding: 1vw 2vw;
         right: 5%;
-  
-        
     }
 
+    /* Add top margin to .login */
     .login{
         margin-top: 4vw;
     }
 
+    /* Styles h2 element of login container */
     .login_container h2 {
-        font-size: 5vw;
+        font-size: 4vw;
     }
 
+    /* Styles label of login container */
+    .login_container label{
+        font-size: 1vw;
+        line-height: 1;
+        margin: 0;
+        margin-top: 0.8vw;
+    }
 
+    /* Styles button of login container */
     .login_container button {
-        margin: 1.5vw;
+        margin: 1vw;
+        padding: 1%;
+        width: 70%;
+       
     }
+
+    .login_container .forgot_password_btn{
+        margin-top: 0.5vw;
+        margin-bottom: 1vw;
+        width: 60%;
+    }
+
+    .login_container form{
+        gap: 1vw;
+    }
+
+   
 
 
 
     /* Form fields */
     .field {
         width: 20vw;
+        height: 15%;
+        margin: 0.5vw;
+    }
+
+    .login_field{
+        width: 20vw;
+        height: 25%;
     }
 
 }

@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api"; // Import API helper
+import NavBar from "../components/Navbar";
+import styles from "../styles/ResetPassword.module.css";
 
 function ResetPassword() {
     const [oldPassword, setOldPassword] = useState("");
@@ -9,6 +11,10 @@ function ResetPassword() {
     const [error, setError] = useState("");
     const [success, setSuccess] = useState("");
     const navigate = useNavigate();
+
+    useEffect(() => {
+        document.title = "Reset Password"
+    }, [])
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -40,55 +46,60 @@ function ResetPassword() {
     };
     
     return (
-        <div>
-            <h1>Reset Password</h1>
-            <form onSubmit={handleSubmit}>
-                <div className="form-group"> 
-                    <label htmlFor="old-password">Old Password</label>
-                    <input 
-                        type="password" 
-                        id="old-password" 
-                        className="form-control"
-                        placeholder="Enter old password"
-                        value={oldPassword}
-                        onChange={(e) => setOldPassword(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div className="form-group"> 
-                    <label htmlFor="new-password">New Password</label>
-                    <input 
-                        type="password" 
-                        id="new-password" 
-                        className="form-control"
-                        placeholder="Enter new password"
-                        value={newPassword}
-                        onChange={(e) => setNewPassword(e.target.value)}
-                        required
-                    />
-                </div>
-
-                <div className="form-group"> 
-                    <label htmlFor="confirm-password">Confirm Password</label>
-                    <input 
-                        type="password" 
-                        id="confirm-password" 
-                        className="form-control"
-                        placeholder="Confirm new password"
-                        value={confirmPassword}
-                        onChange={(e) => setConfirmPassword(e.target.value)}
-                        required
-                    />
-                </div>
-
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {success && <p style={{ color: "green" }}>{success}</p>}
-
-                <button type="submit" disabled={!oldPassword || !newPassword || !confirmPassword}>
-                    Save Changes
-                </button>
-            </form>
+        <div className={styles.main_resetPassword}>
+            <NavBar />
+            <div className={styles.password_container}>
+                <h1>Change Password</h1>
+                <br></br>
+                <form onSubmit={handleSubmit}>
+                    <div className="form-group"> 
+                        <input 
+                            type="password" 
+                            id="old-password" 
+                            className="form-control"
+                            placeholder="Enter old password"
+                            value={oldPassword}
+                            onChange={(e) => setOldPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+    
+                    <div className="form-group"> 
+                        <br></br>
+                        <label htmlFor="new-password">New Password</label>
+                        <input 
+                            type="password" 
+                            id="new-password" 
+                            className="form-control"
+                            placeholder="Enter new password"
+                            value={newPassword}
+                            onChange={(e) => setNewPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+    
+                    <div className="form-group"> 
+                        <br></br>
+                        <label htmlFor="confirm-password">Confirm Password</label>
+                        <input 
+                            type="password" 
+                            id="confirm-password" 
+                            className="form-control"
+                            placeholder="Confirm new password"
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                            required
+                        />
+                    </div>
+    
+                    {error && <p style={{ color: "red" }}>{error}</p>}
+                    {success && <p style={{ color: "green" }}>{success}</p>}
+    
+                    <button type="submit" disabled={!oldPassword || !newPassword || !confirmPassword} className={styles["reset_btn"]}>
+                        Save Changes
+                    </button>
+                </form>
+            </div>
         </div>
     );
 }

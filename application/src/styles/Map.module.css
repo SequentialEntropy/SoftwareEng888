@@ -1,4 +1,14 @@
-/* Sidebar Navigation */
+/*
+* Map.module.css - Stylesheet for the Map page
+* 
+* @file Defines the styles for the map and current task/location container 
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-03-2025
+*/
+
+/* Styles main layout */
 .game{
     background-color: #e9fffd;
     background-size: cover;
@@ -8,51 +18,8 @@
     position: absolute;
 }
 
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
 
-}
-
-.sidebar i {
-    color: #85AEB3;
-  
-}
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
-
-
-
-
+/* Styles current task bar */
 .map_taskbar {
     position: relative;
     margin: auto;
@@ -66,12 +33,14 @@
     
 }
 
+/* Styles icon on task bar */
 .task_icon {
     float:left;
     margin-right: 10px;
     font-size: 48px;
 }
 
+/* Styles text on task bar */
 .task_text {
     margin-top: 8px;
     float: left;
@@ -79,6 +48,11 @@
     color: white;
 }
 
+body.accessible-mode .game {
+    background-color: orange !important;
+}
+
+/* Styles map container */
 .map_container {
     position: relative;
     margin: auto;
@@ -88,6 +62,7 @@
     margin-top: 2vw;
 }
 
+/* Styles map */
 .map {
     width: 100%;
     height: 110%; 
@@ -97,119 +72,60 @@
 /* Mobile Styling */
 
 @media (max-width: 480px){
+
+    /* Styles task bar */
     .map_taskbar{
         width: 90vw;
         height: 10%;
         margin-top: 4vw;
     }
 
+    /* Styles map container */
     .map_container{
         width: 88vw;
         height: 60%;
         margin-top: 3vw;
-    }
-
-    .sidebar{
-        width: 85vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 5vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 5vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
     
     }
-    
 
+   .task_text h3,
+   .task_text h6{
+    font-size: 4vw
+   }
 
 }
 
 @media (min-width: 481px) and (max-width: 768px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 90vw;
         height: 10%;
         margin-top: 3vw;
     }
 
+    /* Styles map container */
     .map_container{
         width: 88vw;
         height: 60%;
         margin-top: 2vw;
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-    }
     
     
 }
 
 @media (min-width: 769px) and (max-width: 1199px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 82vw;
         height: 10%;
         margin-top: 3vw;
         margin-left: 15vw;
     }
+
+    /* Styles map container */
     .map_container{
         width: 82vw;
         height: 68%;
@@ -217,36 +133,6 @@
         margin-left: 15vw;
     }
 
-    .sidebar {
-        width: 9vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3vw;
-        margin-top: 3vw;
-       
-    }
-
-    
-    .sidebar h2{
-        font-size: 2.5vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-    }
      
 
 }
@@ -254,12 +140,15 @@
 
 @media (min-width: 1200px){
 
+    /* Styles task bar */
     .map_taskbar{
         width: 86vw;
         height: 10%;
         margin-top: 3vw;
         margin-left: 10vw;
     }
+
+    /* Styles map container */
     .map_container{
         width: 86vw;
         height: 60%;
@@ -268,35 +157,4 @@
     
     }
 
-    .sidebar {
-        width: 7vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 1.5vw;
-        margin-top: 2.5vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 1.5vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 2.5vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
 }

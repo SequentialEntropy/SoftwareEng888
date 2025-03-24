@@ -9,12 +9,13 @@
 * @since 19-02-2025
 */
 
+/* Ensure full-height layout and hide overflow */  
 html, body{
     height: 100%;
     overflow: hidden;
 }
 
-/* Sidebar Navigation */
+/* Entire page styling */
 .game{
     background-color: #e9fffd;
     background-size: cover;
@@ -24,47 +25,6 @@ html, body{
     position: absolute;
 }
 
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
-
-}
-
-.sidebar i {
-    color: #85AEB3;
-  
-}
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
 
 /* Spinner component */
 :where(.spinner) {
@@ -91,7 +51,8 @@ html, body{
     }
   
     & > * { position: absolute; }
-  
+
+/*     Styles SPIN button */
     button {
         aspect-ratio: 1 / 1;
         background: #3c3e4c;
@@ -157,17 +118,23 @@ html, body{
     box-sizing: border-box;
 }
 
-.avatar{
-    position: absolute;
-    z-index: 1;
+.accessible_main_board{
+    background-color: pink;
 }
 
+/* Styling of avatar position */
+.avatar{
+    position: absolute;
+    z-index: 10;
+}
+
+/* Styles font size of entire game board */
 .main_board i{
     font-size: 10vw;
 }
 
+/* Styles individual squares on game board */
 .item {
-    
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -179,12 +146,21 @@ html, body{
     flex-direction: column;
 }
 
+
+body.accessible-mode .game{
+    background-color: pink !important;
+}
+
+/* Styles heading on game board square */
 .item h3{
     font-size: 1.5vw;
     font-family: 'Londrina Solid';
     margin-top: 4.5vw;
 }
 
+
+
+/* Styles tile bar */
 .tile_bar{
     background-color: pink;
     width: 100%;
@@ -194,7 +170,7 @@ html, body{
 }
 
 
-
+/* Styles task deck */
 .task_deck{
     position: absolute;
     top: 33%;
@@ -207,9 +183,9 @@ html, body{
     align-items: center;
 
    
-    
 }
 
+/* Styles task button */
 .task_btn{
     background-color: #3c3e4c;
     border: none;
@@ -224,6 +200,7 @@ html, body{
 
 }
 
+/* Styles Chance card deck */
 .chance_deck{
     position: absolute;
     top: 52%;
@@ -237,6 +214,7 @@ html, body{
  
 }
 
+/* Styles headings of task_deck and chance_deck */
 .task_deck h1,
 .chance_deck h1{
     font-family: 'Londrina Solid';
@@ -244,10 +222,10 @@ html, body{
     color: #d9d9d9;
 }
 
-/* Chance Popup */
+/* Chance Popup  */
 
+/* Styles main chance pop up */
 .chance_popup{
-
     position: fixed;
     top: 50%;
     left: 50%;
@@ -266,6 +244,7 @@ html, body{
 
 }
 
+/* Styles chance card header */
 .chance_header{
     background-color: green;
     width: 100%;
@@ -281,6 +260,7 @@ html, body{
 
 }
 
+/* Styles heading on chance card pop up */
 .chance_header h1{
     font-family: 'Londrina Solid';
     font-size: 1.5rem;
@@ -289,6 +269,7 @@ html, body{
 
 }
 
+/* Styles button on chance card */
 .chance_header button{
     color:black;
     font-size: 25px;
@@ -300,12 +281,14 @@ html, body{
 
 }
 
+/* Styles content within chance card pop up */
 .chance_content h2{
     margin-top: 25px;
     margin-bottom: 10px;
     font-family: 'Londrina Solid';
     padding: 20px;
 }
+
 /* Spinner */
 .spinner {
     position: absolute;
@@ -336,6 +319,7 @@ html, body{
     height: 25%;
 }
 
+/* Styles pop up header section */
 .popup_header{
     background-color: green;
     width: 100%;
@@ -351,12 +335,14 @@ html, body{
 
 }
 
+/* Styles pop up heading on header section */
 .popup_header h1{
     font-family: 'Londrina Solid';
     font-size: 2.5vw;
     margin: auto;
 }
 
+/* Styles exit button on pop up header */
 .popup_header .exit_btn{
     color:black;
     font-size: 25px;
@@ -368,6 +354,7 @@ html, body{
     
 }
 
+/* Styles content of pop up  */
 .popup_content{
     display: flex;
     flex-direction: column;
@@ -376,6 +363,7 @@ html, body{
     
 }
 
+/* Styles heading of pop up content */
 .popup_content h2 {
     margin-top: 3vw;
     margin-bottom: 0;
@@ -384,6 +372,7 @@ html, body{
     
 }
 
+/* Styles button on pop up content */
 .popup_content button {
     background: #4CAF50;
     color: white;
@@ -393,6 +382,7 @@ html, body{
     padding: 5px 10px;
 }
 
+/* Hover effect of button on pop up */
 .popup_content  button:hover {
     background: #45a049;
 }
@@ -412,6 +402,7 @@ html, body{
     align-items: center;
 }
 
+/* Styles heading of points container */
 .points_container h1{
     font-size: 4vw;
     text-align: center;
@@ -443,6 +434,7 @@ html, body{
     z-index: 1000;
 }
 
+/* Hover effect on how to play button */
 .how_to_play_btn:hover {
     background-color: #9f9d9d; 
     transform: scale(1.1); 
@@ -452,6 +444,7 @@ html, body{
     transform: scale(0.95); /* Click effect */
 }
 
+/* Styles how to play main container */
 .how_to_play_container2 {
     background-color: #D9D9D9;
     display: flex !important;
@@ -467,6 +460,7 @@ html, body{
 
 }
 
+/* Styles exit button on how to play */
 .exit_btn {
     color:black;
     position: absolute;
@@ -476,24 +470,28 @@ html, body{
     font-weight: 600;
 }
 
+/* Styles how to play header container */
 .how_to_play_container3 {
     background-color: #3C3E4C;
     border-radius: 25px;
     top:0;
 }
 
+/* Styles title 'How to play'  */
 .how_to_play_title {
     color: white;
     font-family: "Londrina Solid";
     width: 100%;
+
 }
 
+/* Styles how to play instructions */
 .how_to_play_instructions {
     color: black;
     font-family: "Londrina Solid";
 }
 
-
+/* Styles overlay when how to play pop up is activated */
 .overlay {
     position: fixed;
     inset: 0; 
@@ -510,41 +508,8 @@ html, body{
 
 @media(max-width: 480px){
 
-    .sidebar{
-        width: 85vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 5vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 5vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-        
+    .game{
+        overflow: scroll;
     }
 
     .main_board{
@@ -585,9 +550,16 @@ html, body{
 
     .how_to_play_container2 {
         width: 50vw;
-        height: 40%;
+        height: 50vh;
     
     }
+
+    .how_to_play_title{
+    margin-top: 5%;
+    
+    
+    }
+
     .exit_btn {
         font-size: 25px;
         right: 20px;
@@ -608,6 +580,47 @@ html, body{
     }
 
 
+    /* Styles pop up heading on header section */
+    .popup_header h1{
+        font-size: 5vw;
+    }
+
+    /* Styles exit button on pop up header */
+    .popup_header .exit_btn{
+        font-size: 25px;
+        top: 0;
+        right: 2vw;
+        
+    }
+
+    /* Styles content of pop up  */
+    .popup_content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2vw;
+        
+    }
+
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        margin-top: 5vw;
+        margin-bottom: 1vw;
+        font-size: 4vw;
+        
+    }
+
+    /* Styles button on pop up content */
+    .popup_content button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+
+
 
 }
 
@@ -615,42 +628,6 @@ html, body{
 /* Tablet Styling */
 
 @media (min-width: 481px) and (max-width: 768px){
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-        
-    }
 
     .main_board{
         width: 80vw;
@@ -691,43 +668,22 @@ html, body{
     }
    
 
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        font-size: 2.5vw;
+        
+    }
+
+   
+
 }
 
 
 @media (min-width: 769px) and (max-width: 1199px ){
 
-    .sidebar {
-        width: 8.5vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 3vw;
-        top: 3vw;
-    
+    .game{
+        overflow: scroll;
     }
-
-    
-    .sidebar h2{
-        font-size: 2vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
-
 
     .main_board{
         width: 84vw;
@@ -755,6 +711,7 @@ html, body{
         margin-top: 2vw;
         width: 20vw;
         height: 5%;
+        
     }
 
     .points_container h1{
@@ -794,6 +751,28 @@ html, body{
         margin-top: 5%;
         font-size: 3vw;
     }
+
+
+
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        margin-top: 5vw;
+        margin-bottom: 1vw;
+        font-size: 2.5vw;
+        
+    }
+
+    /* Styles button on pop up content */
+    .popup_content button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+
+    
     
 
 
@@ -801,38 +780,6 @@ html, body{
 
 
 @media (min-width: 1200px){
-    .sidebar {
-        width: 7vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 2vw;
-        top: 2.5vw;
-    
-    }
-
-    
-    .sidebar h2{
-        font-size: 1.7vw;
-        margin-top: 2vw;
-    }
-
-    .sidebar i{
-        font-size: 3vw;
-    }
-
-    .logoContainer {
-        width: 100%;
-        height: 10%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 1vw;
-        margin-right: 1vw;
-       
-    }
-
     .main_board{
         width: 83vw;
         height: 82vh;
@@ -859,6 +806,7 @@ html, body{
         margin-top: 1vw;
         width: 20vw;
         height: 5%;
+
     }
 
     .points_container h1{
@@ -897,6 +845,12 @@ html, body{
         margin-top: 5%;
         font-size: 2vw;
     }
+
+    .popup{
+        height: 30%;
+    }
+
+
 
 
     

@@ -5,11 +5,11 @@ class Command(BaseCommand):
     help = "Populate the database with default task cards"
 
     def handle(self, *args, **kwargs):
-        Task.objects.create(description="Use a reusable cup"                 , applicable_squares=[3, 4, 6, 8, 9, 11, 14], score_to_award=5)
-        Task.objects.create(description="Recycle an item"                    , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
-        Task.objects.create(description="Use the water fountain"             , applicable_squares=[3, 4, 5, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
+        Task.objects.create(description="Use a reusable cup"                 , applicable_squares=[3, 4, 6, 7, 8, 9, 13, 14, 15], score_to_award=5)
+        Task.objects.create(description="Recycle an item"                    , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=10)
+        Task.objects.create(description="Use the water fountain"             , applicable_squares=[3, 4, 7, 8, 9, 10, 11, 13, 14, 15],score_to_award=5)
         Task.objects.create(description="Recycle used paper"                 , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
-        Task.objects.create(description="Visit a green space"                , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
+        Task.objects.create(description="Visit the green space"                , applicable_squares=[2, 3, 6, ], score_to_award=5)
         Task.objects.create(description="Pick up a piece of litter"          , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=5)
         Task.objects.create(description="Turn off the lights"                , applicable_squares=[1, 2], score_to_award=5)
         Task.objects.create(description="Donate to the food fridge"          , applicable_squares=[4], score_to_award=5)

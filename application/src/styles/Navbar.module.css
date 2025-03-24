@@ -1,0 +1,215 @@
+/*
+* Navbar.module.css - Stylesheet for the Navigation Bar component 
+* 
+* @file Defines the styles for the sidebar
+* @author Carina Jose 
+* @author Amreet Dhillon 
+* @version 1.1.0 
+* @since 19-02-2025
+*/
+
+
+/* Styles the Sidebar */
+.sidebar {
+    background-color:#3C3E4C;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    width: 9vw;
+    padding: 1.5vw 0;
+    height: 90vh;
+    position: absolute;
+    border-radius: 30px;
+    gap: 4vw;
+
+}
+
+/* Styles i element of the sidebar */
+.sidebar i {
+    color: #85AEB3;
+    font-size: 4vw;
+  
+}
+
+
+/* Styles h2 element of the sidebar */
+.sidebar h2{
+    color: #85AEB3;
+    font-family: 'Hammersmith One';
+    font-size: 2vw;
+}
+
+
+/* Logo container */
+.logoContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+/* Styles logo text 'cliMate' */
+.logoText {
+    color: #85AEB3;
+    font-size:25px;
+    top: 0;
+    justify-content: flex-start;
+}
+
+
+@media (max-width: 480px){
+
+    /* Styles the Sidebar */
+    .sidebar{
+        width: 85vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 2vh;
+        margin-bottom: 4vh;
+        left: 2vw;
+        
+    }
+
+    /* Styles the h2 element of sidebar */
+    .sidebar h2{
+        font-size: 5vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    /* Styles the i element of sidebar */
+    .sidebar i{
+        font-size: 5vw;
+        
+    }
+
+    /* Styles the logo container */
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+}
+
+
+/* Tablet Styling */
+@media (min-width: 481px) and (max-width: 768px){
+
+    /* Styles the Sidebar */
+    .sidebar{
+        width: 90vw;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        height: 9vh;
+        gap: 6vw;
+        position: absolute;
+        bottom: 3vh;
+        margin-bottom: 3vw;
+        left: 2vw;
+        
+    }
+
+    /* Styles the h2 element of sidebar */
+    .sidebar h2{
+        font-size: 4vw;
+        margin-left: 5vw;
+        margin-top: 1vw;
+    }
+
+    /* Styles the i element of sidebar */
+    .sidebar i{
+        font-size: 4vw;
+        
+    }
+
+    /* Styles the logo container */
+    .logoContainer {
+        width: 20%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-left: 3vw;
+        margin-right: 3vw;
+    
+        
+    }
+
+}
+
+/* Desktop Styling */
+
+@media (min-width: 769px) and (max-width: 1012px){
+
+    /* Styles the Sidebar */
+    .sidebar {
+        width: 8vw;
+        padding: 1.5vw 0;
+        height: 88vh;
+        position: absolute;
+        border-radius: 30px;
+        gap: 2vw;
+        top: 5.5%;
+    
+    }
+
+    /* Styles the i element of sidebar */
+    .sidebar i {
+        color: #85AEB3;
+        font-size: 4vw;
+      
+    }
+    
+    
+    /* Styles the h2 element of sidebar */
+    .sidebar h2{
+        color: #85AEB3;
+        font-family: 'Hammersmith One';
+        font-size: 2vw;
+    }
+
+
+
+}
+
+
+/* Large Desktop Styling */
+
+@media (min-width: 1013px){
+
+    /* Styles the Sidebar */
+    .sidebar {
+        width: 7vw;
+        height: 90vh;
+        gap: 1vw;
+        top: 5.5%;
+    
+    }
+
+    /* Styles the i element of the sidebar */
+    .sidebar i {
+        font-size: 3vw;
+      
+    }
+    
+    
+    /* Styles the h2 element of the sidebar */
+    .sidebar h2{
+        font-size: 1.8vw;
+    }
+
+}

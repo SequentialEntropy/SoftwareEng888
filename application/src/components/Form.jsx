@@ -1,3 +1,16 @@
+/**
+ * Form.jsx - A reusable form component for user login and registration.
+ *
+ * @file Handles authentication form submission: login & register
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useState } from "react";
 import api from "../api";
 import { Link, useNavigate } from "react-router-dom";
@@ -30,6 +43,20 @@ function Form({ route, method }) {
     const closePopup = () => {
         setIsOpen(false);
     };
+
+    /**
+     * Handles form submission.
+     *
+     * - Prevents default form behavior.
+     * - Sends a POST request to authenticate/register the user.
+     * - If login is successful, stores tokens in local storage and navigates to homepage.
+     * - If user just registered, redirects user to login page.
+     * - Alerts the user in case of an error.
+     *
+     * @param {Event} e - Form submission event.
+     */
+
+    const [errorMessages, setErrorMessages] = useState([]); // New state for errors
 
     const handleSubmit = async (e) => {
         setLoading(true);
@@ -67,7 +94,7 @@ function Form({ route, method }) {
                 navigate("/login");
             }
         } catch (error) {
-            setErrorMessages(error.response?.data || { error: "Something went wrong." });
+            setErrorMessages(error.response.data)
         } finally {
             setLoading(false);
         }
@@ -76,6 +103,7 @@ function Form({ route, method }) {
     return (
         <div className={styles.main_form}>
             <div className={styles.header}>
+                <Link className={styles.logo} to="/">888</Link>
                 <Link className={styles.logo} to="/">888</Link>
                 <h1 className={styles.heading}>cliMate</h1>
                 <Link className={styles.header_btn_login} to="/login">Login</Link>
@@ -151,7 +179,8 @@ function Form({ route, method }) {
                                         placeholder="Confirm Password"
                                         required
                                     />
-                                    <label style={{ width: "100%" }}>
+                                    {/* Checkbox with Privacy Policy Link */}
+                                    <label className={styles.signup_label}>
                                         <input type="checkbox" required />
                                         By signing up you agree to our{" "}
                                         <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.

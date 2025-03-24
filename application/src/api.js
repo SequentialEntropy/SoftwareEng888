@@ -3,7 +3,8 @@
  * 
  * @file Sets ups and Axios instance with a base URL and request intercepter for authentication 
  * @author Carina Jose 
- * @author Amreet Dhillon 
+ * @author Amreet Dhillon
+ * @author Dany Kelzi  
  * @version 1.0.0 
  * @since 15-02-2025
  */
@@ -15,9 +16,7 @@ import { ACCESS_TOKEN } from "./constants"
  * Creates an Axios instance with a predefined base URL 
  */
 const api = axios.create({
-    // baseURL: import.meta.env.VITE_API_URL
-    // base URL for API requests 
-    baseURL: "http://127.0.0.1:8000"
+    baseURL: import.meta.env.VITE_API_URL || "http://127.0.0.1:8000"
 })
 
 /**

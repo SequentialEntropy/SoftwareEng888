@@ -22,6 +22,7 @@
     background-color: #C5E4E1;
 }
 
+/* Heading styling */
 .heading{
     margin-left: auto;
     margin-right: auto;
@@ -33,51 +34,7 @@
     font-family: "Hammersmith One";
 }
 
-/* Sidebar navigation */
-.sidebar {
-    background-color:#3C3E4C;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    align-items: center;
-    width: 9vw;
-    padding: 1.5vw 0;
-    height: 90vh;
-    position: absolute;
-    border-radius: 30px;
-    gap: 4vw;
 
-}
-
-.sidebar i {
-    color: #85AEB3;
-    font-size: 4vw;
-  
-}
-
-
-
-.sidebar h2{
-    color: #85AEB3;
-    font-family: 'Hammersmith One';
-    font-size: 2vw;
-}
-
-
-/* Logo container */
-.logoContainer {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-    padding-top: 10px;
-}
-
-.logoText {
-    color: #85AEB3;
-    font-size:25px;
-    top: 0;
-    justify-content: flex-start;
-}
 
 /* Dashboard grid layout */
 .grid {
@@ -109,6 +66,7 @@
     padding: 0;
 }
 
+/* Style links inside .item */
 .item a{
     text-decoration: none;
     font-size: 2rem;
@@ -140,7 +98,8 @@
     align-items: center;
     gap: 20px;
     border-radius: 30px;
-    background-color: rgba(0, 0, 0, 0.5);
+/*     background-color: rgba(0, 0, 0, 0.5); */
+    background-color: #37394A;
 
 
 }
@@ -159,6 +118,7 @@
     height: 45px;
 }
 
+/* Styles profile icon on leaderboard */
 .profileIcon {
     margin-top: 5px;
 }
@@ -205,6 +165,7 @@
     
 }
 
+/* Styles points container */
 .points_container {
     display: flex;
     flex-direction: column;
@@ -230,9 +191,9 @@
    
 }
 
+/* Remove margin from .pointsIcon */
 .pointsIcon {
     margin: 0;
-   
 }
 
 /* Progress bar */
@@ -245,12 +206,14 @@
     
 }
 
+/* Style for the progress bar container */
 .progressBar::-webkit-progress-bar {
     background-color: #C5E4E1;
     border-radius: 30px;
     border: 1px solid #3C3E4C; /* Add a border color to the progress bar */
 }
 
+/* Style for the progress value */
 .progressBar::-webkit-progress-value {
     background-color: #3C3E4C;
     border-radius: 30px;
@@ -260,28 +223,31 @@
 /* Mobile Styling */
 @media (max-width: 480px){
 
+    /* Set the width of .heading to 80% of the viewport width */
     .heading{
-        width: 80vw;
-        
+        width: 100%;
     }
 
+    /* Style for .grid element */
     .grid{
         width: 90vw;
         height: 100%;
-        max-height: 80vh;
+        max-height: 70vh;
         margin-left: auto;
         margin-right: auto;
-        gap: 1.5vw;
-      
+        gap: 1.5vw;  
+   
     }
 
     /* Game Widget */
 
+    /* Style for the game widget */
     .grid .item:nth-child(1){
         min-height: 28vh;
         max-height: 35vh;
     }
 
+    /* Style for the anchor and h2 of game widget */
     .grid .item:nth-child(1) a,
     .grid .item:nth-child(1) h2 {
         font-size: 5.5vw;
@@ -289,6 +255,7 @@
 
     /* Leaderboard Widget */
 
+    /* Style for leaderboard widget */
     .grid .item:nth-child(2) {
 
         width: 33vw;
@@ -298,6 +265,7 @@
     
     }
 
+    /* Style for h1 of leaderboard widget */
     .grid .item:nth-child(2) h1{
         font-size: 5vw;
         margin-bottom: 0;
@@ -305,28 +273,26 @@
         
     }
 
+    /* Style for h3 of leaderboard widget */
     .grid .item:nth-child(2) h3{
         font-size: 4vw;
-        
-        
     }
 
+    /* Styles font size for profile name within leaderboard */
     .grid .item:nth-child(2) .profileName{
-        font-size: 2.5vw;
+        font-size: 2vw;
     }
 
+    /* Styles bar for each user in leaderboard */
     .grid .item:nth-child(2) .profileItem{
         height: 8vw;
         width: 24vw;
-        
-        
     }
 
+    /* Styles i element for leaderboard widget */
     .grid .item:nth-child(2) i{
         font-size: 8vw;
     }
-
-    
     
     /* Progress Bar */
     .progressBar{
@@ -337,8 +303,8 @@
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        min-height: 32vh;
-        max-height: 33vh;
+        min-height: 30vh;
+        max-height: 30vh;
         margin-top:0;
       
     
@@ -349,15 +315,17 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        min-height: 32vh;
-        max-height: 33vh;
+        min-height: 30vh;
+        max-height: 30vh;
     }
 
+    /* Styles i element for points widget */
     .grid .item:nth-child(5) i{
         font-size: 12vw;
         line-height: 1.5;
     }
 
+    /* Style for h2 of points widget */
     .grid .item:nth-child(5) h2{
         font-size: 8vw;
         line-height: 1;
@@ -365,54 +333,16 @@
         
     }
 
+    /* Style for h1 of points widget */
     .grid .item:nth-child(5) h1{
         margin-top: 5vw;
         font-size: 5vw;
     }
 
+    /* Provides margin top to .pointsItem */
     .pointsItem{
         margin-top: 1vw;
     }
-
-    .sidebar{
-        width: 85vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 5vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 5vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
-    
-        
-    }
-
-
-
 
 }
 
@@ -420,28 +350,32 @@
 
 /* Tablet Styling */
 @media (min-width: 481px) and (max-width: 768px){
+
+     /* Set the width of .heading to 80% of the viewport width */
     .heading{
         width: 80vw;
-        
     }
 
+    /* Style for .grid element */
     .grid{
         width: 90vw;
         height: 100%;
-        max-height: 80vh;
+        max-height: 70vh;
         margin-left: auto;
         margin-right: auto;
-        gap: 1.5vw;
+        gap: 1.5vw; 
       
     }
 
     /* Game Widget */
 
+    /* Style for the game widget */
     .grid .item:nth-child(1){
         min-height: 30vh;
         max-height: 35vh;
     }
 
+    /* Style for the anchor and h2 of game widget */
     .grid .item:nth-child(1) a,
     .grid .item:nth-child(1) h2 {
         font-size: 3.5vw;
@@ -449,6 +383,7 @@
 
     /* Leaderboard Widget */
 
+    /* Style for leaderboard widget */
     .grid .item:nth-child(2) {
 
         width: 33vw;
@@ -458,6 +393,7 @@
     
     }
 
+    /* Style for h1 element on leaderboard widget */
     .grid .item:nth-child(2) h1{
         font-size: 3vw;
         margin-bottom: 0;
@@ -465,23 +401,23 @@
         
     }
 
+    /* Style for h3 element on leaderboard widget */
     .grid .item:nth-child(2) h3{
         font-size: 2vw;
-        
-        
     }
 
+    /* Style for usernames on leaderboard widget */
     .grid .item:nth-child(2) .profileName{
-        font-size: 2vw
+        font-size: 1.5vw
     }
 
+    /* Style for user tab on leaderboard widget */
     .grid .item:nth-child(2) .profileItem{
         height: 4.5vw;
         width: 22vw;
-        
-        
     }
 
+    /* Style for i element on leaderboard widget */
     .grid .item:nth-child(2) i{
         font-size: 4.5vw;
     }
@@ -497,8 +433,8 @@
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        min-height: 35vh;
-        max-height: 38vh;
+        min-height: 30vh;
+        max-height: 30vh;
         margin-top:0;
       
     
@@ -509,78 +445,48 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        min-height: 35vh;
-        max-height: 38vh;
+        min-height: 30vh;
+        max-height: 30vh;
     }
 
+    /* Style for i element on points widget */
     .grid .item:nth-child(5) i{
-        font-size: 7vw;
+        font-size: 5vw;
         line-height: 1;
     }
 
+    /* Style for h2 element on points widget */
     .grid .item:nth-child(5) h2{
-        font-size: 8vw;
+        font-size: 5vw;
         line-height: 1.5;
         margin-top: 1vw;
         
     }
 
+    /* Style for h1 element on points widget */
     .grid .item:nth-child(5) h1{
         margin-top: 4vw;
-        font-size: 4vw;
+        font-size: 3vw;
     }
 
+    /* Style for .pointsItem on points widget */
     .pointsItem{
         margin-top: 3vw;
     }
 
-    .sidebar{
-        width: 90vw;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        height: 9vh;
-        gap: 6vw;
-        position: absolute;
-        bottom: 4.5%;
-        left: 2vw;
-        
-    }
-
-    .sidebar h2{
-        font-size: 4vw;
-        margin-left: 5vw;
-        margin-top: 1vw;
-    }
-
-    .sidebar i{
-        font-size: 4vw;
-        
-    }
-
-    .logoContainer {
-        width: 20%;
-        height: 100%;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        margin-left: 3vw;
-        margin-right: 3vw;
     
-        
-    }
 
 }
 
 /* Desktop Styling */
 
 @media (min-width: 769px) and (max-width: 1012px){
+    /* Set the width of .heading to 80% of the viewport width */
     .heading{
         width: 80vw;
-        
     }
 
+    /* Style for .grid element */
     .grid{
         width: 85vw;
         height: 83vh;
@@ -598,6 +504,7 @@
         max-height: 50vh;
     }
 
+    /* Style for the anchor and h2 of game widget */
     .grid .item:nth-child(1) a,
     .grid .item:nth-child(1) h2 {
         font-size: 3vw;
@@ -614,6 +521,7 @@
     
     }
 
+    /* Style h1 element of leaderboard widget */
     .grid .item:nth-child(2) h1{
         font-size: 3vw;
         margin-bottom: 0;
@@ -621,12 +529,14 @@
         
     }
 
+    /* Style h3 element of leaderboard widget */
     .grid .item:nth-child(2) h3{
         font-size: 1.5vw;
         margin-bottom: 0;
         
     }
 
+    /* Style .profileItem of leaderboard widget */
     .grid .item:nth-child(2) .profileItem{
         height: 4vw;
         width: 25vw;
@@ -634,6 +544,7 @@
         
     }
 
+    /* Style i element of leaderboard widget */
     .grid .item:nth-child(2) i{
         font-size: 4vw;
     }
@@ -664,11 +575,13 @@
         max-height: 50vh;
     }
 
+    /* Style i element of points widget */
     .grid .item:nth-child(5) i{
         font-size: 7vw;
         line-height: 1;
     }
 
+    /* Style h1 element of points widget */
     .grid .item:nth-child(5) h1{
         font-size: 3vw;
         margin-bottom: 0;
@@ -676,42 +589,17 @@
         
     }
 
+    /* Style h2 element of points widget */
     .grid .item:nth-child(5) h2{
         font-size: 8vw;
         line-height: 1;
         
     }
 
+    /* Style .pointsItem of points widget */
     .pointsItem{
         margin-top: 1.5vw;
     }
-
-    .sidebar {
-        width: 8vw;
-        padding: 1.5vw 0;
-        height: 88vh;
-        position: absolute;
-        border-radius: 30px;
-        gap: 3vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        color: #85AEB3;
-        font-size: 4vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        color: #85AEB3;
-        font-family: 'Hammersmith One';
-        font-size: 2vw;
-    }
-
-
 
 }
 
@@ -719,11 +607,14 @@
 /* Large Desktop Styling */
 
 @media (min-width: 1013px){
+    
+    /* Set the width of .heading to 80% of the viewport width */
     .heading{
         width: 80vw;
         
     }
 
+    /* Style for .grid element */
     .grid{
         width: 88vw;
         height: 84vh;
@@ -752,6 +643,7 @@
     
     }
 
+    /* Style for h1 element of leaderboard widget */
     .grid .item:nth-child(2) h1{
         font-size: 2.5vw;
         margin-bottom: 0;
@@ -759,17 +651,20 @@
         
     }
 
+    /* Style for h3 element of leaderboard widget */
     .grid .item:nth-child(2) h3{
         font-size: 1.5vw;
         
     }
 
+    /* Style .profileItem of leaderboard widget */
     .grid .item:nth-child(2) .profileItem{
         height: 3vw;
         width: 25vw;   
      
     }
 
+    /* Style for i element of leaderboard widget */
     .grid .item:nth-child(2) i{
         font-size: 3vw;
     }
@@ -799,43 +694,29 @@
         max-height: 40vh;
     }
 
+    /* Style for i element of points widget */
     .grid .item:nth-child(5) i{
         font-size: 4vw;
         line-height: 1;
     }
 
+    /* Style for h1 element of points widget */
     .grid .item:nth-child(5) h1{
         margin-top: 1.5vw;
         font-size: 2vw;
     }
 
+    /* Style for h2 element of points widget */
     .grid .item:nth-child(5) h2{
         font-size: 4vw;
         line-height: 1.2;
         
     }
 
+    /* Style for .pointsItem of points widget */
     .pointsItem{
         margin-top: 0.7vw;
     }
 
-    .sidebar {
-        width: 7vw;
-        height: 90vh;
-        gap: 2vw;
-        top: 5.5%;
-    
-    }
-    
-    .sidebar i {
-        font-size: 3vw;
-      
-    }
-    
-    
-    
-    .sidebar h2{
-        font-size: 1.8vw;
-    }
 
 }

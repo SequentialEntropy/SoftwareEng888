@@ -23,6 +23,8 @@ import Avatar from "../components/Avatar"
 import NavBar from "../components/Navbar"
 import { squares } from "../constants"
 
+
+
 /**
  * Board Component
  * This component represents a spinning wheel that determines the number of squares the user will proceed.
@@ -51,6 +53,7 @@ function Board() {
 
     // Initialise Avatar location & score
     useEffect(() => {
+        document.title = "Board"
         // fetch current score and update rendered value
         api.get("/accounts/me/").then(res => res.data.usergamestats).then(
             usergamestats => {
@@ -178,6 +181,9 @@ function Board() {
 
                 {/* How to play popup */}
                 <HowToPlay />
+
+        
+            
             </div>
             <div className={styles.main_board}>
                 {/* Avatar */}

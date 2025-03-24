@@ -156,6 +156,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 

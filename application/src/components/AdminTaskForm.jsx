@@ -22,16 +22,6 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
         setFormData({ ...formData, [e.target.name]: e.target.value })
     }
 
-    const onSelectChange = (e) => {
-        const selectedValues = Array.from(e.target.selectedOptions, option => parseInt(option.value));
-    
-        setFormData(prev => ({
-            ...prev,
-            applicable_squares: selectedValues
-        }));
-    };
-    
-
     const onCheckboxChange = e => {
         let newApplicableSquares = formData.applicable_squares.filter(
             square_id => square_id !== parseInt(e.target.id)
@@ -82,33 +72,32 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
                 placeholder="Enter score to award"
                 required
             />
-            <select onChange={onSelectChange} value={formData.applicable_squares}>
-                {squares.map(square => (
-                    <option key={square.id} value={square.id}>
+
+            {squares.map(square => (
+                <div key={square.id} className={styles.form_group}>
+                    {/* <input
+                        type="checkbox"
+                        id="task_completed"
+                        name="task_completed"
+                        checked={formData.usergamestats.task_completed}
+                        onChange={onGameStatsChange}
+                    />
+                    <label htmlFor="task_completed">
+                        Task Completed
+                    </label> */}
+                    <input
+                        type="checkbox"
+                        id={square.id}
+                        onChange={onCheckboxChange}
+                        checked={formData.applicable_squares.includes(square.id)}
+                    />
+                    <label htmlFor={square.id}>
                         {square.name}
-                    </option>
-                ))}
-            </select>
+                    </label>
+                </div>
+            ))}
 
-            {/*
-            <ul>
-                {squares.map(square => (
-                    <div key={square.id}>
-                        <input
-                            type="checkbox"
-                            id={square.id}
-                            onChange={onCheckboxChange}
-                            checked={formData.applicable_squares.includes(square.id)}
-                        />
-                        <label htmlFor={square.id}>
-                            {square.name}
-                        </label>
-                    </div>
-                ))}
-            </ul>
-
-            */}
-            <button type="submit">{selectedTask ? "Save Task" : "Add Task"}</button>
+            <button type="submit">{selectedTask ? "Save Task" : "Create Task"}</button>
         </form>
     )
 }
