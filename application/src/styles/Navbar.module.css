@@ -70,7 +70,8 @@
         height: 9vh;
         gap: 6vw;
         position: absolute;
-        bottom: 7%;
+        bottom: 2vh;
+        margin-bottom: 4vh;
         left: 2vw;
         
     }
@@ -116,7 +117,8 @@
         height: 9vh;
         gap: 6vw;
         position: absolute;
-        bottom: 4.5%;
+        bottom: 3vh;
+        margin-bottom: 3vw;
         left: 2vw;
         
     }

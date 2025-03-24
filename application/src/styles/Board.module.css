@@ -143,7 +143,7 @@ html, body{
 }
 
 
-body .accessible-mode .item{
+body.accessible-mode.item{
     background-color: pink !important;
 }
 

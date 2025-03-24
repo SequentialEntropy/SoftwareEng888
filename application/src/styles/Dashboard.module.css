@@ -225,18 +225,18 @@
 
     /* Set the width of .heading to 80% of the viewport width */
     .heading{
-        width: 80vw;
+        width: 100%;
     }
 
     /* Style for .grid element */
     .grid{
         width: 90vw;
         height: 100%;
-        max-height: 80vh;
+        max-height: 70vh;
         margin-left: auto;
         margin-right: auto;
-        gap: 1.5vw;
-      
+        gap: 1.5vw;  
+   
     }
 
     /* Game Widget */
@@ -303,8 +303,8 @@
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        min-height: 32vh;
-        max-height: 33vh;
+        min-height: 30vh;
+        max-height: 30vh;
         margin-top:0;
       
     
@@ -315,8 +315,8 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        min-height: 32vh;
-        max-height: 33vh;
+        min-height: 30vh;
+        max-height: 30vh;
     }
 
     /* Styles i element for points widget */
@@ -360,10 +360,10 @@
     .grid{
         width: 90vw;
         height: 100%;
-        max-height: 80vh;
+        max-height: 70vh;
         margin-left: auto;
         margin-right: auto;
-        gap: 1.5vw;
+        gap: 1.5vw; 
       
     }
 
@@ -433,8 +433,8 @@
     /* Map Widget */
 
     .grid .item:nth-child(4) {
-        min-height: 35vh;
-        max-height: 38vh;
+        min-height: 30vh;
+        max-height: 30vh;
         margin-top:0;
       
     
@@ -445,31 +445,31 @@
     .grid .item:nth-child(5) {
         margin-left: 2vw;
         margin-top: 0; 
-        min-height: 35vh;
-        max-height: 38vh;
+        min-height: 30vh;
+        max-height: 30vh;
     }
 
     /* Style for i element on points widget */
     .grid .item:nth-child(5) i{
-        font-size: 7vw;
+        font-size: 5vw;
         line-height: 1;
     }
 
     /* Style for h2 element on points widget */
     .grid .item:nth-child(5) h2{
-        font-size: 8vw;
+        font-size: 5vw;
         line-height: 1.5;
         margin-top: 1vw;
         
     }
 
-    /* Style for h1 element on leaderboard widget */
+    /* Style for h1 element on points widget */
     .grid .item:nth-child(5) h1{
         margin-top: 4vw;
-        font-size: 4vw;
+        font-size: 3vw;
     }
 
-    /* Style for .pointsItem on leaderboard widget */
+    /* Style for .pointsItem on points widget */
     .pointsItem{
         margin-top: 3vw;
     }
