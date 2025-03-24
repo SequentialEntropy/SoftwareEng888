@@ -29,9 +29,22 @@ SECRET_KEY = 'django-insecure-q8dcsu32n+cbpl&cn&y-(n@t)^utg&1cg^et96&&la%-z#@t+5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWS_CREDENTIALS = True
 
+<<<<<<< refs/remotes/origin/forgot-password
 ALLOWED_HOSTS = []
 # ALLOWED_HOSTS = ["*"]
+=======
+ALLOWED_HOSTS = [
+    "climate.genkiasahi.com",
+    "127.0.0.1",
+    "localhost",
+    "0.0.0.0",
+]
+CSRF_TRUSTED_ORIGINS = ["https://climate.genkiasahi.com",     
+                        "http://localhost:5173"]
+>>>>>>> local
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -62,15 +75,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
+
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -92,9 +105,15 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
+<<<<<<< refs/remotes/origin/forgot-password
 LOGIN_REDIRECT_URL = "home"
 LOGOUT_REDIRECT_URL = "home"
 EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+=======
+LOGIN_REDIRECT_URL = "/home"
+LOGOUT_REDIRECT_URL = "/login"
+
+>>>>>>> local
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -147,6 +166,6 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+EMAIL_USER = "climate.customerservice@gmail.com"
+EMAIL_PASSWORD = "nahl vmuq rzyp pnmp"
+FRONTEND_URL = "http://localhost:5173"
