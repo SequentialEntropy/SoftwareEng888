@@ -51,3 +51,9 @@ jobs:
       run: |
         cd application
         npm test -- --coverage
+
+    - name: Run Map test
+      run: |
+        cd application
+        npm test Map.test.jsx
+      
