@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
+import os
 from pathlib import Path
 from datetime import timedelta
 # from dotenv import load_dotenv
@@ -32,10 +33,6 @@ DEBUG = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWS_CREDENTIALS = True
 
-<<<<<<< refs/remotes/origin/forgot-password
-ALLOWED_HOSTS = []
-# ALLOWED_HOSTS = ["*"]
-=======
 ALLOWED_HOSTS = [
     "climate.genkiasahi.com",
     "127.0.0.1",
@@ -44,7 +41,6 @@ ALLOWED_HOSTS = [
 ]
 CSRF_TRUSTED_ORIGINS = ["https://climate.genkiasahi.com",     
                         "http://localhost:5173"]
->>>>>>> local
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -105,15 +101,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'mysite.wsgi.application'
 
-<<<<<<< refs/remotes/origin/forgot-password
-LOGIN_REDIRECT_URL = "home"
-LOGOUT_REDIRECT_URL = "home"
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-=======
 LOGIN_REDIRECT_URL = "/home"
 LOGOUT_REDIRECT_URL = "/login"
 
->>>>>>> local
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -161,6 +151,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

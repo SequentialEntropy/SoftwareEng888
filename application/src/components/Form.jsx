@@ -1,22 +1,6 @@
-<<<<<<< refs/remotes/origin/forgot-password
-/**
- * Form.jsx - A reusable form component for user login and registration.
- *
- * @file Handles authentication form submission: login & register
- * @author Carina Jose
- * @author Amreet Dhillon
- * @author Genki Asahi 
- * @author Yap Wen Xing
- * @author Dany Kelzi
- * @version 1.1.0
- * @since 23-02-2025
- */
-
-=======
->>>>>>> local
 import { useState } from "react";
 import api from "../api";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ACCESS_TOKEN, REFRESH_TOKEN } from "../constants";
 import styles from "../styles/Form.module.css";
 
@@ -47,23 +31,6 @@ function Form({ route, method }) {
         setIsOpen(false);
     };
 
-<<<<<<< refs/remotes/origin/forgot-password
-    /**
-     * Handles form submission.
-     *
-     * - Prevents default form behavior.
-     * - Sends a POST request to authenticate/register the user.
-     * - If login is successful, stores tokens in local storage and navigates to homepage.
-     * - If user just registered, redirects user to login page.
-     * - Alerts the user in case of an error.
-     *
-     * @param {Event} e - Form submission event.
-     */
-
-    const [errorMessage, setErrorMessage] = useState(""); // New state for errors
-
-=======
->>>>>>> local
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
@@ -75,12 +42,6 @@ function Form({ route, method }) {
         } else {
             setPasswordError("");
         }
-<<<<<<< refs/remotes/origin/forgot-password
-    
-        try {
-            const res = await api.post(route, { username, password });
-    
-=======
 
         const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[A-Za-z0-9!@#$%^&*]{8,}$/;
         if (method === "register" && !passwordRegex.test(password)) {
@@ -98,7 +59,6 @@ function Form({ route, method }) {
 
             const res = await api.post(route, data);
 
->>>>>>> local
             if (method === "login") {
                 localStorage.setItem(ACCESS_TOKEN, res.data.access);
                 localStorage.setItem(REFRESH_TOKEN, res.data.refresh);
@@ -107,20 +67,7 @@ function Form({ route, method }) {
                 navigate("/login");
             }
         } catch (error) {
-<<<<<<< refs/remotes/origin/forgot-password
-            if (error.response && error.response.data) {
-                // Check if the error is about the username being taken
-                if (error.response.data.username) {
-                    setErrorMessage(error.response.data.username);
-                } else {
-                    setErrorMessage(error.response.data.error || "An error occurred. Please try again.");
-                }
-            } else {
-                setErrorMessage("An error occurred. Please try again later.");
-            }
-=======
             setErrorMessages(error.response?.data || { error: "Something went wrong." });
->>>>>>> local
         } finally {
             setLoading(false);
         }
@@ -129,16 +76,10 @@ function Form({ route, method }) {
     return (
         <div className={styles.main_form}>
             <div className={styles.header}>
-                <a className={styles.logo} href="/">888</a>
+                <Link className={styles.logo} to="/">888</Link>
                 <h1 className={styles.heading}>cliMate</h1>
-<<<<<<< refs/remotes/origin/forgot-password
-                <a className={styles.header_btn_login} href="login">Login</a>
-                <a className={styles.header_btn_sign} href="Register">Sign Up</a>
-                
-=======
                 <Link className={styles.header_btn_login} to="/login">Login</Link>
                 <Link className={styles.header_btn_sign} to="/register">Sign Up</Link>
->>>>>>> local
             </div>
 
             <div className={styles.login}>
@@ -148,11 +89,6 @@ function Form({ route, method }) {
                         <div className="form-group">
                             {method === "login" && (
                                 <>
-<<<<<<< refs/remotes/origin/forgot-password
-                                <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-                                <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-                                <button className={styles.forgot_password_btn}>Forgot Password</button>
-=======
                                     <input
                                         type="text"
                                         className={`form-control ${styles.login_field}`}
@@ -178,27 +114,11 @@ function Form({ route, method }) {
                                     >
                                         Forgot Password?
                                     </button>
->>>>>>> local
                                 </>
                             )}
 
                             {method === "register" && (
                                 <>
-<<<<<<< refs/remotes/origin/forgot-password
-                                    <input type="text" className={`form-control ${styles.field}`} value={email} onChange={e => setEmail(e.target.value)} placeholder="Email" required />
-                                    <input type="text" className={`form-control ${styles.field}`} value={username} onChange={e => setUsername(e.target.value)} placeholder="Username" required />
-                                    <input type="password" className={`form-control ${styles.field}`} value={password} onChange={e => setPassword(e.target.value)} placeholder="Password" required />
-                                    <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
-                                    <div>
-                                        {/* Checkbox with Privacy Policy Link */}
-                                        <label>
-                                            <input type="checkbox" />
-                                            By signing up you agree to our{" "}
-                                            <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.
-                                        </label>
-
-                                        {/* Popup and Overlay */}
-=======
                                     <input
                                         type="text"
                                         className={`form-control ${styles.field}`}
@@ -237,7 +157,6 @@ function Form({ route, method }) {
                                         <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.
                                     </label>
 
->>>>>>> local
                                     {isOpen && (
                                         <div>
                                             <div style={{
@@ -299,15 +218,10 @@ function Form({ route, method }) {
                                 </>
                             )}
                         </div>
-<<<<<<< refs/remotes/origin/forgot-password
-                        {/* Display error message after signup forms*/}
-                        {errorMessage && <p style={{ color: "red", textAlign: "center" }}>{errorMessage}</p>}
-=======
 
                         {Object.entries(errorMessages).map(([field, message]) => (
                             <p key={field} style={{ color: "red", textAlign: "center" }}>{message}</p>
                         ))}
->>>>>>> local
 
                         <button type="submit" className={styles.login_btn} disabled={loading}>
                             {loading ? "Processing..." : name}

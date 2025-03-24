@@ -3,18 +3,6 @@ import { useNavigate, useSearchParams } from "react-router-dom"
 import api from "../api"
 import styles from "../styles/ForgotPassword.module.css"
 
-<<<<<<< refs/remotes/origin/forgot-password
-
-function ForgotPassword(){
-    return <div className={styles.forgot_password_container}>
-        <h1 className={styles.heading}>Forgot Password </h1>
-        <form className={styles.password_form}>
-            <input type="password" placeholder="Enter new password"></input>
-            <input type="password" placeholder="Confirm new password"></input>
-            <button className={styles.submit_btn} type="submit">Submit</button>
-        </form>
-    </div>
-=======
 function ForgotPassword() {
     const [password, setPassword] = useState("")
     const [confirmPassword, setConfirmPassword] = useState("")
@@ -60,7 +48,6 @@ function ForgotPassword() {
     return (
         <div className={styles.forgot_password_container}>
             <h1 className={styles.heading}>Reset Your Password</h1>
->>>>>>> local
 
             <form className={styles.password_form} onSubmit={handleSubmit}>
                 <input
@@ -85,9 +72,4 @@ function ForgotPassword() {
     )
 }
 
-<<<<<<< refs/remotes/origin/forgot-password
-
-export default ForgotPassword;
-=======
 export default ForgotPassword
->>>>>>> local
