@@ -154,10 +154,19 @@
 }
 
 /* Style for T&C checkbox*/
-.signup_label{
+.login_container label{
     width: 100%;
     font-size: 12px;
     margin-bottom: 10px;
+}
+
+input[type="checkbox"]{
+    -webkit-appearance: none;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+    appearance: checkbox;
 }
 
 
@@ -220,18 +229,28 @@
     /* Styles button of login container */
     .login_container button {
         margin: 2.5vw;
+        margin-top: 4vw;
         width: 80%;
     }
 
     .login_container .forgot_password_btn{
         width: 80%;
+        margin-bottom: 10vw;
     }
 
+    .login_container label{
+        margin-top: 1vw;
+    }
 
-
+    
     /* Form fields */
     .field {
         width: 55vw;
+    }
+
+    .login_field{
+        width: 100%;
+        height: 25%;
     }
 
 
@@ -244,12 +263,12 @@
     /* Sets width of login container */
     .login_container{
         width: 50vw;
-        height: 70vh;
+        height: 75vh;
     }
 
     /* Sets height of header */
     .header{
-        height: 16vw; 
+        height: 10vw; 
     }
 
     /* Styles heading */
@@ -282,13 +301,13 @@
     /* Styles form of login container */
     .login_container form {
         width: 30vw;
-        gap: 0.5vw;
+        gap: 0vw;
     
     }
 
     /* Styles h2 element of login container */
     .login_container h2 {
-        font-size: 8vw;
+        font-size: 7vw;
         margin: 0;
        
     }
@@ -320,6 +339,8 @@
     /* Form fields */
     .field {
         width: 35vw;
+        margin-bottom: 0;
+        margin-top: 1vw;
     }
 
     .login_field{
@@ -472,6 +493,7 @@
         font-size: 1vw;
         line-height: 1;
         margin: 0;
+        margin-top: 0.8vw;
     }
 
     /* Styles button of login container */
