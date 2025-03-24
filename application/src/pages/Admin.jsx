@@ -80,7 +80,7 @@ export default function Admin() {
             {/* Sidebar navigation */}
             <NavBar />
 
-            <div>
+            <div className={styles.page_selector_container}>
                 <button className={styles.page_selector} onClick={() => setSelectedPage("Users")}>
                     Users
                 </button>

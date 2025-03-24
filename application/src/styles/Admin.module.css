@@ -23,12 +23,17 @@
 .game_manager{
     margin-top: 1vh;
     width: 85%;
-    margin-left: 10%;
     display: flex;
     flex-direction: row;
     gap: 5%;
     border-radius: 25px;
     overflow: scroll;
+}
+
+.page_selector_container {
+    display: flex;
+    justify-content: start;
+    gap: 1vw;
 }
 
 /* page_selector styles: user and game */
@@ -41,7 +46,6 @@
     border: none;
     border-radius: 25px;
     background-color: #3C3E4C;
-    margin-left: 10%;
     text-align: center;
     font-size: 1.8vw;
     margin-top: 1vw;
@@ -204,18 +208,22 @@
 @media (min-width: 481px) and (max-width: 768px){
     
     .game_manager{
-        width: 95%;
-        margin: auto;
+        width: 95vw;
+        /* margin: auto; */
+        margin-left: 3vw;
         margin-top: 2vw;
         gap: 5%; 
         max-height: 65vh;
+    }
+
+    .page_selector_container {
+        margin-left: 3vw;
     }
     
     .page_selector {
         border: none;
         width: 20%;
         padding: 10px;
-        margin: auto;
         font-size: 2vw;
         margin-top: 2vw;
     }
@@ -250,13 +258,8 @@
         max-height: 80vh;
     }
     
-    .page_selector {
-        border: none;
-        width: 20%;
-        padding: 10px;
+    .page_selector_container {
         margin-left: 13vw;
-        font-size: 1.8vw;
-        margin-top: 1vw;
     }
     
     .panel {
@@ -294,13 +297,8 @@
         max-height: 78vh;
     }
     
-    .page_selector {
-        border: none;
-        width: 20%;
-        padding: 10px;
+    .page_selector_container {
         margin-left: 11vw;
-        font-size: 1.7vw;
-        margin-top: 1vw;
     }
     
     
