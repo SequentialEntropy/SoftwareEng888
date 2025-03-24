@@ -160,11 +160,13 @@
     margin-bottom: 10px;
 }
 
-.login_container label input[type="checkbox"]{
+input[type="checkbox"]{
+    -webkit-appearance: none;
     display: inline-block;
-    width: auto;
-    height: auto;
+    width: 20px;
+    height: 20px;
     margin: 0;
+    appearance: checkbox;
 }
 
 
