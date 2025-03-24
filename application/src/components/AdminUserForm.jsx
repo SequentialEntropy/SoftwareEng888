@@ -82,44 +82,67 @@ export default function AdminUserForm({ selectedUser, tasks, onSuccess }) {
                 placeholder="Enter email"
                 required
             />
-            <input
-                type="checkbox"
-                name="is_staff"
-                checked={formData.is_staff}
-                onChange={onChange}
-            />
-            <h3>Game Stats</h3>
-            <select
-                name="current_square"
-                value={formData.usergamestats.current_square}
-                onChange={onGameStatsChange}
-            >
-                {squares.map(square => (
-                    <option key={square.id} value={square.id}>
-                        {square.name}
+            <div className={styles.form_group}>
+                <input
+                    id="is_staff"
+                    type="checkbox"
+                    name="is_staff"
+                    checked={formData.is_staff}
+                    onChange={onChange}
+                />
+                <label htmlFor="is_staff">
+                    Staff
+                </label>
+            </div>
+            <div className={styles.form_group}>
+                <label htmlFor="current_square">
+                    Current Square
+                </label>
+                <select
+                    id="current_square"
+                    name="current_square"
+                    value={formData.usergamestats.current_square}
+                    onChange={onGameStatsChange}
+                >
+                    {squares.map(square => (
+                        <option key={square.id} value={square.id}>
+                            {square.name}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className={styles.form_group}>
+                <label htmlFor="current_task">
+                    Current Task
+                </label>
+                <select
+                    id="current_task"
+                    name="current_task"
+                    onChange={onGameStatsChange}
+                    value={formData.usergamestats.current_task}
+                >
+                    <option value="-1">
+                        Not Selected
                     </option>
-                ))}
-            </select>
-            <select
-                onChange={onGameStatsChange}
-                value={formData.usergamestats.current_task}
-                name="current_task"
-            >
-                <option value="-1">
-                    Not Selected
-                </option>
-                {tasks.map(task => (
-                    <option key={task.id} value={task.id}>
-                        {task.description}
-                    </option>
-                ))}
-            </select>
-            <input
-                type="checkbox"
-                name="task_completed"
-                checked={formData.usergamestats.task_completed}
-                onChange={onGameStatsChange}
-            />
+                    {tasks.map(task => (
+                        <option key={task.id} value={task.id}>
+                            {task.description}
+                        </option>
+                    ))}
+                </select>
+            </div>
+            <div className={styles.form_group}>
+                <input
+                    type="checkbox"
+                    id="task_completed"
+                    name="task_completed"
+                    checked={formData.usergamestats.task_completed}
+                    onChange={onGameStatsChange}
+                />
+                <label htmlFor="task_completed">
+                    Task Completed
+                </label>
+            </div>
             <input
                 type="number"
                 name="score"

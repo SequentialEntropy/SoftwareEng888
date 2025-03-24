@@ -38,7 +38,7 @@ export default function AdminChanceForm({ selectedChance, onSuccess }) {
     }
 
     return (
-        <form className={styles.chance_form} onSubmit={onSubmit}>
+        <form className={styles.task_form} onSubmit={onSubmit}>
             <input
                 type="text"
                 name="description"

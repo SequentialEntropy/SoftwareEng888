@@ -13,6 +13,7 @@ export default function Admin() {
     const [selectedChance, setSelectedChance] = useState(null)
     const [users, setUsers] = useState([])
     const [selectedUser, setSelectedUser] = useState(null)
+    const [selectedPage, setSelectedPage] = useState("Users")
 
     const fetchTasks = async () => {
         const tasks = (await api.get("/tasks/")).data
@@ -79,102 +80,95 @@ export default function Admin() {
             {/* Sidebar navigation */}
             <NavBar />
 
-            <h2 className={styles.user_heading}>Manage Users</h2>
-            <div className={styles.user_panel}>
-                <h2 className={styles.task_heading}>ADD TASK</h2>
-                {/* Form for editing selected User */}
-                <AdminUserForm
-                    selectedUser={selectedUser}
-                    tasks={tasks}
-                    onSuccess={() => {
-                        setSelectedUser(null)
-                        fetchUsers()
-                    }}
-                />
-
-                <ul>
-                    {users.map(user => (
-                        <li key={user.id}>
-                            <button onClick={() => {setSelectedUser(user)}}>Edit</button>
-                            <button onClick={() => onDeleteUser(user.id)}>Delete</button>
-                            {user.username}
-                        </li>
-                    ))}
-                </ul>
+            <div>
+                <button className={styles.page_selector} onClick={() => setSelectedPage("Users")}>
+                    Users
+                </button>
+                <button className={styles.page_selector} onClick={() => setSelectedPage("Tasks")}>
+                    Tasks
+                </button>
+                <button className={styles.page_selector} onClick={() => setSelectedPage("Chances")}>
+                    Chances
+                </button>
             </div>
-            
-            
-            
-            <h2 className={styles.game_heading}>Manage Game</h2>
+
             <div className={styles.game_manager}>
+                <div className={styles.panel}>
+                    <h2 className={styles.panel_heading}>CREATE AND EDIT</h2>
 
-            <div className={styles.task_panel}>
-                <h2 className={styles.task_heading}>ADD TASK</h2>
-                {/* Form for editing selected Task */}
-                <AdminTaskForm
-                    selectedTask={selectedTask}
-                    onSuccess={() => {
-                        setSelectedTask(null)
-                        fetchTasks()
-                    }}
-                />
+                    {selectedPage === "Users" && (
+                        <AdminUserForm
+                            selectedUser={selectedUser}
+                            tasks={tasks}
+                            onSuccess={() => {
+                                setSelectedUser(null)
+                                fetchUsers()
+                            }}
+                        />
+                    )}
 
-                {/* List of Tasks */}
-                <ul>
-                    {tasks.map(task => (
-                        <li key={task.id}>
-                            <button onClick={() => {setSelectedTask(task)}}>Edit</button>
-                            <button onClick={() => onDeleteTask(task.id)}>Delete</button>
-                            {task.description}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                    {selectedPage === "Tasks" && (
+                        <AdminTaskForm
+                            selectedTask={selectedTask}
+                            onSuccess={() => {
+                                setSelectedTask(null)
+                                fetchTasks()
+                            }}
+                        />
+                    )}
 
-            <div className={styles.chance_panel}>
-                <h2 className={styles.chance_heading}>ADD CHANCE</h2>
-                {/* Form for editing selected Chance */}
-                <AdminChanceForm
-                    selectedChance={selectedChance}
-                    onSuccess={() => {
-                        setSelectedChance(null)
-                        fetchChances()
-                    }}
-                />
+                    {selectedPage === "Chances" && (
+                        <AdminChanceForm
+                            selectedChance={selectedChance}
+                            onSuccess={() => {
+                                setSelectedChance(null)
+                                fetchChances()
+                            }}
+                        />
+                    )}
 
-                {/* List of Chances */}
-                <ul>
-                    {chances.map(chance => (
-                        <li key={chance.id}>
-                            <button onClick={() => setSelectedChance(chance)}>Edit</button>
-                            <button onClick={() => onDeleteChance(chance.id)}>Delete</button>
-                            {chance.description}
-                        </li>
-                    ))}
-                </ul>
-            </div>
-            <div className={styles.chance_panel}>
-                <h2 className={styles.chance_heading}>ADD LOCATION</h2>
-                {/* Form for editing selected Chance */}
-                <AdminChanceForm
-                    selectedChance={selectedChance}
-                    onSuccess={() => {
-                        setSelectedChance(null)
-                        fetchChances()
-                    }}
-                />
+                </div>
 
-                {/* List of Chances */}
-                <ul>
-                    {chances.map(chance => (
-                        <li key={chance.id}>
-                            <button onClick={() => setSelectedChance(chance)}>Edit</button>
-                            <button onClick={() => onDeleteChance(chance.id)}>Delete</button>
-                            {chance.description}
-                        </li>
-                    ))}
-                </ul>
-            </div>
+                <div className={styles.panel}>
+                    <h2 className={styles.panel_heading}>ENTRIES</h2>
+
+                    {selectedPage === "Users" && (
+                        <ul className={styles.entries}>
+                            {users.map(user => (
+                                <li key={user.id} className={styles.entry}>
+                                    <button onClick={() => {setSelectedUser(user)}}>Edit</button>
+                                    <button onClick={() => onDeleteUser(user.id)}>Delete</button>
+                                    <p>{user.username}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+
+                    {selectedPage === "Tasks" && (
+                        <ul className={styles.entries}>
+                            {tasks.map(task => (
+                                <li key={task.id} className={styles.entry}>
+                                    <button onClick={() => {setSelectedTask(task)}}>Edit</button>
+                                    <button onClick={() => onDeleteTask(task.id)}>Delete</button>
+                                    <p>{task.description}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+
+                    {selectedPage === "Chances" && (
+                        <ul className={styles.entries}>
+                            {chances.map(chance => (
+                                <li key={chance.id} className={styles.entry}>
+                                    <button onClick={() => setSelectedChance(chance)}>Edit</button>
+                                    <button onClick={() => onDeleteChance(chance.id)}>Delete</button>
+                                    <p>{chance.description}</p>
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+
+                </div>
             </div>
         </div>
     )
