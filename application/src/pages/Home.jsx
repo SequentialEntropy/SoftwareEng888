@@ -14,6 +14,7 @@ import api from "../api"
 import NavBar from "../components/Navbar";
 import styles from "../styles/Dashboard.module.css"
 import { Link } from "react-router-dom";
+import { squares } from "../constants";
 
 /**
  * Home Component 
@@ -87,7 +88,7 @@ function Home() {
         <div className={styles.grid}>
             <div className={styles.item}>
                 <Link to="/board">You are at</Link>
-                <h2>Innovation Centre</h2>
+                <h2>{squares[currentUser.usergamestats.current_square].name}</h2>
             </div>
 
             {/* Leaderboard section */}
