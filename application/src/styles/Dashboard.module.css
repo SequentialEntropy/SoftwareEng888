@@ -280,7 +280,7 @@
 
     /* Styles font size for profile name within leaderboard */
     .grid .item:nth-child(2) .profileName{
-        font-size: 2.5vw;
+        font-size: 2vw;
     }
 
     /* Styles bar for each user in leaderboard */
@@ -408,7 +408,7 @@
 
     /* Style for usernames on leaderboard widget */
     .grid .item:nth-child(2) .profileName{
-        font-size: 2vw
+        font-size: 1.5vw
     }
 
     /* Style for user tab on leaderboard widget */

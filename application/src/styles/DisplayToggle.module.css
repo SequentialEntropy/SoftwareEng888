@@ -1,0 +1,52 @@
+.toggle{
+    background: none;
+    border: none;
+    
+}
+
+
+
+@media (max-width: 480px){
+    .toggle i{
+        font-size: 5vw;
+        
+    }
+
+}
+
+
+/* Tablet Styling */
+@media (min-width: 481px) and (max-width: 768px){
+    .toggle i{
+        font-size: 4vw;
+        
+    }
+
+}
+
+
+
+/* Desktop Styling */
+
+@media (min-width: 769px) and (max-width: 1012px){
+    .toggle i {
+        font-size: 4vw;
+      
+    }
+    
+    
+
+
+
+}
+
+
+/* Large Desktop Styling */
+
+@media (min-width: 1013px){
+    .toggle i {
+        font-size: 3vw;
+      
+    }
+   
+}
