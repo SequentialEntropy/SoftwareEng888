@@ -6,6 +6,7 @@ import { squares } from "../constants"
 const placeholder = {
     username: "",
     email: "",
+    password: "",
     is_staff: "",
     usergamestats: {
         current_square: 0,
@@ -81,6 +82,13 @@ export default function AdminUserForm({ selectedUser, tasks, onSuccess }) {
                 onChange={onChange}
                 placeholder="Enter email"
                 required
+            />
+            <input
+                type="password"
+                name="password"
+                value={formData.password}
+                onChange={onChange}
+                placeholder="Enter password"
             />
             <div className={styles.form_group}>
                 <input

@@ -28,14 +28,15 @@ class UserSerializer(serializers.ModelSerializer):
         return user
 
     def update(self, instance, validated_data):
-        validated_data.pop("password", None)  # Prevent accidental password overwrites
-        validated_data.pop("is_staff", None)  # Prevent permission issues
-
         # Update User fields
         if "username" in validated_data:
             instance.username = validated_data["username"]
         if "email" in validated_data:
             instance.email = validated_data["email"]
+        if "is_staff" in validated_data:
+            instance.is_staff = validated_data["is_staff"]
+        if "password" in validated_data:
+            instance.set_password(validated_data["password"])
 
         instance.save()
 
