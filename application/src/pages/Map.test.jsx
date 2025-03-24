@@ -23,38 +23,70 @@ jest.mock('react-router-dom', () => ({
     )
 }));
 
-jest.mock('react-leaflet');
+jest.mock('react-leaflet', () => ({
+    MapContainer: jest.fn(({ children, ...props }) => (
+      <div data-testid="map-container" {...props}>{children}</div>
+    )),
+    TileLayer: jest.fn(() => <div data-testid="tile-layer" />),
+    Marker: jest.fn(({ children }) => <div data-testid="marker">{children}</div>),
+    Popup: jest.fn(({ children }) => <div data-testid="popup">{children}</div>)
+}));
 
 // Create a _mocks_/leaflet.js file in your project
-jest.mock('leaflet');
+jest.mock('leaflet', () => {
+    return {
+        Icon: jest.fn(() => ({})),
+        map: jest.fn(() => ({
+            setView: jest.fn().mockReturnThis(),
+            remove: jest.fn(),
+            on: jest.fn(),
+            off: jest.fn(),
+            addLayer: jest.fn(),
+            removeLayer: jest.fn()
+        })),
+        tileLayer: jest.fn(() => ({
+            addTo: jest.fn().mockReturnThis()
+        })),
+        marker: jest.fn(() => ({
+            addTo: jest.fn().mockReturnThis(),
+            bindPopup: jest.fn().mockReturnThis()
+        })),
+        layerGroup: jest.fn(() => ({
+            addTo: jest.fn().mockReturnThis(),
+            addLayer: jest.fn(),
+            removeLayer: jest.fn(),
+            clearLayers: jest.fn()
+        }))
+    };
+});
 
 // Basic leaflet mock
-const L = {
-    map: jest.fn(() => ({
-        setView: jest.fn().mockReturnThis(),
-        remove: jest.fn(),
-        on: jest.fn(),
-        off: jest.fn(),
-        addLayer: jest.fn(),
-        removeLayer: jest.fn()
-    })),
-    tileLayer: jest.fn(() => ({
-        addTo: jest.fn().mockReturnThis()
-    })),
-    marker: jest.fn(() => ({
-        addTo: jest.fn().mockReturnThis(),
-        bindPopup: jest.fn().mockReturnThis()
-    })),
-    layerGroup: jest.fn(() => ({
-        addTo: jest.fn().mockReturnThis(),
-        addLayer: jest.fn(),
-        removeLayer: jest.fn(),
-        clearLayers: jest.fn()
-    })),
-    // Add other Leaflet methods you use
-};
+// const L = {
+//     map: jest.fn(() => ({
+//         setView: jest.fn().mockReturnThis(),
+//         remove: jest.fn(),
+//         on: jest.fn(),
+//         off: jest.fn(),
+//         addLayer: jest.fn(),
+//         removeLayer: jest.fn()
+//     })),
+//     tileLayer: jest.fn(() => ({
+//         addTo: jest.fn().mockReturnThis()
+//     })),
+//     marker: jest.fn(() => ({
+//         addTo: jest.fn().mockReturnThis(),
+//         bindPopup: jest.fn().mockReturnThis()
+//     })),
+//     layerGroup: jest.fn(() => ({
+//         addTo: jest.fn().mockReturnThis(),
+//         addLayer: jest.fn(),
+//         removeLayer: jest.fn(),
+//         clearLayers: jest.fn()
+//     })),
+//     // Add other Leaflet methods you use
+// };
 
-module.exports = L;
+// module.exports = L;
 
 jest.mock('../styles/Map.module.css', () => ({
     game: 'game',
@@ -65,7 +97,15 @@ jest.mock('../styles/Map.module.css', () => ({
 }));
 
 // Mock api
-jest.mock('../api');
+jest.mock('../api', () => ({
+    __esModule: true,
+    default: {
+      get: jest.fn(),
+      post: jest.fn(),
+      put: jest.fn(),
+      delete: jest.fn()
+    }
+}));
 
 // Mock constants
 jest.mock('../constants', () => ({
@@ -97,6 +137,13 @@ const mockTask = {
     location: [50.735, -3.534],
     score_to_award: 10
 };  
+
+// Mock Navbar component
+jest.mock('../components/Navbar', () => {
+    return function DummyNavbar() {
+      return <div data-testid="navbar">NavBar</div>;
+    };
+});
 
 describe("Map Component", () => {
 
