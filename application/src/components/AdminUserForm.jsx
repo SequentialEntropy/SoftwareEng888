@@ -151,7 +151,7 @@ export default function AdminUserForm({ selectedUser, tasks, onSuccess }) {
                 placeholder="Score"
                 required
             />
-            <button type="submit">{selectedUser ? "Save User" : "Add User"}</button>
+            <button type="submit">{selectedUser ? "Save User" : "Create User"}</button>
         </form>
     )
 }

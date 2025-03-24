@@ -97,7 +97,7 @@ export default function AdminTaskForm({ selectedTask, onSuccess }) {
                 </div>
             ))}
 
-            <button type="submit">{selectedTask ? "Save Task" : "Add Task"}</button>
+            <button type="submit">{selectedTask ? "Save Task" : "Create Task"}</button>
         </form>
     )
 }

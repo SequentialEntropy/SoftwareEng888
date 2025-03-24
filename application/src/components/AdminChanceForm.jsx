@@ -55,7 +55,7 @@ export default function AdminChanceForm({ selectedChance, onSuccess }) {
                 placeholder="Enter score to award"
                 required
             />
-            <button type="submit">{selectedChance ? "Save Chance" : "Add Chance"}</button>
+            <button type="submit">{selectedChance ? "Save Chance" : "Create Chance"}</button>
         </form>
     )
 }

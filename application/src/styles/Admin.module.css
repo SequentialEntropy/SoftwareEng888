@@ -78,6 +78,7 @@
 
 /* Styles inputs in .task_form */
 .task_form input{
+    border: none;
     border-radius: 25px;
     height: 2.5vw;
     padding: 10px;
