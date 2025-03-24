@@ -24,8 +24,8 @@ jest.mock('react-router-dom', () => ({
 }));
 
 jest.mock('react-leaflet', () => ({
-    MapContainer: jest.fn(({ children, ...props }) => (
-      <div data-testid="map-container" {...props}>{children}</div>
+    MapContainer: jest.fn(({ children, scrollWheelZoom, doubleClickZoom, ...props }) => (
+        <div data-testid="map-container" {...props}>{children}</div>
     )),
     TileLayer: jest.fn(() => <div data-testid="tile-layer" />),
     Marker: jest.fn(({ children }) => <div data-testid="marker">{children}</div>),
@@ -246,17 +246,16 @@ describe("Map Component", () => {
         test('Task info displayed when task is loaded', async () => {
             await act(async () => {
                 render(<Map />);
+                await new Promise(resolve => setTimeout(resolve, 0));
             });
             
             await waitFor(() => {
-                // Use getAllByText since there are multiple elements with "Forum"
                 const forumElements = screen.getAllByText('Forum');
                 expect(forumElements.length).toBeGreaterThan(0);
                 
-                // Similarly, use getAllByText for task description
                 const taskDescriptionElements = screen.getAllByText('This is a test task');
                 expect(taskDescriptionElements.length).toBeGreaterThan(0);
-            }, { timeout: 2000 });
+            });
         });
 
         test('Display with no task message if current task is not found', async () => {
