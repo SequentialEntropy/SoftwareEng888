@@ -118,6 +118,10 @@ html, body{
     box-sizing: border-box;
 }
 
+.accessible_main_board{
+    background-color: pink;
+}
+
 /* Styling of avatar position */
 .avatar{
     position: absolute;
@@ -143,7 +147,7 @@ html, body{
 }
 
 
-body.accessible-mode.item{
+body.accessible-mode .game{
     background-color: pink !important;
 }
 
@@ -504,6 +508,10 @@ body.accessible-mode.item{
 
 @media(max-width: 480px){
 
+    .game{
+        overflow: scroll;
+    }
+
     .main_board{
         width: 90vw;
         height: 75%;
@@ -660,10 +668,22 @@ body.accessible-mode.item{
     }
    
 
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        font-size: 2.5vw;
+        
+    }
+
+   
+
 }
 
 
 @media (min-width: 769px) and (max-width: 1199px ){
+
+    .game{
+        overflow: scroll;
+    }
 
     .main_board{
         width: 84vw;
@@ -731,6 +751,28 @@ body.accessible-mode.item{
         margin-top: 5%;
         font-size: 3vw;
     }
+
+
+
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        margin-top: 5vw;
+        margin-bottom: 1vw;
+        font-size: 2.5vw;
+        
+    }
+
+    /* Styles button on pop up content */
+    .popup_content button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
+    }
+
+    
     
 
 
@@ -803,6 +845,12 @@ body.accessible-mode.item{
         margin-top: 5%;
         font-size: 2vw;
     }
+
+    .popup{
+        height: 30%;
+    }
+
+
 
 
     

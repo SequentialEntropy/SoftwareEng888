@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom"
 import styles from "../styles/Navbar.module.css"
-import DisplayToggle from "./DisplayToggle"
 
 
 
@@ -19,7 +18,6 @@ function NavBar(){
                     <Link to="/profile"><i className="bi bi-person-circle"  ></i></Link>
                     <Link to="/"><i className="bi bi-person-fill-lock"  ></i></Link>
                     <Link to="/logout"><i className="bi bi-box-arrow-right"  ></i></Link>
-                    <DisplayToggle />
                 </div>
             </nav>
         </div>
