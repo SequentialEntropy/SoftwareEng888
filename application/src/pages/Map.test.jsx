@@ -213,13 +213,17 @@ describe("Map Component", () => {
      * 2. Test marker render on map
      */
     describe('Map Render tests', () => {
-        // test('Render map with correct coordinates', async () => {
-        //     await act(async () => {
-        //         render(<Map />);
-        //     });
-    
-        //     expect(screen.getByRole('region')).toBeInTheDocument();
-        // });
+        test('Render map with correct coordinates', async () => {
+            await act(async () => {
+                render(<Map />);
+            });
+        
+            const mapContainer = screen.getByTestId('map-container');
+            expect(mapContainer).toBeInTheDocument();
+            
+            expect(mapContainer).toHaveAttribute('center', '50.73520737891607,-3.533907682035006');
+            expect(mapContainer).toHaveAttribute('zoom', '20');
+        });
 
         test('Marker render on map', async () => {
             await act(async () => {
