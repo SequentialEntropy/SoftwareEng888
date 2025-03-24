@@ -211,7 +211,47 @@ describe('Admin Component', () => {
      * Verify useEffect correctly calls both fetch functions on component mount
      * Test API error handling with simulated network failures
      */
-    
+    describe('API Integration', () => {
+        test('Test fetchTasks and fetchChances', async () => {
+            render(<Admin />);
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/tasks/');
+                expect(api.get).toHaveBeenCalledWith('/chances/');
+                expect(api.get).toHaveBeenCalledWith('/admin/users/');
+            });
+        });
+        
+        test('Test data fetching after successful operations', async () => {
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            fireEvent.click(screen.getByTestId('task-form-submit'));
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/tasks/');
+                expect(api.get.mock.calls.filter(call => call[0] === '/tasks/').length).toBe(2);
+            });
+        });
+        
+        test('Test API error handling with simulated network failures', async () => {
+            const originalConsoleError = console.error;
+            console.error = jest.fn();
+            
+            // Mock API failure
+            api.delete.mockRejectedValue(new Error('Network error'));
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            await waitFor(() => {
+                expect(screen.getByText('Task 1')).toBeInTheDocument();
+            });
+            const deleteButtons = screen.getAllByText('Delete');
+            fireEvent.click(deleteButtons[0]);
+            await waitFor(() => {
+                expect(console.error).toHaveBeenCalled();
+            });
+            
+            // Restore console.error
+            console.error = originalConsoleError;
+        });
+    });
 
     /**
     * CRUD Operation Tests
