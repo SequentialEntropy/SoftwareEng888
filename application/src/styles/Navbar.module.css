@@ -70,7 +70,7 @@
         height: 9vh;
         gap: 6vw;
         position: absolute;
-        bottom: 4.5%;
+        bottom: 7%;
         left: 2vw;
         
     }
@@ -160,7 +160,7 @@
         height: 88vh;
         position: absolute;
         border-radius: 30px;
-        gap: 3vw;
+        gap: 2vw;
         top: 5.5%;
     
     }
@@ -193,7 +193,7 @@
     .sidebar {
         width: 7vw;
         height: 90vh;
-        gap: 2vw;
+        gap: 1vw;
         top: 5.5%;
     
     }

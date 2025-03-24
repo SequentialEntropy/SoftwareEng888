@@ -47,6 +47,12 @@ jobs:
         cd application
         npm test Profile.test.jsx
 
+    - name: Run Admin test
+      run: |
+        cd application
+        npm test Admin.test.jsx
+        
+
     - name: Run Map test
       run: |
         cd application

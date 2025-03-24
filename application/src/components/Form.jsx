@@ -161,7 +161,7 @@ function Form({ route, method }) {
                                     <input type="password" className={`form-control ${styles.field}`} value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} placeholder="Confirm Password" required />
                                     <div>
                                         {/* Checkbox with Privacy Policy Link */}
-                                        <label style = {{width:  "100%"}}>
+                                        <label className={styles.signup_label}>
                                             <input type="checkbox" required/>
                                             By signing up you agree to our{" "}
                                             <a href="#" onClick={openPopup}>privacy policy</a> and terms and conditions.
@@ -224,7 +224,7 @@ function Form({ route, method }) {
                                             <h3 style={{ color: "black" }}>4. Changes to terms</h3>
                                             <p style={{ color: "black" }}>We reserve the right to update these Terms and Conditions at any time. Your continued use of the website signifies your acceptance of any changes.</p>
                                             <h3 style={{ color: "black" }}> Contact us</h3>
-                                            <p style={{ color: "black" }}>If you have any questions about these Terms and Conditions, don't hesitate to contact us. </p>
+                                            <p style={{ color: "black" }}>If you have any questions about these Terms and Conditions, don't hesitate to contact us at climate.customerservice@gmail.com. </p>
                                         </div>
                                         </div>
                                     )}

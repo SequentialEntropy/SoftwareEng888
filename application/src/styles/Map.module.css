@@ -48,6 +48,10 @@
     color: white;
 }
 
+body.accessible-mode .game {
+    background-color: orange !important;
+}
+
 /* Styles map container */
 .map_container {
     position: relative;
@@ -81,8 +85,13 @@
         width: 88vw;
         height: 60%;
         margin-top: 3vw;
+    
     }
 
+   .task_text h3,
+   .task_text h6{
+    font-size: 4vw
+   }
 
 }
 

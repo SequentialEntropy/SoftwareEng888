@@ -121,7 +121,7 @@ html, body{
 /* Styling of avatar position */
 .avatar{
     position: absolute;
-    z-index: 1;
+    z-index: 10;
 }
 
 /* Styles font size of entire game board */
@@ -142,12 +142,19 @@ html, body{
     flex-direction: column;
 }
 
+
+body .accessible-mode .item{
+    background-color: pink !important;
+}
+
 /* Styles heading on game board square */
 .item h3{
     font-size: 1.5vw;
     font-family: 'Londrina Solid';
     margin-top: 4.5vw;
 }
+
+
 
 /* Styles tile bar */
 .tile_bar{
@@ -471,6 +478,7 @@ html, body{
     color: white;
     font-family: "Londrina Solid";
     width: 100%;
+
 }
 
 /* Styles how to play instructions */
@@ -534,9 +542,16 @@ html, body{
 
     .how_to_play_container2 {
         width: 50vw;
-        height: 40%;
+        height: 50vh;
     
     }
+
+    .how_to_play_title{
+    margin-top: 5%;
+    
+    
+    }
+
     .exit_btn {
         font-size: 25px;
         right: 20px;
@@ -554,6 +569,47 @@ html, body{
         padding: 2%;
         margin-top: 6%;
         font-size: 5vw;
+    }
+
+
+    /* Styles pop up heading on header section */
+    .popup_header h1{
+        font-size: 5vw;
+    }
+
+    /* Styles exit button on pop up header */
+    .popup_header .exit_btn{
+        font-size: 25px;
+        top: 0;
+        right: 2vw;
+        
+    }
+
+    /* Styles content of pop up  */
+    .popup_content{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2vw;
+        
+    }
+
+    /* Styles heading of pop up content */
+    .popup_content h2 {
+        margin-top: 5vw;
+        margin-bottom: 1vw;
+        font-size: 4vw;
+        
+    }
+
+    /* Styles button on pop up content */
+    .popup_content button {
+        background: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        padding: 5px 10px;
     }
 
 
