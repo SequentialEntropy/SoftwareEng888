@@ -46,8 +46,14 @@ jobs:
       run: |
         cd application
         npm test Profile.test.jsx
+
+    - name: Run Map test
+      run: |
+        cd application
+        npm test Map.test.jsx
         
     - name: Generate test coverage report
       run: |
         cd application
         npm test -- --coverage
+      
