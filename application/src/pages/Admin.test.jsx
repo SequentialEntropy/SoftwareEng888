@@ -260,6 +260,55 @@ describe('Admin Component', () => {
     * Test the same flow for chance deletion (onDeleteChance)
     * Verify integration with AdminTaskForm and AdminChanceForm for creation/editing
     */
+    describe('CRUD Operations', () => {
+        test('deletes a task when delete button is clicked', async () => {
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            await waitFor(() => {
+                expect(screen.getByText('Task 1')).toBeInTheDocument();
+            });
+            const deleteButtons = screen.getAllByText('Delete');
+            fireEvent.click(deleteButtons[0]);
+            await waitFor(() => {
+                expect(api.delete).toHaveBeenCalledWith('/tasks/1/');
+                expect(api.get).toHaveBeenCalledWith('/tasks/');
+            });
+        });
+        
+        test('Test deleting a chance when delete button is clicked', async () => {
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Chances'));
+            await waitFor(() => {
+                expect(screen.getByText('Chance 1')).toBeInTheDocument();
+            });
+            const deleteButtons = screen.getAllByText('Delete');
+            fireEvent.click(deleteButtons[0]);
+            await waitFor(() => {
+                expect(api.delete).toHaveBeenCalledWith('/chances/1/');
+                expect(api.get).toHaveBeenCalledWith('/chances/');
+            });
+        });
+        
+        test('Verify success callback when task form is submitted', async () => {
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            fireEvent.click(screen.getByTestId('task-form-submit'));
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/tasks/');
+                expect(api.get.mock.calls.filter(call => call[0] === '/tasks/').length).toBe(2); // Initial + refresh
+            });
+        });
+        
+        test('Verify success callback when chance form is submitted', async () => {
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Chances'));
+            fireEvent.click(screen.getByTestId('chance-form-submit'));
+            await waitFor(() => {
+                expect(api.get).toHaveBeenCalledWith('/chances/');
+                expect(api.get.mock.calls.filter(call => call[0] === '/chances/').length).toBe(2); // Initial + refresh
+            });
+        });
+    });
 
     /**
     * User Interaction Tests
