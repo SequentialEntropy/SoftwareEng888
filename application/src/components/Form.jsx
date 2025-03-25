@@ -56,8 +56,6 @@ function Form({ route, method }) {
      * @param {Event} e - Form submission event.
      */
 
-    const [errorMessages, setErrorMessages] = useState([]); // New state for errors
-
     const handleSubmit = async (e) => {
         setLoading(true);
         e.preventDefault();
