@@ -1,10 +1,3 @@
-from django.test import TestCase, Client
-from django.urls import reverse
-from django.contrib.auth.models import User
-from django.core import mail
-from .models import UserGameStats
-import json
-# Create your tests here.
 """
 Tests:
 1. Login Tests: Login Template Load, Login Success, Login Failure
@@ -12,6 +5,13 @@ Tests:
 3. Signup Tests: Signup Template Load, Signup Success, Signup Failure
 """
 #9/9 tests passed
+from django.test import TestCase, Client
+from django.urls import reverse
+from django.contrib.auth.models import User
+from django.core import mail
+from .models import UserGameStats
+import json
+
 class LoginTest(TestCase):
     def setUp(self):
         """

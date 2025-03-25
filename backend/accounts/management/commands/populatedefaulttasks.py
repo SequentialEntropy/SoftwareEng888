@@ -1,10 +1,22 @@
+"""
+Custom django command to populate the Task database with default entries
+
+Run using:
+python3 manage.py populatedefaulttasks
+"""
 from django.core.management.base import BaseCommand
 from accounts.models import Task, Chance
 
 class Command(BaseCommand):
+    """
+    Defines the command itself, extending the django commands API
+    """
     help = "Populate the database with default task cards"
 
     def handle(self, *args, **kwargs):
+        """
+        Defines all default Task entries, loads them into the database and outputs the number of entries
+        """
         Task.objects.create(description="Use a reusable cup"                 , applicable_squares=[3, 4, 6, 7, 8, 9, 13, 14, 15], score_to_award=5)
         Task.objects.create(description="Recycle an item"                    , applicable_squares=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15], score_to_award=10)
         Task.objects.create(description="Use the water fountain"             , applicable_squares=[3, 4, 7, 8, 9, 10, 11, 13, 14, 15],score_to_award=5)
