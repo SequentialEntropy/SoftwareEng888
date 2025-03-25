@@ -44,6 +44,18 @@ function Board() {
             setErrorMessages(err.response.data)
         }
     };
+    const handleDeleteAccount = async () => {
+        try {
+            await api.delete("accounts/delete-account/")
+            localStorage.removeItem("access_token")
+            localStorage.removeItem("refresh_token")
+            window.location.href = "/login"  // force redirect to login
+        } catch (err) {
+            alert("Error deleting account.")
+            console.error(err)
+        }
+    }
+    
 
     return (
         <div className={styles.main_profile}>
@@ -102,7 +114,9 @@ function Board() {
                 ))}
                 <Link to="/reset-password">Reset Password</Link>
                 <Link to="/logout" className={styles.logout_btn}>Log Out</Link>
-                <Link to="" className={styles.deleteAccount_btn}>Delete Account</Link>
+                <button onClick={handleDeleteAccount} className={styles.deleteAccount_btn}>
+                Delete Account
+                </button>
             </div>
         </div>
     );

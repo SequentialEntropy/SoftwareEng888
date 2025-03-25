@@ -162,3 +162,13 @@ class ResetPasswordView(APIView):
 
         except (User.DoesNotExist, PasswordResetToken.DoesNotExist):
             return Response({"error": "Invalid token or user"}, status=400)
+
+
+class DeleteAccountView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def delete(self, request):
+        user = request.user
+        username = user.username
+        user.delete()
+        return Response({"message": f"User '{username}' deleted successfully."})
