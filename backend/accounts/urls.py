@@ -4,7 +4,7 @@ Defines all endpoints and its corresponding views to serve and respond to reques
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .views import SignUpView, RetrieveUserView, RankedUsersView, ChangePasswordView, ForgotPwdRequestView, ResetPasswordView
+from .views import SignUpView, RetrieveUserView, RankedUsersView, ChangePasswordView, ForgotPwdRequestView, ResetPasswordView, DeleteAccountView
 
 urlpatterns = [
     path("user/register/", SignUpView.as_view(), name="register"),
@@ -17,6 +17,8 @@ urlpatterns = [
 
     path("forgot-password-request/", ForgotPwdRequestView.as_view(), name="forgot-password-request"),
     path("reset-password/", ResetPasswordView.as_view(), name="reset-password"),
+    path("delete-account/", DeleteAccountView.as_view(), name="delete-account"),
+
 
 ]
 
