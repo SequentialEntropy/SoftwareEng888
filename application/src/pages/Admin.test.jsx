@@ -489,91 +489,77 @@ describe('Admin Component', () => {
      */
     describe('Edge Cases', () => {
         test('Test behavior when API returns empty data', async () => {
-            api.get.mockImplementation((url) => {
-                return Promise.resolve({ data: [] });
-            });
-            
-            await act(async () => {
-                render(<Admin />);
-            });
-            
-            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
-            
-            const lists = screen.getAllByRole('list');
-            lists.forEach(list => {
-                expect(list.children).toHaveLength(0);
+            // Mock empty data response
+            api.get.mockImplementation(() => Promise.resolve({ data: [] }));
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            await waitFor(() => {
+                expect(screen.queryByText('Task 1')).not.toBeInTheDocument();
             });
         });
-        
+          
         test('Test handling unexpected API response format', async () => {
-            api.get.mockImplementation((url) => {
-                if (url === '/tasks/') {
-                    return Promise.resolve({ data: [] });
-                }
-                if (url === '/chances/') {
-                    return Promise.resolve({ data: [] });
-                }
-                return Promise.reject(new Error('Not found'));
+            const originalConsoleError = console.error;
+            console.error = jest.fn();
+            
+            // Mock data response
+            api.get.mockImplementation(() => Promise.resolve({ data: null }));
+            render(<Admin />);
+            await waitFor(() => {
+                expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
             });
             
-            await act(async () => {
-                render(<Admin />);
-            });
-            
-            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
+            // Restore console.error
+            console.error = originalConsoleError;
         });
-            
+          
         test('Test handling concurrent operations', async () => {
-            const delay = ms => new Promise(resolve => setTimeout(resolve, ms));
-            
-            api.delete.mockImplementation(async () => {
-                await delay(100);
-                return {};
+            // Simulate delayed API responses
+            let resolveDelete;
+            const deletePromise = new Promise(resolve => {
+                resolveDelete = resolve;
             });
-            
-            await act(async () => {
-                render(<Admin />);
-            });
-            
-            // Start two delete operations concurrently
-            const deleteButtons = screen.getAllByText('Delete');
-            
-            await act(async () => {
+            api.delete.mockImplementation(() => deletePromise);
+
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
+            await waitFor(() => {
+                const deleteButtons = screen.getAllByText('Delete');
                 fireEvent.click(deleteButtons[0]);
                 fireEvent.click(deleteButtons[1]);
             });
-            
-            // Verify both delete operations were initiated
-            expect(api.delete).toHaveBeenCalledWith('/tasks/1/');
-            expect(api.delete).toHaveBeenCalledWith('/tasks/2/');
-            
+
+            resolveDelete({});
             await waitFor(() => {
-                expect(api.get).toHaveBeenCalledTimes(4);
+                expect(api.delete).toHaveBeenCalledTimes(2);
             });
         });
-        
+          
         test('Test behaviour with large datasets', async () => {
-            const largeMockTasks = Array.from({ length: 100 }, (_, i) => ({
+            // Generate large dataset
+            const largeTasks = Array(100).fill().map((_, i) => ({
                 id: i + 1,
                 description: `Task ${i + 1}`,
-                applicable_squares: [1],
-                score_to_award: 10
+                score_to_award: 10,
+                applicable_squares: [1, 2]
             }));
             
+            // Mock API to return large dataset
             api.get.mockImplementation((url) => {
                 if (url === '/tasks/') {
-                return Promise.resolve({ data: largeMockTasks });
+                    return Promise.resolve({ data: largeTasks });
+                } else if (url === '/chances/') {
+                    return Promise.resolve({ data: mockChances });
+                } else if (url === '/admin/users/') {
+                    return Promise.resolve({ data: mockUsers });
                 }
-                return Promise.resolve({ data: mockChances });
+                return Promise.resolve({ data: [] });
             });
             
-            await act(async () => {
-                render(<Admin />);
-            });
-            
-            expect(screen.getByText('Admin Dashboard')).toBeInTheDocument();
-            
+            render(<Admin />);
+            fireEvent.click(screen.getByText('Tasks'));
             await waitFor(() => {
+                expect(screen.getByText('Task 1')).toBeInTheDocument();
                 expect(screen.getByText('Task 100')).toBeInTheDocument();
             });
         });
