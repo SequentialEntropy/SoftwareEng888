@@ -425,16 +425,13 @@ describe('Admin Component', () => {
             fireEvent.click(screen.getByText('Tasks'));
             
             await waitFor(() => {
-                // Initially selectedTask should be null
                 expect(screen.getByTestId('admin-task-form').getAttribute('data-selected-task')).toBe('null');
             });
             
-            // Select a task
             const editButtons = screen.getAllByText('Edit');
             fireEvent.click(editButtons[0]);
             
             await waitFor(() => {
-                // Verify the selectedTask prop is updated correctly
                 const selectedTask = JSON.parse(screen.getByTestId('admin-task-form').getAttribute('data-selected-task'));
                 expect(selectedTask).toEqual(mockTasks[0]);
             });
