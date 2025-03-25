@@ -1,3 +1,6 @@
+"""
+Defines all endpoints and its corresponding views to serve and respond to requests to /accounts/
+"""
 from django.urls import path
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
