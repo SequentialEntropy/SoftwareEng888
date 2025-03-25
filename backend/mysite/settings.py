@@ -30,6 +30,8 @@ SECRET_KEY = 'django-insecure-q8dcsu32n+cbpl&cn&y-(n@t)^utg&1cg^et96&&la%-z#@t+5
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOWS_CREDENTIALS = True
 
 ALLOWED_HOSTS = [
     "climate.genkiasahi.com",
@@ -37,7 +39,8 @@ ALLOWED_HOSTS = [
     "localhost",
     "0.0.0.0",
 ]
-CSRF_TRUSTED_ORIGINS = ["https://climate.genkiasahi.com"]
+CSRF_TRUSTED_ORIGINS = ["https://climate.genkiasahi.com",     
+                        "http://localhost:5173"]
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
@@ -68,15 +71,15 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    "corsheaders.middleware.CorsMiddleware", 
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    "corsheaders.middleware.CorsMiddleware",
 ]
+
 
 ROOT_URLCONF = 'mysite.urls'
 
@@ -101,7 +104,6 @@ WSGI_APPLICATION = 'mysite.wsgi.application'
 LOGIN_REDIRECT_URL = "/home"
 LOGOUT_REDIRECT_URL = "/login"
 
-EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
@@ -154,10 +156,14 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
 ]
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "templates/static"),  # Serve assets from React build
+]
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-CORS_ALLOW_ALL_ORIGINS = True
-CORS_ALLOWS_CREDENTIALS = True
+EMAIL_USER = "climate.customerservice@gmail.com"
+EMAIL_PASSWORD = "nahl vmuq rzyp pnmp"
+FRONTEND_URL = "http://localhost:5173"
