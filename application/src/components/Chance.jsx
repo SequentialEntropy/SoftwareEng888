@@ -1,4 +1,26 @@
+/**
+ * HowToPlay.jsx - A popup modal displaying the chosen chance card
+ *
+ * @file Represents the popup modal
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import styles from "../styles/Board.module.css"
+
+/**
+ * Chance Component 
+ * 
+ * This component represents the chance popup modal.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the Chance functionalities.
+ */
 
 export default function Chance({showChance, setShowChance, getChance, chance, onClickChance}) {
     return (

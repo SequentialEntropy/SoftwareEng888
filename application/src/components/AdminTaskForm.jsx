@@ -1,3 +1,16 @@
+/**
+ * AdminTaskForm.jsx - A component for admins to edit any selected task card
+ *
+ * @file Represents the Task editor
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useState, useEffect } from "react"
 import api from "../api"
 import { squares } from "../constants"
@@ -8,6 +21,15 @@ const placeholder = {
     applicable_squares: [],
     score_to_award: "",
 }
+
+/**
+ * AdminTaskForm Component 
+ * 
+ * This component handles creation and editing of Task cards in the game.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component with a form to edit Task fields.
+ */
 
 export default function AdminTaskForm({ selectedTask, onSuccess }) {
     const [formData, setFormData] = useState(placeholder)

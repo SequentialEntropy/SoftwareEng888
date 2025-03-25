@@ -64,6 +64,9 @@ function Home() {
             .catch(err => alert(err))
     }
 
+    /**
+     * Fetches users from the API based on highest ranking order
+     */
     const getRankedUsers = () => {
         api
             .get("/accounts/ranked-users/")

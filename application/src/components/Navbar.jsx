@@ -1,9 +1,29 @@
+/**
+ * Navbar.jsx - A reusable navbar component for all login-protected routes.
+ *
+ * @file Handles navigations to other pages
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { Link } from "react-router-dom"
 import styles from "../styles/Navbar.module.css"
 import { useEffect, useState } from "react"
 import api from "../api"
 
-
+/**
+ * NavBar Component 
+ * 
+ * This component represents the navigation bar.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the navbar.
+ */
 
 function NavBar(){
     const [isAdmin, setIsAdmin] = useState(false)

@@ -35,6 +35,15 @@ const userLocationIcon = new L.Icon({
     popupAnchor: [1, -34]
 });
 
+/**
+ * Map Component 
+ * 
+ * This component represents the interactive map.
+ * It displays the user's current gps location along with all physical locations of squares on the board.
+ * 
+ * @component 
+ * @returns {JSX.Element} The map UI
+ */
 function Map() {
     const taskNotFound = {id: -1, name: "No Task", description: "No tasks found for this square - Skip task!", location: null, score_to_award: 0}
 

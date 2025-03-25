@@ -1,5 +1,27 @@
+/**
+ * Square.jsx - A helper component handling location tracking, verifying locations and detecting task completion.
+ *
+ * @file Detects task completion and updates states
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useEffect, useState } from "react"
 import styles from "../styles/Board.module.css"
+
+/**
+ * Task Component 
+ * 
+ * This component represents the task dropdown and task button on the board.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the tasks and handles geolocation updates.
+ */
 
 export default function Task({showTask, setShowTask, square, task, canSpin, onCompleteTask}) {
     const [isTaskCompletable, setIsTaskCompletable] = useState(false)

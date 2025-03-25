@@ -1,3 +1,16 @@
+/**
+ * Spinner.jsx - A spinner component for animating spins and random number generation
+ *
+ * @file Handles spinner clicks and animations
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useRef, useState } from "react"
 
 import styles from "../styles/Board.module.css"
@@ -6,6 +19,15 @@ const totalSections = 12; // 12 sections in the wheel
 const sectionSize = 360 / totalSections; // each section is 30 degrees
 const pointerOffset = 15; // adjust to align with the pointer
 const numberOrder = [4, 5, 6, 1, 2, 3, 4, 5, 6, 1, 2, 3]; // exact number order on the spinner
+
+/**
+ * Spinner Component 
+ * 
+ * This component represents the spinner on the board.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the spinner.
+ */
 
 function Spinner({
     canSpin,

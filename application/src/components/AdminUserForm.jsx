@@ -1,3 +1,16 @@
+/**
+ * AdminUserForm.jsx - A component for admins to edit any user and promote or demote them from admin status
+ *
+ * @file Represents the User editor
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useState, useEffect } from "react"
 import api from "../api"
 import styles from "../styles/Admin.module.css"
@@ -15,6 +28,15 @@ const placeholder = {
         task_completed: false
     }
 }
+
+/**
+ * AdminUserForm Component 
+ * 
+ * This component handles creation and editing of Users in the game.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component with a form to edit User fields.
+ */
 
 export default function AdminUserForm({ selectedUser, tasks, onSuccess }) {
     const [formData, setFormData] = useState(placeholder)

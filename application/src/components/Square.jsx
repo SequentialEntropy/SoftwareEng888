@@ -1,4 +1,26 @@
+/**
+ * Square.jsx - A reusable square component for all squares on the board.
+ *
+ * @file Represents a square on the board
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import styles from "../styles/Board.module.css"
+
+/**
+ * Square Component 
+ * 
+ * This component represents the square on the board.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the squares.
+ */
 
 export default function Square({id, name, backgroundColor, squareRefs}) {
     const isStartSquare = id === 0

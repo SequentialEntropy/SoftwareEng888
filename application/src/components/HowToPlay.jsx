@@ -1,5 +1,27 @@
+/**
+ * HowToPlay.jsx - A popup modal explaining the rules of the game
+ *
+ * @file Represents the popup modal
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useState } from "react"
 import styles from "../styles/Board.module.css"
+
+/**
+ * HowToPlay Component 
+ * 
+ * This component represents the help icon and popup modal.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the HowToPlay functionalities.
+ */
 
 function HowToPlay() {
     const [showHowToPlay, setShowHowToPlay] = useState(false)
