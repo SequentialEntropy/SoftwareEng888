@@ -29,7 +29,7 @@ function ForgotPassword() {
         }
 
         try {
-            await api.post("/reset-password/", {
+            await api.post("/accounts/reset-password/", {
                 user_id: userId,
                 token: token,
                 new_password: password
