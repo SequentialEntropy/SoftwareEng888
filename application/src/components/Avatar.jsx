@@ -1,5 +1,27 @@
+/**
+ * Avatar.jsx - A bicycle icon representing the user's current location on the board
+ *
+ * @file Represents the user's current location
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @author Genki Asahi 
+ * @author Yap Wen Xing
+ * @author Dany Kelzi
+ * @version 1.1.2
+ * @since 17-03-2025
+ */
+
 import { useEffect, useRef, useState } from "react"
 import styles from "../styles/Board.module.css"
+
+/**
+ * Avatar Component 
+ * 
+ * This component handles the avatar's movement across squares.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the bicycle avatar on the board.
+ */
 
 export default function Avatar({avatarSquare, squareRefs}) {
     const avatarRef = useRef(null)

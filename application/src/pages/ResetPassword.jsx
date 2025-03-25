@@ -1,8 +1,29 @@
+/**
+ * ResetPassword.jsx - A React component for password resets
+ * 
+ * @file renders the reset password form
+ * @author Carina Jose 
+ * @author Amreet Dhillon 
+ * @author Dany Kelzi
+ * @version 1.0.0 
+ * @since 15-02-2025
+ * 
+ */
+
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../api"; // Import API helper
 import NavBar from "../components/Navbar";
 import styles from "../styles/ResetPassword.module.css";
+
+/**
+ * ResetPassword Component 
+ * 
+ * This component represents the password reset page.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the password reset page.
+ */
 
 function ResetPassword() {
     const [oldPassword, setOldPassword] = useState("");
@@ -16,6 +37,10 @@ function ResetPassword() {
         document.title = "Reset Password"
     }, [])
 
+    /**
+     * Handles password resets and propagates it to the API.
+     * If any errors occur, all error messages will be shown.
+     */
     const handleSubmit = async (e) => {
         e.preventDefault();
 

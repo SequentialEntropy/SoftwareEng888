@@ -1,7 +1,26 @@
+/**
+ * Landing.jsx - A React component for displaying the main page when a user first lands on the website.
+ * 
+ * @file Handles rendering of the page.
+ * @author Carina Jose
+ * @author Amreet Dhillon
+ * @version 1.1.0 
+ * @since 19-02-2025
+ */
 import { Link } from "react-router-dom";
 import styles from "../styles/Landing.module.css";
 import MediaQuery from 'react-responsive';
 import { useEffect } from "react";
+
+/**
+ * Landing Component 
+ * 
+ * This component represents the landing page - the main page of the website.
+ * It fetches includes links to the signup and login pages.
+ * 
+ * @component 
+ * @returns {JSX.Element} The landing page UI.
+ */
 
 function Landing() {
     useEffect(() => {

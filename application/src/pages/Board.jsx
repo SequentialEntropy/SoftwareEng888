@@ -51,7 +51,9 @@ function Board() {
     // Component refs
     const squareRefs = useRef({})
 
-    // Initialise Avatar location & score
+    /**
+     * Initialises Avatar location & score
+     */
     useEffect(() => {
         document.title = "Board"
         // fetch current score and update rendered value
@@ -73,7 +75,10 @@ function Board() {
         )
     }, [])
 
-    // Helper functions
+    /**
+     * Fetches the latest score from the database, increments it, then request an update to the database
+     * Ensures database and frontend scores remain synchronised
+     */
     const awardScore = async awardedScore => {
         return api.get("/accounts/me/").then(res => res.data.usergamestats?.score)
         .then(currentScore => {
@@ -86,6 +91,10 @@ function Board() {
         })
     }
 
+    /**
+     * Fetches the latest square from the database, increments it, then request an update to the database
+     * Ensures database and frontend squares remain synchronised
+     */
     const advanceSquare = async squareCount => {
         return api.get("/accounts/me/").then(res => res.data.usergamestats?.current_square)
         .then(currentSquare => {
@@ -100,6 +109,10 @@ function Board() {
         })
     }
 
+    /**
+     * Fetches the list of tasks, and filters them by whether it is applicable to the current square
+     * Updates the database's stored task for the current user
+     */
     const generateRandomTask = async square => {
         const tasks = await api.get("/tasks/").then(
             res => res.data.filter(task => task.applicable_squares.includes(square))
@@ -117,6 +130,10 @@ function Board() {
     }
 
     // Event handlers
+
+    /**
+     * Handles the completion of tasks by propagating it to the backend database
+     */
     const onCompleteTask = () => {
         setShowTask(false)
         awardScore(chosenTask.score_to_award)
@@ -130,10 +147,18 @@ function Board() {
         )
     }
 
+    /**
+     * Handles the click event for the spinner
+     */
     const onClickSpin = () => {
         setGetChance(false)
     }
 
+    /**
+     * Handles the display toggles after the animation ends
+     * Generates a new task, then propagates it to the backend database
+     * Enable the chance popup
+     */
     const onSpinnerAnimationEnd = landedNumber => {
         if (landedNumber === 6) { // enable chance when spinner lands on 6
             setGetChance(true)
@@ -157,6 +182,10 @@ function Board() {
         )
     }
 
+    /**
+     * Fetches the list of all chance cards and chooses one at random
+     * Awards or penalises points based on the chosen chance card
+     */
     const onClickChance = () => {
         setGetChance(false)
         api.get("/chances/")

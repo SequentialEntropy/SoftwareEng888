@@ -1,3 +1,14 @@
+/**
+ * Admin.jsx - A React component for rendering the admin page.
+ * 
+ * @file Handles selection of Users, Tasks and Chances
+ * @author Carina Jose 
+ * @author Amreet Dhillon
+ * @author Genki Asahi
+ * @version 1.1.0 
+ * @since 19-03-2025
+ */
+
 import { useEffect, useState } from "react"
 import api from "../api"
 import AdminTaskForm from "../components/AdminTaskForm"
@@ -5,6 +16,16 @@ import AdminChanceForm from "../components/AdminChanceForm"
 import NavBar from "../components/Navbar";
 import styles from "../styles/Admin.module.css"
 import AdminUserForm from "../components/AdminUserForm";
+
+/**
+ * Admin Component 
+ * 
+ * This component represents the admin dashboard.
+ * It fetches user, task and chance details and displays entries.
+ * 
+ * @component 
+ * @returns {JSX.Element} The admin dashboard UI
+ */
 
 export default function Admin() {
     const [tasks, setTasks] = useState([])
@@ -15,16 +36,25 @@ export default function Admin() {
     const [selectedUser, setSelectedUser] = useState(null)
     const [selectedPage, setSelectedPage] = useState("Users")
 
+    /**
+     * Fetches tasks from the API and updates the state
+     */
     const fetchTasks = async () => {
         const tasks = (await api.get("/tasks/")).data
         setTasks(tasks)
     }
 
+    /**
+     * Fetches chances from the API and updates the state
+     */
     const fetchChances = async () => {
         const chances = (await api.get("/chances/")).data
         setChances(chances)
     }
 
+    /**
+     * Fetches users from the API and updates the state
+     */
     const fetchUsers = async () => {
         const users = (await api.get("/admin/users/")).data
         setUsers(users)
@@ -37,6 +67,9 @@ export default function Admin() {
         fetchUsers()
     }, [])
 
+    /**
+     * Handles task deletion and propagates it to the API
+     */
     const onDeleteTask = async id => {
         try {
             if (id === selectedTask?.id) {
@@ -49,6 +82,9 @@ export default function Admin() {
         }
     }
 
+    /**
+     * Handles chance deletion and propagates it to the API
+     */
     const onDeleteChance = async id => {
         try {
             if (id === selectedChance?.id) {
@@ -61,6 +97,9 @@ export default function Admin() {
         }
     }
 
+    /**
+     * Handles user deletion and propagates it to the API
+     */
     const onDeleteUser = async id => {
         try {
             if (id === selectedUser?.id) {

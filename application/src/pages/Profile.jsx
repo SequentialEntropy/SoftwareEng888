@@ -1,10 +1,31 @@
+/**
+ * Profile.jsx - A React component for the profile.
+ * 
+ * @file allows users to change their username and email to comply with GDPR.
+ * @author Carina Jose 
+ * @author Amreet Dhillon 
+ * @author Yap Wen Xing
+ * @version 1.1.2
+ * @since 14-03-2025
+ * 
+ */
+
 import { useState, useEffect } from "react";
 import api from "../api";
 import NavBar from "../components/Navbar";
 import styles from "../styles/Profile.module.css";
 import { Link } from "react-router-dom";
 
-function Board() {
+/**
+ * Profile Component 
+ * 
+ * This component represents the profile page.
+ * 
+ * @component
+ * @returns {JSX.Element} A react component representing the profile page.
+ */
+
+function Profile() {
     const [user, setUser] = useState({ username: "", email: "" });
     const [editMode, setEditMode] = useState({ username: false, email: false });
     const [tempUser, setTempUser] = useState({ username: "", email: "" });
@@ -15,6 +36,9 @@ function Board() {
         getUserDetails();
     }, []);
 
+    /**
+     * Fetches user details from the API and updates the states
+     */
     const getUserDetails = () => {
         api.get("/accounts/me/")
             .then(res => {
@@ -24,15 +48,24 @@ function Board() {
             .catch(err => alert("Error fetching user details: " + err));
     };
 
+    /**
+     * Toggles editing mode in the corresponding field
+     */
     const handleEdit = (field) => {
         setEditMode(prev => ({ ...prev, [field]: true }));
     };
 
+    /**
+     * Handles changes in fields and updates the state
+     */
     const handleChange = (e) => {
         const { id, value } = e.target;
         setTempUser(prev => ({ ...prev, [id]: value }));
     };
 
+    /**
+     * Handles field saves and propagates it to the API
+     */
     const handleSave = async field => {
         const data = { [field]: tempUser[field] }
         try {
@@ -122,4 +155,4 @@ function Board() {
     );
 }
 
-export default Board;
+export default Profile;
